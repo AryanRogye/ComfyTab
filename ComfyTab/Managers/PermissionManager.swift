@@ -11,8 +11,6 @@ import AppKit
 
 /// Manage All Permissions for the App
 class PermissionManager: ObservableObject {
-    static let shared = PermissionManager()
-    
     @Published var isAccessibilityEnabled: Bool = false
     @Published var isDoneCheckingPermissionsStart: Bool = false
     

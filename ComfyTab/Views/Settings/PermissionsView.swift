@@ -9,7 +9,7 @@ import SwiftUI
 
 public struct PermissionsView: View {
     
-    @ObservedObject var permissionsManager: PermissionManager = .shared
+    @EnvironmentObject var permissionsManager: PermissionManager
     
     public var body: some View {
         VStack {
