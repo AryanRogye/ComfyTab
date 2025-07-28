@@ -9,9 +9,11 @@ import SwiftUI
 
 @main
 struct ComfyTabApp: App {
-    
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @Environment(\.openWindow) var openWindow
+    
+    init() {
+    }
     
     var body: some Scene {
         MenuBarExtra("MyApp", systemImage: "star") {
