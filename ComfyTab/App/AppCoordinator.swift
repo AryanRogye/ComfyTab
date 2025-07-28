@@ -10,14 +10,19 @@ import Combine
 
 final class AppCoordinator {
     let permissionManager : PermissionManager
-    let hotkeyManager : HotkeyManager
+    let hotkeyManager     : HotkeyManager
+    let overlay           : Overlay
+    
     var cancellables = Set<AnyCancellable>()
-
     var didStart = false
 
     init() {
         self.permissionManager = PermissionManager()
-        self.hotkeyManager = HotkeyManager(permissionManager: permissionManager)
+        self.overlay = Overlay()
+        self.hotkeyManager = HotkeyManager(
+            permissionManager: permissionManager,
+            overlay          : overlay
+        )
     }
     
     deinit {
