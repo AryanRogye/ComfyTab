@@ -30,6 +30,7 @@ final class AppCoordinator {
     }
     
     func prepare() {
+        /// Once we detect accessibilty is started/enabled start the app
         permissionManager.$isAccessibilityEnabled
             .filter { $0 }
             .sink { [weak self] granted in

@@ -12,28 +12,45 @@ struct OverlayContent: View {
     @EnvironmentObject var viewModel : OverlayViewModel
     
     var body: some View {
-        ZStack {
+        ZStack {	
             VisualEffectView(material: .hudWindow, blendingMode: .behindWindow)
-            
-            VStack() {
+            VStack(spacing: 0) {
                 topRow
                     .padding(.horizontal, 8)
                     .padding(.top, 12)
                 
+                switch viewModel.overlayState {
+                case .homeView: OverlayHome()
+                case .configureVibe: OverlayConfigureVibe()
+                case .goWithFlow: OverlayGoWithFlow()
+                }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         }
     }
     
     // MARK: - Top Row
     private var topRow: some View {
         HStack(alignment: .top) {
-            pinButton
-            
+            if viewModel.lastState != nil {
+                backButton
+            }
             Spacer()
+            pinButton
         }
     }
     
+    // MARK: - Back Button
+    private var backButton: some View {
+        Button(action: viewModel.goBack) {
+            Image(systemName: "arrowshape.backward")
+                .resizable()
+                .foregroundColor(.secondary)
+                .frame(width: 14, height: 14)
+        }
+        .buttonStyle(.plain)
+    }
+    
+    // MARK: - Pin Button
     private var pinButton: some View {
         Button(action : {
             viewModel.togglePinned()
@@ -44,11 +61,10 @@ struct OverlayContent: View {
             )
             .resizable()
             .foregroundColor(.secondary)
-            .frame(width: 14, height: 14)
+            .frame(width: 14, height: 18		)
         }
         .buttonStyle(.plain)
     }
-    
 }
 
 struct VisualEffectView: NSViewRepresentable {

@@ -23,7 +23,7 @@ class Overlay: ObservableObject {
     var overlay: NSPanel!
     
     let overlayViewModel = OverlayViewModel()
-    let overlayWidth     : CGFloat = 500
+    let overlayWidth     : CGFloat = 800
     let overlayHeight    : CGFloat = 400
     
     init() {

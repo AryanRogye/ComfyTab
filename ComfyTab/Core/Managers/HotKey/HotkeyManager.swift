@@ -27,7 +27,7 @@ public class HotkeyManager {
                     print("is Not Held Triggered")
                     /// We Wanna Check if Option is Being Held
                     /// if it is not then we wanna hide again
-                    if let held = self.modifierKeyMonitor?.isOptionHeldGlobally() {
+                    if let held = self.modifierKeyMonitor?.isOptionHeldGlobally() {	
                         if !held {
                             self.overlay.hide()
                         }
@@ -42,6 +42,7 @@ public class HotkeyManager {
 //            print("⌥ Tab Pressed")
             self.overlay.show()
         }
+        
         modifierKeyMonitor?.onOptionReleased = {
             guard self.permissionManager.isAccessibilityEnabled else { return }
             guard !self.overlay.overlayViewModel.isPinned else { return }
