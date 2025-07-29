@@ -12,16 +12,20 @@ final class AppCoordinator {
     let permissionManager : PermissionManager
     let hotkeyManager     : HotkeyManager
     let overlay           : Overlay
+    let windowManager     : WindowManager
     
     var cancellables = Set<AnyCancellable>()
     var didStart = false
 
     init() {
         self.permissionManager = PermissionManager()
-        self.overlay = Overlay()
-        self.hotkeyManager = HotkeyManager(
-            permissionManager: permissionManager,
-            overlay          : overlay
+        self.windowManager     = WindowManager()
+        self.overlay           = Overlay(windowManager: windowManager)
+        
+        /// init HotkeyManager
+        self.hotkeyManager     = HotkeyManager(
+                permissionManager: permissionManager,
+                overlay          : overlay
         )
     }
     

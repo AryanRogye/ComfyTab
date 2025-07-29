@@ -21,12 +21,14 @@ class FocusablePanel: NSPanel {
 class Overlay: ObservableObject {
     
     var overlay: NSPanel!
-    
-    let overlayViewModel = OverlayViewModel()
     let overlayWidth     : CGFloat = 800
     let overlayHeight    : CGFloat = 400
-    
-    init() {
+
+    let windowManager: WindowManager
+    lazy var overlayViewModel = OverlayViewModel(windowManager: windowManager)
+
+    init(windowManager: WindowManager) {
+        self.windowManager = windowManager
         prepareOverlay()
     }
     
