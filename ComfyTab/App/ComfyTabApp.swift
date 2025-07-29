@@ -29,6 +29,7 @@ struct ComfyTabApp: App {
         Window("SettingsView", id: "SettingsView") {
             SettingsView()
                 .environmentObject(appDelegate.appCoordinator.permissionManager)
+                .environmentObject(appDelegate.appCoordinator.installedAppManager)
         }
     }
 }

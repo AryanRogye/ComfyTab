@@ -64,7 +64,8 @@ class Overlay: ObservableObject {
     
     // MARK: - Prepare Overlay
     private func prepareOverlay() {
-        guard let screen = getScreenUnderMouse() else { return }
+        /// Use A basic screen at the start
+        guard let screen = NSScreen.main else { return }
         
         let panelRect = centerRect(on: screen)
         
