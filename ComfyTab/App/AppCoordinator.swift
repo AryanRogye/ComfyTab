@@ -19,15 +19,16 @@ final class AppCoordinator {
     var didStart = false
 
     init() {
-        self.permissionManager = PermissionManager()
-        self.windowManager     = WindowManager()
-        self.overlay           = Overlay(windowManager: windowManager)
+        self.permissionManager   = PermissionManager()
+        self.windowManager       = WindowManager()
+        self.overlay             = Overlay(windowManager: windowManager)
         self.installedAppManager = InstalledAppManager()
         
         /// init HotkeyManager
         self.hotkeyManager     = HotkeyManager(
                 permissionManager: permissionManager,
-                overlay          : overlay
+                overlay          : overlay,
+                overlayViewModel : overlay.overlayViewModel
         )
     }
     

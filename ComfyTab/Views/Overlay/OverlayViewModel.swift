@@ -14,7 +14,6 @@ enum OverlayState {
     case goWithFlow
 }
 
-@MainActor
 class OverlayViewModel: ObservableObject {
     @Published var isPinned: Bool = false
     
@@ -26,6 +25,8 @@ class OverlayViewModel: ObservableObject {
     @Published var chosenApps: [RunningAppInfo] = []
     @Published var runningApps: [RunningAppInfo]? = nil
     @Published var allApps: [RunningAppInfo]? = nil
+    @Published var overlay: (width: CGFloat, height: CGFloat) = (200,200)
+    @Published var isShowing: Bool = false
     
     init(overlayState: OverlayState = .homeView, windowManager: WindowManager) {
         self.overlayState = overlayState

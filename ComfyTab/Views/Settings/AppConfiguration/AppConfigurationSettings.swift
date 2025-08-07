@@ -10,17 +10,16 @@ import SwiftUI
 public struct AppConfigurationSettings: View {
     public var body: some View {
         ScrollView {
-            VStack {
+            VStack(spacing: 0) {
                 installedAppsSettings
-                    .padding(.horizontal)
-                    .padding(.top, 8)
+                    .padding([.horizontal])
+                    .padding(.vertical, 8)
                 
                 Divider()
-                    .padding(.vertical, 4)
                 
                 blockedAppSettings
-                    .padding(.horizontal)
-                    .padding(.bottom, 8)
+                    .padding([.horizontal])
+                    .padding(.vertical, 8)
             }
             .background {
                 RoundedRectangle(cornerRadius: 12)
@@ -34,16 +33,18 @@ public struct AppConfigurationSettings: View {
     private var installedAppsSettings: some View {
         NavigationLink(destination: InstalledAppConfiguration()) {
             HStack {
-                Text("Installed Apps")
-                    .font(.system(size: 12, weight: .medium, design: .default))
+                Label("Installed Apps", systemImage: "folder.fill")
+                    .font(.system(size: 14, weight: .regular, design: .default))
                 
                 Spacer()
                 
                 Image(systemName: "chevron.right")
                     .resizable()
                     .foregroundColor(.secondary)
-                    .frame(width: 12, height: 12)
+                    .frame(width: 11, height: 12)
             }
+            .frame(maxWidth: .infinity, minHeight: 30)
+            .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
     }
@@ -51,16 +52,18 @@ public struct AppConfigurationSettings: View {
     private var blockedAppSettings: some View {
         Button(action: {}) {
             HStack {
-                Text("Blocked Apps")
-                    .font(.system(size: 12, weight: .medium, design: .default))
-                
+                Label("Blocked Apps", systemImage: "xmark.circle.fill")
+                    .font(.system(size: 14, weight: .regular, design: .default))
+
                 Spacer()
                 
                 Image(systemName: "chevron.right")
                     .resizable()
                     .foregroundColor(.secondary)
-                    .frame(width: 12, height: 12)
+                    .frame(width: 11, height: 12)
             }
+            .frame(maxWidth: .infinity, minHeight: 30)
+            .contentShape(Rectangle())
         }
         .buttonStyle(.plain)
     }

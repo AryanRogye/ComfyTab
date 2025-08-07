@@ -16,6 +16,7 @@ struct InstalledAppConfiguration: View {
                 ForEach(installedAppsManager.installedApps, id: \.self) { app in
                     showAppDetails(app)
                 }
+                .padding(.top, 8)
             }
             .padding(.horizontal, 8)
         }

@@ -12,20 +12,49 @@ struct OverlayContent: View {
     @EnvironmentObject var viewModel : OverlayViewModel
     
     var body: some View {
-        ZStack {	
+        VStack {
+            Spacer()
+            HStack {
+                Spacer()
+                overlay
+                    .scaleEffect(viewModel.isShowing ? 1.0 : 0.95)
+                    .opacity(viewModel.isShowing ? 1.0 : 0.0)
+                    .offset(y: viewModel.isShowing ? 0 : 10)
+                    .blur(radius: viewModel.isShowing ? 0 : 1.5)
+                    .shadow(radius: viewModel.isShowing ? 2 : 1)
+                    .animation(
+                        .interpolatingSpring(
+                            stiffness: 120,
+                            damping: 22
+                        ),
+                        value: viewModel.isShowing
+                    )
+                Spacer()
+            }
+            Spacer()
+        }
+    }
+    
+    private var overlay: some View {
+        ZStack(alignment: .top) {
+            
             VisualEffectView(material: .hudWindow, blendingMode: .behindWindow)
+            
             VStack(spacing: 0) {
-                topRow
-                    .padding(.horizontal, 8)
-                    .padding(.top, 12)
                 
-                switch viewModel.overlayState {
-                case .homeView: OverlayHome()
-                case .configureVibe: OverlayConfigureVibe()
-                case .goWithFlow: OverlayGoWithFlow()
-                }
+                topRow
+                    .padding([.horizontal, .top], 8)
+                    .frame(alignment: .top)
+                
+                
+//                switch viewModel.overlayState {
+//                case .homeView: OverlayHome().frame(width: 200, height: 200)
+//                case .configureVibe: OverlayConfigureVibe().frame(width: 200, height: 200)
+//                case .goWithFlow: OverlayGoWithFlow().frame(width: 200, height: 200)
+//                }
             }
         }
+        .frame(width: viewModel.overlay.width, height: viewModel.overlay.height)
     }
     
     // MARK: - Top Row
@@ -61,26 +90,8 @@ struct OverlayContent: View {
             )
             .resizable()
             .foregroundColor(.secondary)
-            .frame(width: 14, height: 18		)
+            .frame(width: 14, height: 17)
         }
         .buttonStyle(.plain)
     }
-}
-
-struct VisualEffectView: NSViewRepresentable {
-    var material: NSVisualEffectView.Material = .sidebar
-    var blendingMode: NSVisualEffectView.BlendingMode = .behindWindow
-    
-    func makeNSView(context: Context) -> NSVisualEffectView {
-        let view = NSVisualEffectView()
-        view.material = material
-        view.blendingMode = blendingMode
-        view.state = .active
-        view.wantsLayer = true
-        view.layer?.cornerRadius = 12
-        view.layer?.masksToBounds = true
-        return view
-    }
-    
-    func updateNSView(_ nsView: NSVisualEffectView, context: Context) {}
 }

@@ -11,16 +11,16 @@ struct OverlayHome: View {
     var body: some View {
         VStack(spacing: 1) {
             HStack(alignment: .top) {
-                
-                WelcomeView()
-                
-                Divider()
-                    .frame(maxHeight: .infinity)
-                
-                PastComfySessionView()
+                Text("Hello")
+//
+//                WelcomeView()
+//                
+//                Divider()
+//                    .frame(maxHeight: .infinity)
+//                
+//                PastComfySessionView()
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-    }    
+//        .frame(width: 100, height: 100)
+    }
 }
