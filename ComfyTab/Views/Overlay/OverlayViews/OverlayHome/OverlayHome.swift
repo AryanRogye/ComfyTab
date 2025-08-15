@@ -8,19 +8,26 @@
 import SwiftUI
 
 struct OverlayHome: View {
+    
+    @EnvironmentObject var viewModel : OverlayViewModel
+    
     var body: some View {
         VStack(spacing: 1) {
-            HStack(alignment: .top) {
-                Text("Hello")
-//
-//                WelcomeView()
-//                
-//                Divider()
-//                    .frame(maxHeight: .infinity)
-//                
-//                PastComfySessionView()
+            ScrollView {
+                ForEach(viewModel.runningApps) { app in
+                    HStack {
+                        if let icon = app.icon {
+                            Image(nsImage: icon)
+                        }
+                        Text(app.name)
+                    }
+                }
             }
         }
-//        .frame(width: 100, height: 100)
+        .onChange(of: viewModel.isShowing) { _, value in
+            if value {
+                viewModel.getRunningApps()
+            }
+        }
     }
 }

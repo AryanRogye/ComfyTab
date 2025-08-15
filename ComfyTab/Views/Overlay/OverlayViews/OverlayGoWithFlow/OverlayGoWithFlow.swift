@@ -50,7 +50,7 @@ struct OverlayGoWithFlow: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .onAppear {
-            viewModel.syncRunningApps()
+//            viewModel.syncRunningApps()
         }
     }
     
@@ -62,19 +62,19 @@ struct OverlayGoWithFlow: View {
     
     private var chosenFlow: some View {
         ScrollView(.vertical, showsIndicators: false) {
-            ForEach(viewModel.chosenApps, id: \.self) { app in
-                Button(action: {
-                    viewModel.switchTab(app)
-                }) {
-                    Text(app.name)
-                        .padding(8)
-                        .background(
-                            RoundedRectangle(cornerRadius: 12)
-                                .fill(.regularMaterial)
-                        )
-                }
-                .buttonStyle(.plain)
-            }
+//            ForEach(viewModel.chosenApps, id: \.self) { app in
+//                Button(action: {
+//                    viewModel.switchTab(app)
+//                }) {
+//                    Text(app.name)
+//                        .padding(8)
+//                        .background(
+//                            RoundedRectangle(cornerRadius: 12)
+//                                .fill(.regularMaterial)
+//                        )
+//                }
+//                .buttonStyle(.plain)
+//            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }

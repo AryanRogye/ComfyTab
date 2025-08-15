@@ -3,11 +3,17 @@
 <plist version="1.0">
     <dict>
         
+        <key>LSUIElement</key>
+        <true/>
+        
         <key>NSAccessibilityUsageDescription</key>
         <string>Need access to accessibility features to get information about open windows.</string>
         
-        <key>LSUIElement</key>
-        <true/>
+        <key>NSSystemCaptureUsageDescription</key>
+        <string>This app requires permission to capture the screen to show window thumbnails.</string>
+        
+        <key>NSAppleEventsUsageDescription</key>
+        <string>This app requires Apple Events permission to control other apps.</string>
         
     </dict>
 </plist>

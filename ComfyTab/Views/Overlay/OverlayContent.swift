@@ -47,11 +47,11 @@ struct OverlayContent: View {
                     .frame(alignment: .top)
                 
                 
-//                switch viewModel.overlayState {
-//                case .homeView: OverlayHome().frame(width: 200, height: 200)
-//                case .configureVibe: OverlayConfigureVibe().frame(width: 200, height: 200)
-//                case .goWithFlow: OverlayGoWithFlow().frame(width: 200, height: 200)
-//                }
+                switch viewModel.overlayState {
+                case .homeView: OverlayHome()
+                case .configureVibe: OverlayConfigureVibe()
+                case .goWithFlow: OverlayGoWithFlow()
+                }
             }
         }
         .frame(width: viewModel.overlay.width, height: viewModel.overlay.height)

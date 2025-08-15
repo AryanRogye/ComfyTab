@@ -12,23 +12,24 @@ final class AppCoordinator {
     let permissionManager   : PermissionManager
     let hotkeyManager       : HotkeyManager
     let overlay             : Overlay
-    let windowManager       : WindowManager
+    
+    let runningAppManager   : RunningAppManager
     let installedAppManager : InstalledAppManager
     
     var cancellables = Set<AnyCancellable>()
     var didStart = false
-
+    
     init() {
+        self.runningAppManager   = RunningAppManager()
         self.permissionManager   = PermissionManager()
-        self.windowManager       = WindowManager()
-        self.overlay             = Overlay(windowManager: windowManager)
+        self.overlay             = Overlay(runningAppManager: runningAppManager)
         self.installedAppManager = InstalledAppManager()
         
         /// init HotkeyManager
         self.hotkeyManager     = HotkeyManager(
-                permissionManager: permissionManager,
-                overlay          : overlay,
-                overlayViewModel : overlay.overlayViewModel
+            permissionManager: permissionManager,
+            overlay          : overlay,
+            overlayViewModel : overlay.overlayViewModel
         )
     }
     
@@ -48,7 +49,7 @@ final class AppCoordinator {
             }
             .store(in: &cancellables)
     }
-
+    
     func start() {
         guard !didStart else { return }
         didStart = true

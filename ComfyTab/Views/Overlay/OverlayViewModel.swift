@@ -19,26 +19,15 @@ class OverlayViewModel: ObservableObject {
     
     var lastState: OverlayState? = nil
     @Published var overlayState : OverlayState = .homeView
-    
-    var windowManager: WindowManager
-    
-    @Published var chosenApps: [RunningAppInfo] = []
-    @Published var runningApps: [RunningAppInfo]? = nil
-    @Published var allApps: [RunningAppInfo]? = nil
-    @Published var overlay: (width: CGFloat, height: CGFloat) = (200,200)
     @Published var isShowing: Bool = false
+    @Published var overlay: (width: CGFloat, height: CGFloat) = (700, 500)
     
-    init(overlayState: OverlayState = .homeView, windowManager: WindowManager) {
+    var runningAppManager: RunningAppManager
+    @Published var runningApps: [RunningApp] = []
+    
+    init(overlayState: OverlayState = .homeView, runningAppManager: RunningAppManager) {
         self.overlayState = overlayState
-        self.windowManager = windowManager
-        
-        /// Get Open Running Apps
-        runningApps = getOpenApps()
-        
-        /// Assign Chosen Apps
-        chosenApps = runningApps ?? []
-        
-        /// No Need to get non_running_apps
+        self.runningAppManager = runningAppManager
     }
     
     // MARK: - Pin Toggle
@@ -62,17 +51,10 @@ class OverlayViewModel: ObservableObject {
         self.lastState = nil
     }
     
-    // MARK: - Window Management
-    public func syncRunningApps() {
-        self.runningApps = getOpenApps()
-    }
-    private func getOpenApps() -> [RunningAppInfo] {
-        return windowManager.getRunningAppsWithWindows()
-    }
-    
-    public func switchTab(_ tab: RunningAppInfo) {
-        if let app = NSRunningApplication(processIdentifier: tab.pid) {
-            app.activate(options: [.activateAllWindows])
+    public func getRunningApps() {
+        runningAppManager.getRunningApps()
+        DispatchQueue.main.async {
+            self.runningApps = self.runningAppManager.runningApps
         }
     }
 }
