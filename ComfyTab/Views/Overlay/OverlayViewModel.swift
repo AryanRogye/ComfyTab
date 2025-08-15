@@ -20,7 +20,8 @@ class OverlayViewModel: ObservableObject {
     var lastState: OverlayState? = nil
     @Published var overlayState : OverlayState = .homeView
     @Published var isShowing: Bool = false
-    @Published var overlay: (width: CGFloat, height: CGFloat) = (700, 500)
+    
+    @Published var comfyTabSize: (radius: CGFloat, thickness: CGFloat) = (130, 80)
     
     var runningAppManager: RunningAppManager
     @Published var runningApps: [RunningApp] = []

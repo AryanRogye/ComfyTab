@@ -17,11 +17,16 @@ struct OverlayContent: View {
             HStack {
                 Spacer()
                 overlay
+                    /// Mix of Scale and offset gives it that nice come up feeling
                     .scaleEffect(viewModel.isShowing ? 1.0 : 0.95)
-                    .opacity(viewModel.isShowing ? 1.0 : 0.0)
+                    /// Gives Appearence of coming from the bottom
                     .offset(y: viewModel.isShowing ? 0 : 10)
+                    /// hide to unhide
+                    .opacity(viewModel.isShowing ? 1.0 : 0.0)
+                    /// transition to a nonblur when showing
                     .blur(radius: viewModel.isShowing ? 0 : 1.5)
                     .shadow(radius: viewModel.isShowing ? 2 : 1)
+                    /// Animation Logic
                     .animation(
                         .interpolatingSpring(
                             stiffness: 120,
@@ -36,25 +41,19 @@ struct OverlayContent: View {
     }
     
     private var overlay: some View {
-        ZStack(alignment: .top) {
-            
-            VisualEffectView(material: .hudWindow, blendingMode: .behindWindow)
-            
-            VStack(spacing: 0) {
                 
-                topRow
-                    .padding([.horizontal, .top], 8)
-                    .frame(alignment: .top)
+//                topRow
+//                    .padding([.horizontal, .top], 8)
+//                    .frame(alignment: .top)
+//                
+//                
+//                switch viewModel.overlayState {
+//                case .homeView: OverlayHome()
+//                case .configureVibe: OverlayConfigureVibe()
+//                case .goWithFlow: OverlayGoWithFlow()
+//                }
                 
-                
-                switch viewModel.overlayState {
-                case .homeView: OverlayHome()
-                case .configureVibe: OverlayConfigureVibe()
-                case .goWithFlow: OverlayGoWithFlow()
-                }
-            }
-        }
-        .frame(width: viewModel.overlay.width, height: viewModel.overlay.height)
+        ComfyTab()
     }
     
     // MARK: - Top Row
