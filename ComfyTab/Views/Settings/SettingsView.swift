@@ -53,6 +53,34 @@ struct SettingsView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .environmentObject(viewModel)
+        .onAppear {
+            onAppear()
+        }
+        .onDisappear {
+            onClose()
+        }
+    }
+    
+    private func onClose() {
+        settingsManager.isSettingsWindowOpen = false
+        NSApp.activate(ignoringOtherApps: false)
+    }
+    private func onAppear() {
+        /// Mark as True
+        settingsManager.isSettingsWindowOpen = true
+        
+        /// Make Sure That the Window is Above runs after 0.2 seconds
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            NSApp.activate(ignoringOtherApps: true)
+            
+            // Find window by title or identifier
+            if let window = NSApp.windows.first(where: {
+                $0.title.contains("Settings") || $0.identifier?.rawValue == "SettingsView"
+            }) {
+                window.makeKeyAndOrderFront(nil)
+                window.orderFrontRegardless()
+            }
+        }
     }
 }
 

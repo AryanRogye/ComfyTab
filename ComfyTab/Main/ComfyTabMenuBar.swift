@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ComfyTabMenuBar: Scene {
     
+    @EnvironmentObject private var settingsManager: SettingsManager
     @Environment(\.openWindow) private var openWindow
     
     var body: some Scene {
@@ -16,6 +17,7 @@ struct ComfyTabMenuBar: Scene {
             Button("Open Settings") {
                 openWindow(id: "SettingsView")
                 NSApp.activate(ignoringOtherApps: true)
+                settingsManager.isSettingsWindowOpen = true
             }
             Divider()
             Button("Quit") {

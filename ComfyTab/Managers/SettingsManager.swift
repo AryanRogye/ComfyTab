@@ -31,6 +31,9 @@ class SettingsManager : ObservableObject {
         }
     }
     
+    @Published var isSettingsWindowOpen: Bool = false
+    var cancellables: Set<AnyCancellable> = []
+    
     
     /// Load in Defaults
     init(defaults: UserDefaults = .standard) {
@@ -38,6 +41,19 @@ class SettingsManager : ObservableObject {
         self.modifierKey = .option
         
         loadDefaults()
+        
+        $isSettingsWindowOpen
+            .sink { isOpen in
+                if isOpen {
+                    NSApp.setActivationPolicy(.regular)
+                    NSApp.activate(ignoringOtherApps: true)
+                } else {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        NSApp.setActivationPolicy(.accessory)
+                    }
+                }
+            }
+            .store(in: &cancellables)
     }
 }
 
