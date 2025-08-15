@@ -7,8 +7,9 @@
 
 import Combine
 
-
-final class AppCoordinator {
+/// we make it observable so we can pass it around as a enviorment object
+final class AppCoordinator : ObservableObject {
+    let settingsManager     : SettingsManager
     let permissionManager   : PermissionManager
     let hotkeyManager       : HotkeyManager
     let overlay             : Overlay
@@ -20,6 +21,7 @@ final class AppCoordinator {
     var didStart = false
     
     init() {
+        self.settingsManager     = SettingsManager()
         self.runningAppManager   = RunningAppManager()
         self.permissionManager   = PermissionManager()
         self.overlay             = Overlay(runningAppManager: runningAppManager)

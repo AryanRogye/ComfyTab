@@ -7,9 +7,10 @@
 
 import SwiftUI
 
+// TODO: Move to a view model
 public struct PermissionsView: View {
     
-    @EnvironmentObject var permissionsManager: PermissionManager
+    @EnvironmentObject var appCoordinator: AppCoordinator
     
     public var body: some View {
         VStack {
@@ -30,10 +31,10 @@ public struct PermissionsView: View {
             Spacer()
             
             Button(action: {
-                permissionsManager.requestAcessibilityPermission()
+                appCoordinator.permissionManager.requestAcessibilityPermission()
             }) {
                 Group {
-                    if permissionsManager.isAccessibilityEnabled {
+                    if appCoordinator.permissionManager.isAccessibilityEnabled {
                         Text("Enabled")
                             .foregroundColor(.green)
                     } else {
@@ -45,13 +46,13 @@ public struct PermissionsView: View {
                 .padding(.vertical, 4)
                 .background {
                     RoundedRectangle(cornerRadius: 8)
-                        .fill(permissionsManager.isAccessibilityEnabled
+                        .fill(appCoordinator.permissionManager.isAccessibilityEnabled
                               ? Color.green.opacity(0.2)
                               : Color.red.opacity(0.2)
                         )
                 }
             }
-            .disabled(permissionsManager.isAccessibilityEnabled)
+            .disabled(appCoordinator.permissionManager.isAccessibilityEnabled)
             .buttonStyle(.plain)
         }
     }

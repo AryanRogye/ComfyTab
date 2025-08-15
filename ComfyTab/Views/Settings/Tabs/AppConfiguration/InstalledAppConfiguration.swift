@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct InstalledAppConfiguration: View {
-    @EnvironmentObject var installedAppsManager: InstalledAppManager
+    @EnvironmentObject var appCoordinator: AppCoordinator
     
     var body: some View {
         VStack {
             ScrollView {
-                ForEach(installedAppsManager.installedApps, id: \.self) { app in
+                ForEach(appCoordinator.installedAppManager.installedApps, id: \.self) { app in
                     showAppDetails(app)
                 }
                 .padding(.top, 8)

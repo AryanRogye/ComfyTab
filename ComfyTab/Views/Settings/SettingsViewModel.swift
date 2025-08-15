@@ -10,6 +10,6 @@ import Combine
 @MainActor
 class SettingsViewModel: ObservableObject {
     
-    @Published var selectedTab: SettingTab = .installedApp
+    @Published var selectedTab: SettingTab = .general
     
 }

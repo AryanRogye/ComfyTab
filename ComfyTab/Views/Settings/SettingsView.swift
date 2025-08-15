@@ -8,38 +8,89 @@
 import SwiftUI
 
 enum SettingTab: String, CaseIterable, Hashable {
-    case installedApp = "App Configurations"
-    case permissions = "Permissions"
+    case general        = "General"
+    // TODO: Add App Configuration Settings inside Behavior
+    case behavior       = "Behavior"
+    case permissions    = "Permissions"
+    case about          = "About"
     
     @ViewBuilder
     var view: some View {
         switch self {
-        case .installedApp:
-            AppConfigurationSettings()
-        case .permissions:
-            PermissionsView()
+        case .general:      GeneralSettings()
+            // TODO: Add App Configuration Settings inside Behavior
+            //            AppConfigurationSettings()
+        case .behavior:     BehaviorSettings()
+        case .permissions:  PermissionsView()
+        case .about:        AboutView()
+        }
+    }
+    
+    /// Gives SystemName
+    var icon: String {
+        switch self {
+        case .general:      return "gearshape"
+        case .behavior:     return "slider.horizontal.3"
+        case .permissions:  return "lock.shield"
+        case .about:        return "info.circle"
         }
     }
 }
 
 struct SettingsView: View {
     
-    @ObservedObject var permissionManager: PermissionManager
-    @ObservedObject var installedAppManager: InstalledAppManager
+    @EnvironmentObject var appCoordinator: AppCoordinator
     
     @StateObject var viewModel = SettingsViewModel()
 
     var body: some View {
-        ComfySplitView {
-            /// Impliment Your Own
+        NavigationSplitView {
             Sidebar()
-        } content: {
-            /// Impliment Your Own
+        } detail: {
             SettingsContent()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .environmentObject(viewModel)
-        .environmentObject(permissionManager)
-        .environmentObject(installedAppManager)
+    }
+}
+
+struct Sidebar: View {
+    
+    @EnvironmentObject var viewModel: SettingsViewModel
+    @State private var selectedTab : SettingTab = .general
+    
+    var body: some View {
+        List(selection: $selectedTab) {
+            Section {
+                ForEach(SettingTab.allCases, id: \.self) { tab in
+                    Text(tab.rawValue)
+                }
+            } header: {
+                Text("ComfyTab")
+                    .font(.system(size: 36, weight: .medium))
+                    .foregroundStyle(.primary)
+                    .padding(.vertical, 5)
+            }
+            .collapsible(false)
+        }
+        .scrollDisabled(true)
+        .navigationSplitViewColumnWidth(200)
+        /// Helps With Not Publishing View Updates
+        .onAppear {
+            selectedTab = viewModel.selectedTab
+        }
+        .onChange(of: selectedTab) { _, newValue in
+            viewModel.selectedTab = newValue
+        }
+    }
+}
+
+struct SettingsContent: View {
+    
+    @EnvironmentObject var viewModel: SettingsViewModel
+    
+    var body: some View {
+        viewModel.selectedTab.view
+            .frame(maxWidth: .infinity,maxHeight: .infinity)
     }
 }

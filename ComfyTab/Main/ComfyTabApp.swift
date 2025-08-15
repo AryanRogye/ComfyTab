@@ -1,0 +1,49 @@
+//
+//  ComfyTabApp.swift
+//  ComfyTab
+//
+//  Created by Aryan Rogye on 7/27/25.
+//
+
+import SwiftUI
+
+@main
+struct ComfyTabApp: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    
+    @Environment(\.openWindow) var openWindow
+    
+    init() {
+    }
+    
+    var body: some Scene {
+        SettingsWindowScene(appDelegate: appDelegate)
+        ComfyTabMenuBar()
+    }
+}
+
+struct SettingsWindowScene: Scene {
+    
+    var appDelegate: AppDelegate
+    
+    var body: some Scene {
+        if #available(macOS 15.0, *) {
+            return Window("SettingsView", id: "SettingsView") {
+                SettingsView()
+                    .environmentObject(appDelegate.appCoordinator)
+            }
+            .commandsRemoved()
+            .windowResizability(.contentSize)
+            .defaultSize(width: 900, height: 625)
+            .defaultLaunchBehavior(.suppressed)
+        } else {
+            return Window("SettingsView", id: "SettingsView") {
+                SettingsView()
+                    .environmentObject(appDelegate.appCoordinator)
+            }
+            .commandsRemoved()
+            .windowResizability(.contentSize)
+            .defaultSize(width: 900, height: 625)
+        }
+    }
+}

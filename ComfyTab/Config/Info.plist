@@ -7,13 +7,10 @@
         <true/>
         
         <key>NSAccessibilityUsageDescription</key>
-        <string>Need access to accessibility features to get information about open windows.</string>
-        
-        <key>NSSystemCaptureUsageDescription</key>
-        <string>This app requires permission to capture the screen to show window thumbnails.</string>
+        <string>This app needs Accessibility permission to detect your keyboard shortcut and retrieve information about open applications for the app switcher overlay.</string>
         
         <key>NSAppleEventsUsageDescription</key>
-        <string>This app requires Apple Events permission to control other apps.</string>
+        <string>This app requires Apple Events permission to bring other applications to the front when switching.</string>
         
     </dict>
 </plist>
