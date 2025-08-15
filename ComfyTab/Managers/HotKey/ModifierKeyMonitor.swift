@@ -11,13 +11,16 @@ class ModifierComboMonitor {
     private var eventTap: CFMachPort?
     private var runLoopSource: CFRunLoopSource?
     
-    var onOptionTabPressed: (() -> Void)?
     var onTabPressed: (() -> Void)?
-    var onOptionReleased: (() -> Void)?
     
-    private var optionPressed = false
+    var onModifierPressed: (() -> Void)?
+    var onModifierReleased: (() -> Void)?
     
-    init() {
+    private var modifierPressed = false
+    var modifierKey: ModifierKey
+    
+    init(modifierKey: ModifierKey) {
+        self.modifierKey = modifierKey
         start()
     }
     
@@ -63,33 +66,40 @@ class ModifierComboMonitor {
     
     
     /// Function to handle the events
-    private func handle(event: CGEvent, type: CGEventType) -> Unmanaged<CGEvent>? {
+    private func handle(
+        event: CGEvent,
+        type: CGEventType
+    ) -> Unmanaged<CGEvent>? {
+        
         let flags = event.flags
         let keyCode = event.getIntegerValueField(.keyboardEventKeycode)
         
         switch type {
         case .flagsChanged:
             
-            /// This is if option is pressed in the moment
-            let optionNowDown = flags.contains(.maskAlternate)
+            /// If The Modifier Key Is Pressed
+            let modifierKeyDown: Bool = isModifierPressed(
+                flags: flags,
+                modifierKey
+            )
             
             /// if changed locally vs globally
-            if optionPressed && !optionNowDown {
-                optionPressed = false   /// Assignment
+            if modifierPressed && !modifierKeyDown {
+                modifierPressed = false   /// Assignment
                 /// do the release action
                 DispatchQueue.main.async {
-                    self.onOptionReleased?()
+                    self.onModifierReleased?()
                 }
             }
             /// set flag to true
-            else if optionNowDown {
-                optionPressed = true
+            else if modifierKeyDown {
+                modifierPressed = true
             }
         case .keyDown:
             /// This is if option and the Carbon Code 48 (Tab) is being held
-            if optionPressed && keyCode == 48 {
+            if modifierPressed && keyCode == 48 {
                 DispatchQueue.main.async {
-                    self.onOptionTabPressed?()
+                    self.onModifierPressed?()
                 }
             }
         default:
@@ -99,8 +109,29 @@ class ModifierComboMonitor {
         return Unmanaged.passUnretained(event)
     }
     
-    /// Function used to check if option is held globally, used by pin logic
-    func isOptionHeldGlobally() -> Bool {
-        return CGEventSource.flagsState(.combinedSessionState).contains(.maskAlternate)
+    private func isModifierPressed(
+        flags: CGEventFlags,
+        _ modifier: ModifierKey
+    ) -> Bool {
+        switch self.modifierKey {
+        case .option:
+            return flags.contains(.maskAlternate) // MaskAlternate means Option
+        case .control:
+            return flags.contains(.maskControl) // MaskControl means Control
+        case .shift:
+            return flags.contains(.maskShift) // MaskShift means Shift
+        }
+    }
+    
+    /// Function used to check if the modifier is held globally, used by pin logic
+    public func isModifierPressedGlobally() -> Bool {
+        switch self.modifierKey {
+        case .option:
+            return CGEventSource.flagsState(.combinedSessionState).contains(.maskAlternate)
+        case .control:
+            return CGEventSource.flagsState(.combinedSessionState).contains(.maskControl)
+        case .shift:
+            return CGEventSource.flagsState(.combinedSessionState).contains(.maskShift)
+        }
     }
 }

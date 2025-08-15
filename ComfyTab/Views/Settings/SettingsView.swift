@@ -39,7 +39,9 @@ enum SettingTab: String, CaseIterable, Hashable {
 
 struct SettingsView: View {
     
-    @EnvironmentObject var appCoordinator: AppCoordinator
+    @EnvironmentObject var installedAppManager: InstalledAppManager
+    @EnvironmentObject var permissionManager: PermissionManager
+    @EnvironmentObject var settingsManager: SettingsManager
     
     @StateObject var viewModel = SettingsViewModel()
 

@@ -24,13 +24,15 @@ class SettingsManager : ObservableObject {
     /// and its nicer to test with
     private var defaults: UserDefaults
     
-    @Published var modifierKey: NSEvent.ModifierFlags {
+    /// Modifier Key For the Shortcut
+    @Published var modifierKey: ModifierKey {
         didSet {
             defaults.set(modifierKey.rawValue, forKey: Keys.modifierKey)
         }
     }
     
     
+    /// Load in Defaults
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
         self.modifierKey = .option
@@ -47,7 +49,10 @@ extension SettingsManager {
     }
     
     private func loadModifierKey() {
-        let raw = defaults.object(forKey: Keys.modifierKey) as? UInt ?? NSEvent.ModifierFlags.option.rawValue
-        self.modifierKey = NSEvent.ModifierFlags(rawValue: raw)
+        if let raw = defaults.object(forKey: Keys.modifierKey) as? UInt {
+            self.modifierKey = ModifierKey(rawValue: raw) ?? .option
+        } else {
+            self.modifierKey = .option
+        }
     }
 }

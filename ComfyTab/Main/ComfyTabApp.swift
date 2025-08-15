@@ -30,7 +30,9 @@ struct SettingsWindowScene: Scene {
         if #available(macOS 15.0, *) {
             return Window("SettingsView", id: "SettingsView") {
                 SettingsView()
-                    .environmentObject(appDelegate.appCoordinator)
+                    .environmentObject(appDelegate.appCoordinator.installedAppManager)
+                    .environmentObject(appDelegate.appCoordinator.permissionManager)
+                    .environmentObject(appDelegate.appCoordinator.settingsManager)
             }
             .commandsRemoved()
             .windowResizability(.contentSize)
@@ -39,7 +41,9 @@ struct SettingsWindowScene: Scene {
         } else {
             return Window("SettingsView", id: "SettingsView") {
                 SettingsView()
-                    .environmentObject(appDelegate.appCoordinator)
+                    .environmentObject(appDelegate.appCoordinator.installedAppManager)
+                    .environmentObject(appDelegate.appCoordinator.permissionManager)
+                    .environmentObject(appDelegate.appCoordinator.settingsManager)
             }
             .commandsRemoved()
             .windowResizability(.contentSize)
