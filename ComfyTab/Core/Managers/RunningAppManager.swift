@@ -20,4 +20,8 @@ class RunningAppManager: ObservableObject {
             print("There Was A Error Fetching Running Apps: \(error)")
         }
     }
+    
+    public func goToApp(_ runningApp: RunningApp) {
+        runningApp.focusApp()
+    }
 }

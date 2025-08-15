@@ -58,4 +58,8 @@ class OverlayViewModel: ObservableObject {
             self.runningApps = self.runningAppManager.runningApps
         }
     }
+    
+    public func focusApp(index: Int)  {
+        self.runningAppManager.goToApp(runningApps[index])
+    }
 }

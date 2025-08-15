@@ -14,23 +14,60 @@ struct RunningApp: Identifiable {
     var icon    : NSImage?
     var hidden  : Bool
     var isTerminated: Bool
+    var bundleID: String?
+    var pid     : pid_t
     
     init(
         id: UUID = UUID(),
         name: String,
         hidden: Bool,
         isTerminated: Bool,
-        icon: NSImage? = nil
+        icon: NSImage? = nil,
+        bundleID: String?,
+        pid: pid_t
     ) {
         self.id = id
         self.name = name
         self.hidden = hidden
         self.isTerminated = isTerminated
         self.icon = icon
+        self.bundleID = bundleID
+        self.pid = pid
+    }
+    
+    public func focusApp() {
+        if let runningApp = NSRunningApplication(processIdentifier: self.pid) {
+            runningApp.activate(options: [.activateAllWindows])
+            launchApp()
+        }
+    }
+    
+    private func launchApp() {
+        print("Launching App \(name)")
+        guard let bundleID = bundleID, bundleID != "" else { return }
+        guard let url = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bundleID) else {
+            print("❌ No app found for bundle ID: \(bundleID)")
+            return
+        }
+        
+        let config = NSWorkspace.OpenConfiguration()
+        config.activates = true // bring to front after launch
+        
+        NSWorkspace.shared.openApplication(at: url,
+                                           configuration: config) { app, error in
+            if let error = error {
+                print("❌ Launch failed: \(error.localizedDescription)")
+            } else {
+                print("✅ Launched \(bundleID)")
+            }
+        }
     }
 }
 
 class RunningAppFetcher {
+    
+    // MARK: - Public API's
+    /// Get all running applications
     public static func fetchRunningApps() throws -> [RunningApp] {
         
         var runningApps: [RunningApp] = []
@@ -44,6 +81,8 @@ class RunningAppFetcher {
             let hidden = app.isHidden
             let isTerminated = app.isTerminated
             let icon = app.icon
+            let pid = app.processIdentifier
+            let bundleID = app.bundleIdentifier
 
             /// if it is minimized we can keep going, later on we can keep a flag
             if isMinimized(axElement, appName: name) { continue }
@@ -54,7 +93,9 @@ class RunningAppFetcher {
                     name: name,
                     hidden: hidden,
                     isTerminated: isTerminated,
-                    icon: icon
+                    icon: icon,
+                    bundleID: bundleID,
+                    pid: pid
                 )
             )
         }
@@ -62,6 +103,7 @@ class RunningAppFetcher {
         return runningApps
     }
     
+    // MARK: - Private API's
     private static func isMinimized(
         _ axElement: AXUIElement,
         appName: String

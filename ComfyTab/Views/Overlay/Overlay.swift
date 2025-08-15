@@ -101,6 +101,8 @@ class Overlay: ObservableObject {
         overlay.backgroundColor = .clear
         overlay.isOpaque = false
         overlay.hasShadow = false
+        overlay.ignoresMouseEvents = false
+        overlay.acceptsMouseMovedEvents = true
         
         
         let contentView = OverlayContent()

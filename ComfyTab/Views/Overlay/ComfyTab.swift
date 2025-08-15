@@ -12,11 +12,21 @@ import SwiftUI
 struct ComfyTab: View {
     
     @EnvironmentObject var viewModel: OverlayViewModel
+    /// What index we're hovering on
+    @State private var hoveringIndex: Int? = nil
+    
+    private let iconSize: CGFloat           = 48
+    private let distanceFromCenter: CGFloat = 130
+    private let hoverPopOut: CGFloat        = 12
+    private let angleOffset: CGFloat        = -.pi/2
     
     var body: some View {
         ZStack(alignment: .center) {
+            /// Background
             VisualEffectView(material: .hudWindow, blendingMode: .behindWindow)
+                .allowsHitTesting(false)
                 .mask {
+                    /// Shape
                     Circle()
                         .stroke(
                             Color.primary.opacity(0.4),
@@ -26,6 +36,7 @@ struct ComfyTab: View {
                             width: viewModel.comfyTabSize.radius * 2,
                             height: viewModel.comfyTabSize.radius * 2)
                 }
+            /// Actual Apps
             appsView
         }
         .onChange(of: viewModel.isShowing) { _, value in
@@ -35,11 +46,24 @@ struct ComfyTab: View {
         }
     }
     
+    /// Looping through the Running Apps
     private var appsView: some View {
         ZStack {
+            
             ForEach(Array(viewModel.runningApps.enumerated()), id: \.offset) { index, app in
-                appView(icon: app.icon)
-                    .position(positionFor(index: index))
+                
+                /// Easy for us to know if the index we're in is getting hovered on or not
+                let hovered = (hoveringIndex == index)
+                
+                /// Show Each App
+                appView(icon: app.icon, index: index)
+                    .frame(width: iconSize, height: iconSize)
+                    .contentShape(Circle())
+                    .zIndex(hovered ? 1 : 0)
+                    .position(positionFor(
+                        index: index,
+                        hovered: hovered
+                    ))
             }
         }
         .frame(
@@ -48,34 +72,46 @@ struct ComfyTab: View {
         )
     }
     
-    private func appView(icon: NSImage?) -> some View {
-        VStack {
-            if let icon = icon {
-                Image(nsImage: icon)
-                    .resizable()
-                    .frame(width: 48, height: 48)
-                    .clipShape(Circle())
-                    .shadow(radius: 4)
-            } else {
-                Circle()
-                    .fill(Color.gray)
-                    .frame(width: 48, height: 48)
-            }	
+    /// Singular App View
+    private func appView(icon: NSImage?, index: Int) -> some View {
+        Button(action: {
+            viewModel.focusApp(index: index)
+        }) {
+            Group {
+                if let icon = icon {
+                    Image(nsImage: icon)
+                        .resizable()
+                        .clipShape(Circle())
+                } else {
+                    Circle().fill(.gray)
+                }
+            }
+        }
+        .buttonStyle(.plain)
+        .shadow(radius: 4)
+        .onHover { hovering in
+            withAnimation(.spring(response: 0.2, dampingFraction: 0.8)) {
+                hoveringIndex = hovering ? index : nil
+            }
         }
     }
     
-    func positionFor(index: Int) -> CGPoint {
-        let r = viewModel.comfyTabSize.radius
-        let a = CGFloat(index) / CGFloat(viewModel.runningApps.count) * 2 * .pi
-        let x = cos(a) * r
-        let y = sin(a) * r
+    private func positionFor(index: Int, hovered: Bool) -> CGPoint {
+        let count = max(viewModel.runningApps.count, 1)
+        let a = (CGFloat(index) / CGFloat(count)) * 2 * .pi + angleOffset
         
-//        let screen = OverlayHelper.getScreenUnderMouse()
-        /// inside the screen we figure out the x and y relative to the radius and angle
-        	
+        let centerR = viewModel.comfyTabSize.radius
+        let minR = iconSize / 2 + 8
+        
+        // Base distance exactly as set, clamped only to min
+        let baseR = max(distanceFromCenter, minR)
+        
+        // Force outward pop
+        let r = hovered ? baseR + hoverPopOut : baseR
+        
         return CGPoint(
-            x: r + x, // center X + offset
-            y: r + y  // center Y + offset
+            x: centerR + cos(a) * r,
+            y: centerR + sin(a) * r
         )
     }
 }
@@ -84,9 +120,9 @@ struct ComfyTab: View {
     
     let overlayViewModel = OverlayViewModel(runningAppManager: RunningAppManager())
     
-    VStack {
-        ComfyTab()
-            .environmentObject(overlayViewModel)
-    }
-    .frame(width: 400, height: 400)
+    ComfyTab()
+        .environmentObject(overlayViewModel)
+        .task {
+            overlayViewModel.getRunningApps()
+        }
 }
