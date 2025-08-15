@@ -10,31 +10,36 @@ import SwiftUI
 enum SettingTab: String, CaseIterable, Hashable {
     case installedApp = "App Configurations"
     case permissions = "Permissions"
-}
-
-public struct SettingsView: View {
     
-    @StateObject private var viewModel = SettingsViewModel()
-    @State private var selection: SettingTab = .installedApp
-    
-    public var body: some View {
-        NavigationSplitView {
-            List(selection: $selection) {
-                ForEach(SettingTab.allCases, id: \.self) { tab in
-                    Text(tab.rawValue)
-                }
-            }
-            .onChange(of: selection) { _, newValue in
-                viewModel.selectedTab = newValue
-            }
-        } detail: {
-            NavigationStack {
-                switch viewModel.selectedTab {
-                case .installedApp: AppConfigurationSettings()
-                case .permissions: PermissionsView()
-                }
-            }
+    @ViewBuilder
+    var view: some View {
+        switch self {
+        case .installedApp:
+            AppConfigurationSettings()
+        case .permissions:
+            PermissionsView()
         }
     }
 }
 
+struct SettingsView: View {
+    
+    @ObservedObject var permissionManager: PermissionManager
+    @ObservedObject var installedAppManager: InstalledAppManager
+    
+    @StateObject var viewModel = SettingsViewModel()
+
+    var body: some View {
+        ComfySplitView {
+            /// Impliment Your Own
+            Sidebar()
+        } content: {
+            /// Impliment Your Own
+            SettingsContent()
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .environmentObject(viewModel)
+        .environmentObject(permissionManager)
+        .environmentObject(installedAppManager)
+    }
+}

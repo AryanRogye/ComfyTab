@@ -11,6 +11,7 @@ import Combine
 class AppDelegate: NSObject, NSApplicationDelegate {
     
     let appCoordinator = AppCoordinator()
+    var settingsWindow: AppWindow?
     
     public func applicationDidFinishLaunching(_ notification: Notification) {
         appCoordinator.prepare()

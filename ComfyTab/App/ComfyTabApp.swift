@@ -18,18 +18,20 @@ struct ComfyTabApp: App {
     var body: some Scene {
         MenuBarExtra("MyApp", systemImage: "star") {
             Button("Open Settings") {
-                openWindow(id: "SettingsView")
+                if appDelegate.settingsWindow == nil {
+                    appDelegate.settingsWindow = AppWindow(
+                        permissionManager: appDelegate.appCoordinator.permissionManager,
+                        installedAppManager: appDelegate.appCoordinator.installedAppManager
+                    )
+                }
+                appDelegate.settingsWindow?.makeKeyAndOrderFront(nil)
+                appDelegate.settingsWindow?.center()
+                NSApp.activate(ignoringOtherApps: true)
             }
             Divider()
             Button("Quit") {
                 NSApp.terminate(nil)
             }
-        }
-        
-        Window("SettingsView", id: "SettingsView") {
-            SettingsView()
-                .environmentObject(appDelegate.appCoordinator.permissionManager)
-                .environmentObject(appDelegate.appCoordinator.installedAppManager)
         }
     }
 }
