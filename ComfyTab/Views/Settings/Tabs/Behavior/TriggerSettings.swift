@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TriggerSettings: View {
+struct ModifierKeyPicker: View {
     
     @EnvironmentObject var settingsManager: SettingsManager
     

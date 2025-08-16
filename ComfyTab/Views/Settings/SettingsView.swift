@@ -93,7 +93,16 @@ struct Sidebar: View {
         List(selection: $selectedTab) {
             Section {
                 ForEach(SettingTab.allCases, id: \.self) { tab in
-                    Text(tab.rawValue)
+                    
+                    Label {
+                        Text(tab.rawValue)
+                            .padding(.leading, 8)
+                    } icon: {
+                        Image(systemName: tab.icon)
+                            .iconWithRectangle(
+                            )
+                    }
+                    
                 }
             } header: {
                 Text("ComfyTab")

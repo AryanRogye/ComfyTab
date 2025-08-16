@@ -14,14 +14,16 @@ struct ComfyTabMenuBar: Scene {
     
     var body: some Scene {
         MenuBarExtra("MyApp", systemImage: "star") {
-            Button("Open Settings") {
-                openWindow(id: "SettingsView")
-                NSApp.activate(ignoringOtherApps: true)
-                settingsManager.isSettingsWindowOpen = true
-            }
-            Divider()
-            Button("Quit") {
-                NSApp.terminate(nil)
+            VStack {
+                Button("Open Settings") {
+                    openWindow(id: "SettingsView")
+                    NSApp.activate(ignoringOtherApps: true)
+                    settingsManager.isSettingsWindowOpen = true
+                }
+                Divider()
+                Button("Quit") {
+                    NSApp.terminate(nil)
+                }
             }
         }
     }

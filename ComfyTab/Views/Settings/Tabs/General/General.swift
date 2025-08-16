@@ -10,27 +10,19 @@ import SwiftUI
 struct GeneralSettings: View {
     var body: some View {
         SettingsContainerView {
-            appearanceSettings
-            triggerSettings
-            startUpSettings
-        }
-    }
-    
-    private var appearanceSettings: some View {
-        SettingsSection {
-            
-        }
-    }
-    
-    private var triggerSettings: some View {
-        SettingsSection("Trigger") {
-            TriggerSettings()
-                .padding()
-        }
-    }
-    
-    private var startUpSettings: some View {
-        SettingsSection {
+            /// General View is pretty small, later on we can break it up
+            SettingsSection {
+                
+                Appearance()
+                    .padding(8)
+                
+                Divider()
+                
+                ShowDockIcon()
+                    .padding(8)
+                
+            }
+            .padding(.top)
         }
     }
 }

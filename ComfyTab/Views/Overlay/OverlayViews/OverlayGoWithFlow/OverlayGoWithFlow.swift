@@ -11,7 +11,7 @@ import Combine
 enum OverlayGoWithFlowState: String, CaseIterable {
     case chosen = "Chosen Apps"
     case configure = "Configure"
-}	
+}
 
 class OverlayGoWithFlowViewModel: ObservableObject {
     @Published var state: OverlayGoWithFlowState = .chosen

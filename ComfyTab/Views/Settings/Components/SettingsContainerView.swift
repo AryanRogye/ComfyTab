@@ -18,7 +18,7 @@ struct SettingsContainerView<Content: View>: View {
     
     var body: some View {
         ScrollView {
-            VStack {
+            VStack(spacing: 8) {
                 content
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
