@@ -21,6 +21,11 @@ struct GeneralSettings: View {
                 ShowDockIcon()
                     .padding(8)
                 
+                Divider()
+                
+                LaunchAtLogin()
+                    .padding(8)
+                
             }
             .padding(.top)
         }

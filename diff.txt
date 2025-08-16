@@ -1,0 +1,123 @@
+diff --git a/ComfyTab/Managers/SettingsManager.swift b/ComfyTab/Managers/SettingsManager.swift
+index a67125f..296dc6c 100644
+--- a/ComfyTab/Managers/SettingsManager.swift
++++ b/ComfyTab/Managers/SettingsManager.swift
+@@ -8,6 +8,7 @@
+ import Combine
+ import Foundation
+ import AppKit
++import ServiceManagement
+ 
+ /// Class Is The Main Apps Manager For Everything
+ /// All Managers will retreive data through this object,
+@@ -20,6 +21,7 @@ class SettingsManager : ObservableObject {
+         static let modifierKey          = "modifierKey"
+         static let colorSchemeSetting   = "colorSchemeSetting"
+         static let showDockIcon         = "showDockIcon"
++        static let launchAtLogin        = "launchAtLogin"
+     }
+     
+     /// Defaults
+@@ -41,27 +43,58 @@ class SettingsManager : ObservableObject {
+         }
+     }
+     
++    /// Switch to show Dock Item while app is running, minus the Settings Page
++    /// The Settings page will always show the Dock Item
+     @Published var showDockIcon: Bool {
+         didSet {
+             defaults.set(showDockIcon, forKey: Keys.showDockIcon)
+         }
+     }
+     
+-    
+-    
++    @Published var launchAtLogin: Bool
+     @Published var isSettingsWindowOpen: Bool = false
++    
+     var cancellables: Set<AnyCancellable> = []
+     
+     
+     /// Load in Defaults
+     init(defaults: UserDefaults = .standard) {
+         self.defaults = defaults
++        self.launchAtLogin = (SMAppService.mainApp.status == .enabled)
+         self.modifierKey = .option
+         self.colorScheme = .system
+         self.showDockIcon = false
+         
+         loadDefaults()
+         
++        $launchAtLogin
++            .sink { [weak self] launchAtLogin in
++                guard let self = self else { return }
++                /// If We Set Launch At Login
++                if launchAtLogin {
++                    if SMAppService.mainApp.status == .enabled { return }
++                    do {
++                        try SMAppService.mainApp.register()
++                    } catch {
++                        print("Couldnt Register ComfyTab to Launch At Login \(error.localizedDescription)")
++                        /// Toggle it Off
++                        self.launchAtLogin = false
++                    }
++                }
++                /// If Launch At Logic is Turned off
++                else {
++                    /// ONLY go through if the status is enabled
++                    if SMAppService.mainApp.status != .enabled { return }
++                    do {
++                        try SMAppService.mainApp.unregister()
++                    } catch {
++                        print("Couldnt Turn Off Launch At Logic for ComfyTab \(error.localizedDescription)")
++                        self.launchAtLogin = true
++                    }
++                }
++            }
++            .store(in: &cancellables)
++        
+         /// 1. Settings window open → always show (overrides everything).
+         /// 2. User enabled Dock icon → always show (even if settings window is closed).
+         /// 3. Neither true → hide (after the delay).
+@@ -97,6 +130,7 @@ class SettingsManager : ObservableObject {
+             }
+             .store(in: &cancellables)
+         
++        /// Handling Color Scheme
+         $colorScheme
+             .sink { colorScheme in
+                 switch colorScheme {
+@@ -137,8 +171,8 @@ extension SettingsManager {
+                 }
+                 
+                 NSApp.setActivationPolicy(.accessory)
++                isShowingAppIcon = false
+             }
+-            isShowingAppIcon = false
+         }
+     }
+ }
+@@ -170,6 +204,7 @@ extension SettingsManager {
+         }
+     }
+     
++    // MARK: - Load Show Dock Icon
+     private func loadShowDockIcon() {
+         if let showDockIcon = defaults.object(forKey: Keys.showDockIcon) as? Bool {
+             self.showDockIcon = showDockIcon
+diff --git a/ComfyTab/Views/Settings/Tabs/General/General.swift b/ComfyTab/Views/Settings/Tabs/General/General.swift
+index b410185..c95567a 100644
+--- a/ComfyTab/Views/Settings/Tabs/General/General.swift
++++ b/ComfyTab/Views/Settings/Tabs/General/General.swift
+@@ -21,6 +21,11 @@ struct GeneralSettings: View {
+                 ShowDockIcon()
+                     .padding(8)
+                 
++                Divider()
++                
++                LaunchAtLogin()
++                    .padding(8)
++                
+             }
+             .padding(.top)
+         }
