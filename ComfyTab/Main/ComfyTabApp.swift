@@ -37,8 +37,10 @@ struct SettingsWindowScene: Scene {
             }
             .commandsRemoved()
             .windowResizability(.contentSize)
+            .windowStyle(.hiddenTitleBar)
             .defaultSize(width: 900, height: 625)
             .defaultLaunchBehavior(.suppressed)
+            .defaultPosition(.center)
         } else {
             return Window("SettingsView", id: "SettingsView") {
                 SettingsView()
@@ -48,7 +50,9 @@ struct SettingsWindowScene: Scene {
             }
             .commandsRemoved()
             .windowResizability(.contentSize)
+            .windowStyle(.hiddenTitleBar)
             .defaultSize(width: 900, height: 625)
+            .defaultPosition(.center)
         }
     }
 }

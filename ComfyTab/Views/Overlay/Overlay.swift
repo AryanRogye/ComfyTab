@@ -46,6 +46,7 @@ class Overlay: ObservableObject {
             previousFocousedWindow = NSWorkspace.shared.frontmostApplication
             calculateNewScreenPosition()
             NSApp.activate(ignoringOtherApps: true)
+            OverlayHelper.centerMouse()
             DispatchQueue.main.async {
                 self.overlayViewModel.isShowing = true
             }
@@ -141,5 +142,13 @@ struct OverlayHelper {
     public static func getScreenUnderMouse() -> NSScreen? {
         let mouseLocation = NSEvent.mouseLocation
         return NSScreen.screens.first(where: { $0.frame.contains(mouseLocation) })
+    }
+    
+    public static func centerMouse() {
+        if let screen = getScreenUnderMouse() {
+            let frame = screen.frame
+            let center = CGPoint(x: frame.midX, y: frame.midY)
+            CGWarpMouseCursorPosition(center)
+        }
     }
 }

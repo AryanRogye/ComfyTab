@@ -89,6 +89,7 @@ struct ComfyTab: View {
         }
         .buttonStyle(.plain)
         .shadow(radius: 4)
+        .contentShape(Circle())
         .onHover { hovering in
             withAnimation(.spring(response: 0.2, dampingFraction: 0.8)) {
                 hoveringIndex = hovering ? index : nil

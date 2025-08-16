@@ -16,12 +16,12 @@ struct GeneralSettings: View {
                 Appearance()
                     .padding(8)
                 
-                Divider()
+                Divider().groupBoxStyle()
                 
                 ShowDockIcon()
                     .padding(8)
                 
-                Divider()
+                Divider().groupBoxStyle()
                 
                 LaunchAtLogin()
                     .padding(8)

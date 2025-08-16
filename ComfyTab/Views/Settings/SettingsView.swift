@@ -14,6 +14,20 @@ enum SettingTab: String, CaseIterable, Hashable {
     case permissions    = "Permissions"
     case about          = "About"
     
+    var color: Color {
+        switch self {
+        case .general, .behavior, .permissions, .about:
+            return Color.primary.opacity(0.15) // neutral backdrop
+        }
+    }
+    var titleColor: Color {
+        switch self {
+        case .general, .behavior, .permissions, .about:
+            return Color.primary.opacity(0.75) // neutral backdrop
+        }
+    }
+
+    
     @ViewBuilder
     var view: some View {
         switch self {
@@ -93,16 +107,15 @@ struct Sidebar: View {
         List(selection: $selectedTab) {
             Section {
                 ForEach(SettingTab.allCases, id: \.self) { tab in
-                    
                     Label {
                         Text(tab.rawValue)
                             .padding(.leading, 8)
                     } icon: {
                         Image(systemName: tab.icon)
                             .iconWithRectangle(
+                                bg: tab.color
                             )
                     }
-                    
                 }
             } header: {
                 Text("ComfyTab")
@@ -129,7 +142,26 @@ struct SettingsContent: View {
     @EnvironmentObject var viewModel: SettingsViewModel
     
     var body: some View {
-        viewModel.selectedTab.view
-            .frame(maxWidth: .infinity,maxHeight: .infinity)
+        VStack(spacing: 8) {
+            HStack(alignment: .center, spacing: 8) {
+                Image(systemName: viewModel.selectedTab.icon)
+                    .iconWithRectangle(
+                        size: 25,
+                        bg: viewModel.selectedTab.titleColor
+                    )
+                
+                Text(viewModel.selectedTab.rawValue)
+                    .font(.system(size: 20, weight: .semibold))
+                    .foregroundColor(.primary)
+                
+                Spacer()
+            }
+            .padding(.horizontal)
+            
+            Divider()
+            
+            viewModel.selectedTab.view
+                .frame(maxWidth: .infinity,maxHeight: .infinity)
+        }
     }
 }
