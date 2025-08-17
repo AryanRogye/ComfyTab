@@ -24,7 +24,10 @@ final class AppCoordinator : ObservableObject {
         self.settingsManager     = SettingsManager()
         self.runningAppManager   = RunningAppManager()
         self.permissionManager   = PermissionManager()
-        self.overlay             = Overlay(runningAppManager: runningAppManager)
+        self.overlay             = Overlay(
+            runningAppManager: runningAppManager,
+            settingsManager  : settingsManager
+        )
         self.installedAppManager = InstalledAppManager()
         
         /// init HotkeyManager

@@ -12,9 +12,13 @@ class RunningAppFetcher {
     
     // MARK: - Public API's
     /// Get all running applications
-    public static func fetchRunningApps() throws -> [RunningApp] {
+    public static func fetchRunningApps(
+        cache: [RunningApp]
+    ) throws -> [RunningApp] {
         
-        var runningApps: [RunningApp] = []
+        let cacheByPID = Dictionary(uniqueKeysWithValues: cache.map { ($0.pid, $0) })
+        var newList : [RunningApp] = []
+        
         for app in NSWorkspace.shared.runningApplications {
             
             guard app.activationPolicy == .regular else { continue }
@@ -31,20 +35,40 @@ class RunningAppFetcher {
             /// if it is minimized we can keep going, later on we can keep a flag
             if isMinimized(axElement, appName: name) { continue }
             
-
-            runningApps.append(
-                RunningApp(
-                    name: name,
-                    hidden: hidden,
-                    isTerminated: isTerminated,
-                    icon: icon,
-                    bundleID: bundleID,
-                    pid: pid
+            if var cached = cacheByPID[pid] {
+                // Refresh cheap, frequently-changing fields
+                cached.hidden       = app.isHidden
+                cached.isTerminated = app.isTerminated
+                
+                // Opportunistic refreshes
+                if cached.icon == nil { cached.icon = app.icon }
+                if cached.name != name { cached.name = name }
+                if cached.bundleID != bundleID { cached.bundleID = bundleID }
+                
+                newList.append(cached)
+            } else {
+                newList.append(
+                    RunningApp(
+                        name: name,
+                        hidden: hidden,
+                        isTerminated: isTerminated,
+                        icon: icon,
+                        bundleID: bundleID,
+                        pid: pid
+                    )
                 )
-            )
+            }
         }
         
-        return runningApps
+        let order = Dictionary(uniqueKeysWithValues: cache.enumerated().map { ($0.element.pid, $0.offset) })
+        newList.sort { (a, b) in
+            let ia = order[a.pid] ?? Int.max
+            let ib = order[b.pid] ?? Int.max
+            if ia != ib { return ia < ib }
+            return a.name.localizedCaseInsensitiveCompare(b.name) == .orderedAscending
+        }
+        
+        return newList
     }
     
     // MARK: - Private API's

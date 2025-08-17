@@ -28,9 +28,9 @@ class Overlay: ObservableObject {
     var overlayViewModel: OverlayViewModel
     private weak var previousFocousedWindow: NSRunningApplication?
     
-    init(runningAppManager: RunningAppManager) {
+    init(runningAppManager: RunningAppManager, settingsManager: SettingsManager) {
         self.runningAppManager = runningAppManager
-        self.overlayViewModel = OverlayViewModel(runningAppManager: runningAppManager)
+        self.overlayViewModel = OverlayViewModel(runningAppManager: runningAppManager, settingsManager: settingsManager)
         
         prepareOverlay()
     }
@@ -46,7 +46,7 @@ class Overlay: ObservableObject {
             previousFocousedWindow = NSWorkspace.shared.frontmostApplication
             calculateNewScreenPosition()
             NSApp.activate(ignoringOtherApps: true)
-            OverlayHelper.centerMouse()
+//            OverlayHelper.centerMouse()
             DispatchQueue.main.async {
                 self.overlayViewModel.isShowing = true
             }

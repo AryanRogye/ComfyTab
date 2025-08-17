@@ -15,6 +15,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Config/Info.plist,
+				Views/Settings/Tabs/Behavior/Untitled.swift,
 			);
 			target = 9BBF0BEF2E371FA800F4A825 /* ComfyTab */;
 		};

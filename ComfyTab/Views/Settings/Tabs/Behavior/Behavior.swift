@@ -19,6 +19,21 @@ struct BehaviorSettings: View {
         SettingsSection("Overlay Behavior") {
             ModifierKeyPicker()
                 .padding(8)
+            
+            Divider().groupBoxStyle()
+            
+            IntroAnimation()
+                .padding(8)
+            
+            Divider().groupBoxStyle()
+            
+            ShowAppNameUnderIcon()
+                .padding(8)
+            
+            Divider().groupBoxStyle()
+
+            HoverEffect()
+                .padding(8)
         }
     }
 }

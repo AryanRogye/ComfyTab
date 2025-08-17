@@ -24,11 +24,14 @@ class OverlayViewModel: ObservableObject {
     @Published var comfyTabSize: (radius: CGFloat, thickness: CGFloat) = (130, 80)
     
     var runningAppManager: RunningAppManager
+    var settingsManager  : SettingsManager
+    
     @Published var runningApps: [RunningApp] = []
     
-    init(overlayState: OverlayState = .homeView, runningAppManager: RunningAppManager) {
+    init(overlayState: OverlayState = .homeView, runningAppManager: RunningAppManager, settingsManager: SettingsManager) {
         self.overlayState = overlayState
         self.runningAppManager = runningAppManager
+        self.settingsManager = settingsManager
     }
     
     // MARK: - Pin Toggle
@@ -53,9 +56,10 @@ class OverlayViewModel: ObservableObject {
     }
     
     public func getRunningApps() {
-        runningAppManager.getRunningApps()
-        DispatchQueue.main.async {
-            self.runningApps = self.runningAppManager.runningApps
+        runningAppManager.getRunningApps { apps in
+            DispatchQueue.main.async {
+                self.runningApps = apps
+            }
         }
     }
     

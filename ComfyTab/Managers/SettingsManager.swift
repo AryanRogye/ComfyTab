@@ -18,10 +18,13 @@ class SettingsManager : ObservableObject {
     
     /// Keys
     private enum Keys {
-        static let modifierKey          = "modifierKey"
-        static let colorSchemeSetting   = "colorSchemeSetting"
-        static let showDockIcon         = "showDockIcon"
-        static let launchAtLogin        = "launchAtLogin"
+        static let modifierKey              = "modifierKey"
+        static let colorSchemeSetting       = "colorSchemeSetting"
+        static let showDockIcon             = "showDockIcon"
+        static let launchAtLogin            = "launchAtLogin"
+        static let isIntroAnimationEnabled  = "isIntroAnimationEnabled"
+        static let showAppNameUnderIcon     = "showAppNameUnderIcon"
+        static let isHoverEffectEnabled     = "isHoverEffectEnabled"
     }
     
     /// Defaults
@@ -51,7 +54,31 @@ class SettingsManager : ObservableObject {
         }
     }
     
+    /// We Dont Save this cuz we read this value from the system
     @Published var launchAtLogin: Bool
+    
+    /// Switch to enable/disable animation on opening
+    @Published var isIntroAnimationEnabled: Bool {
+        didSet {
+            defaults.set(isIntroAnimationEnabled, forKey: Keys.isIntroAnimationEnabled)
+        }
+    }
+    
+    /// Switch to show app name under the icon in the donut
+    @Published var showAppNameUnderIcon: Bool {
+        didSet {
+            defaults.set(showAppNameUnderIcon, forKey: Keys.showAppNameUnderIcon)
+        }
+    }
+    
+    /// Switch to turn hover off and on, on the donut
+    @Published var isHoverEffectEnabled: Bool {
+        didSet {
+            defaults.set(isHoverEffectEnabled, forKey: Keys.isHoverEffectEnabled)
+        }
+    }
+    
+    
     @Published var isSettingsWindowOpen: Bool = false
     
     var cancellables: Set<AnyCancellable> = []
@@ -64,6 +91,9 @@ class SettingsManager : ObservableObject {
         self.modifierKey = .option
         self.colorScheme = .system
         self.showDockIcon = false
+        self.isIntroAnimationEnabled = true
+        self.showAppNameUnderIcon = false
+        self.isHoverEffectEnabled = true
         
         loadDefaults()
         
@@ -122,8 +152,7 @@ class SettingsManager : ObservableObject {
                     /// By default if the settings page is open we always show the App Icon,/
                     self.showAppIcon()
                 } else {
-                    /// If the user decides that they want to show the dock icon we just return early
-                    if self.showDockIcon { return }
+                    /// If the user decides that they want to show the dock icon we just return early if self.showDockIcon { return }
                     /// if they have showDockIcon toggled off then we show the hide the dock icon when closing
                     self.hideAppIcon()
                 }
@@ -184,6 +213,9 @@ extension SettingsManager {
         loadModifierKey()
         loadColorScheme()
         loadShowDockIcon()
+        loadIsIntroAnimationEnabled()
+        loadShowAppNameUnderIcon()
+        loadIsHoverEffectEnabled()
     }
     
     // MARK: - Load Modifier Key
@@ -210,6 +242,33 @@ extension SettingsManager {
             self.showDockIcon = showDockIcon
         } else {
             self.showDockIcon = false
+        }
+    }
+    
+    // MARK: - Load Is Intro Animation Enabled
+    private func loadIsIntroAnimationEnabled() {
+        if let isIntroAnimationEnabled = defaults.object(forKey: Keys.isIntroAnimationEnabled) as? Bool {
+            self.isIntroAnimationEnabled = isIntroAnimationEnabled
+        } else {
+            self.isIntroAnimationEnabled = true
+        }
+    }
+    
+    // MARK: - Load Show App Name Under Icon
+    private func loadShowAppNameUnderIcon() {
+        if let showAppNameUnderIcon = defaults.object(forKey: Keys.showAppNameUnderIcon) as? Bool {
+            self.showAppNameUnderIcon = showAppNameUnderIcon
+        } else {
+            self.showAppNameUnderIcon = false
+        }
+    }
+    
+    // MARK: - Load Is Hoverr Effect Enabled
+    private func loadIsHoverEffectEnabled() {
+        if let isHoverEffectEnabled = defaults.object(forKey: Keys.isHoverEffectEnabled) as? Bool {
+            self.isHoverEffectEnabled = isHoverEffectEnabled
+        } else {
+            self.isHoverEffectEnabled = true
         }
     }
 }

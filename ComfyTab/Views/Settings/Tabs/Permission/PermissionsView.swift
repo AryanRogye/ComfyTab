@@ -13,21 +13,18 @@ public struct PermissionsView: View {
     @EnvironmentObject var permissionManager: PermissionManager
     
     public var body: some View {
-        VStack {
-            /// Acessibility Permissions
-            accessibilityPermissionsView
-                .padding([.horizontal, .top])
-            Divider()
-                .padding(.vertical, 8)
-            
-            Spacer()
+        SettingsContainerView {
+             SettingsSection {
+                accessibilityPermissionsView
+                     .padding(8)
+            }
         }
     }
     
     private var accessibilityPermissionsView: some View {
         HStack {
             Text("Accessibility Permissions")
-                .font(.headline)
+            
             Spacer()
             
             Button(action: {
