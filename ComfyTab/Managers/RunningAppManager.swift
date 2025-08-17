@@ -7,57 +7,66 @@
 
 import SwiftUI
 
-final class RunningAppManager {
+final actor RunningAppManager {
     
     private(set) var runningApps: [RunningApp] = []
     private(set) var fetchEpoch = 0   // cancels stale inflight fetches
     
+    /**
+     NOTE:
+        By adding @MainActor to the completion parameter, i'm telling the compiler that the
+        completion handler must run on the main actor. This means I can eliminate explicit
+        MainActor.run calls, didnt know that its sick, gonna leave it here as a note for me
+     */
     func getRunningApps(
-        completion: @escaping ([RunningApp]) -> Void
+        completion: @MainActor @escaping ([RunningApp]) -> Void
     ) {
-        /// Send Cached Copy At The Start
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            completion(self.runningApps)
+        
+        let cached = runningApps
+        /// Send Cached Copy At The Start so it looks like we have no delays
+        Task { @MainActor in
+            completion(cached)
         }
         
-        var epochSnapshot = 0
-        var cacheSnapshot: [RunningApp] = []
+        fetchEpoch &+= 1
         
-        DispatchQueue.main.async { [weak self] in
-            guard let self = self else { return }
-            fetchEpoch &+= 1
-            epochSnapshot = self.fetchEpoch
-            cacheSnapshot = self.runningApps /// Immutable Copy
-        }
+        /// Create Copies
+        let epochSnapshot = self.fetchEpoch
+        let cacheSnapshot = self.runningApps /// Immutable Copy
         
-        /// Hop on A Different Thread
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            guard let self = self else { return }
+        Task.detached(priority: .userInitiated) { [epochSnapshot, cacheSnapshot] in
             do {
+                
+                /// Get Fresh Copy
                 let fresh = try RunningAppFetcher.fetchRunningApps(
                     cache: cacheSnapshot
                 )
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else { return }
-                    // Bail if a newer fetch started
-                    /// Keep a internal copy for later caching
-                    guard epochSnapshot == self.fetchEpoch else { return }
-                    if fresh != self.runningApps {
-                        self.runningApps = fresh
-                        completion(fresh)
-                    }
+                
+                /// Get Back Updated
+                let updated = await self.applyIfNewest(epoch: epochSnapshot, fresh: fresh)
+                
+                if let apps = updated {
+                    await completion(apps)
                 }
+
             } catch {
-                print("There Was A Error Fetching Running Apps: \(error)")
-                DispatchQueue.main.async {
-                    completion(self.runningApps) // return the previous list
-                }
+                // on error, just emit the current snapshot
+                let prev = await self.runningApps
+                await completion(prev)
             }
         }
     }
     
-    public func goToApp(_ runningApp: RunningApp) {
+    private func applyIfNewest(epoch: Int, fresh: [RunningApp]) -> [RunningApp]? {
+        guard epoch == fetchEpoch else { return nil }
+        if fresh != runningApps {
+            runningApps = fresh
+        }
+        // still allow a “second emission” if the caller expects it
+        return fresh
+    }
+    
+    nonisolated public func goToApp(_ runningApp: RunningApp) {
         runningApp.focusApp()
     }
 }

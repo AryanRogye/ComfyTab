@@ -56,9 +56,17 @@ class OverlayViewModel: ObservableObject {
     }
     
     public func getRunningApps() {
-        runningAppManager.getRunningApps { apps in
-            DispatchQueue.main.async {
+        
+        if settingsManager.isIntroAnimationEnabled {
+            // Clear first to ensure animation triggers
+            self.runningApps = []
+        }
+        
+        Task { [weak self] in
+            guard let self else { return }
+            await runningAppManager.getRunningApps { apps in
                 self.runningApps = apps
+                print("got Running App \(self.runningApps.count)")
             }
         }
     }
