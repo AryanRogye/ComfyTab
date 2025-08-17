@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-
+import CoreGraphics
 
 /// Donut Shaped
 struct ComfyTab: View {
@@ -20,28 +20,31 @@ struct ComfyTab: View {
     private let hoverPopOut: CGFloat        = 12
     private let angleOffset: CGFloat        = -.pi/2
     
+    @State private var visibleApps: [RunningApp] = []
+    var parameters = LiquidGlassParameters()
+    
     var body: some View {
-        ZStack(alignment: .center) {
-            /// Background
-            VisualEffectView(material: .hudWindow, blendingMode: .behindWindow)
-                .allowsHitTesting(false)
-                .mask {
-                    /// Shape
-                    Circle()
-                        .stroke(
-                            Color.primary.opacity(0.4),
-                            lineWidth: viewModel.comfyTabSize.thickness
-                        )
-                        .frame(
-                            width: viewModel.comfyTabSize.radius * 2,
-                            height: viewModel.comfyTabSize.radius * 2)
+        appsView
+            .onChange(of: viewModel.isShowing) { _, value in
+                if value {
+                    viewModel.getRunningApps()
+                } else {
+                    visibleApps = []
                 }
-            /// Actual Apps
-            appsView
-        }
-        .onChange(of: viewModel.isShowing) { _, value in
-            if value {
-                viewModel.getRunningApps()
+            }
+            .onChange(of: viewModel.runningApps) { _, apps in
+                guard viewModel.isShowing else { return }
+                addAppsOneByOne(apps: apps)
+            }
+    }
+    
+    private func addAppsOneByOne(apps: [RunningApp]) {
+        visibleApps = []
+        for (i, app) in apps.enumerated() {
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(i) * 0.1) {
+                withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
+                    visibleApps.append(app)
+                }
             }
         }
     }
@@ -49,47 +52,98 @@ struct ComfyTab: View {
     /// Looping through the Running Apps
     private var appsView: some View {
         ZStack {
-            
-            ForEach(Array(viewModel.runningApps.enumerated()), id: \.offset) { index, app in
+            ForEach(visibleApps) { app in
+                let index = visibleApps.firstIndex(of: app)!
+                let count = visibleApps.count
+                let start = Angle(degrees: Double(index) * 360.0 / Double(count))
+                let end   = Angle(degrees: Double(index+1) * 360.0 / Double(count))
                 
-                /// Easy for us to know if the index we're in is getting hovered on or not
-                let hovered = (hoveringIndex == index)
-                
-                /// Show Each App
-                appView(icon: app.icon, index: index)
-                    .frame(width: iconSize, height: iconSize)
-                    .contentShape(Circle())
-                    .zIndex(hovered ? 1 : 0)
-                    .position(positionFor(
-                        index: index,
-                        hovered: hovered
-                    ))
+                circlePeice(index: index,
+                            count: count,
+                            start: start,
+                            end: end,
+                            app: app
+                )
+                .contentShape(
+                    CirclePiece(
+                        startAngle: start,
+                        endAngle: end,
+                        radius: viewModel.comfyTabSize.radius,
+                        thickness: viewModel.comfyTabSize.thickness
+                    )
+                )
+                .animation(.spring(response: 0.4, dampingFraction: 0.8), value: visibleApps)
             }
         }
-        .frame(
-            width: viewModel.comfyTabSize.radius * 2,
-            height: viewModel.comfyTabSize.radius * 2
-        )
+        .frame(width: viewModel.comfyTabSize.radius * 2,
+               height: viewModel.comfyTabSize.radius * 2,
+               alignment: .center)
     }
     
-    /// Singular App View
-    private func appView(icon: NSImage?, index: Int) -> some View {
+    private func circlePeice(
+        index: Int,
+        count: Int,
+        start: Angle,
+        end: Angle,
+        app: RunningApp
+    ) -> some View {
         Button(action: {
             viewModel.focusApp(index: index)
         }) {
-            Group {
-                if let icon = icon {
-                    Image(nsImage: icon)
-                        .resizable()
-                        .clipShape(Circle())
-                } else {
-                    Circle().fill(.gray)
+            ZStack {
+                let isHovered = hoveringIndex == index
+                let extraRadius: CGFloat = isHovered ? 12 : 0
+                
+                ZStack {
+                    if isHovered {
+                        CirclePiece(
+                            startAngle: start,
+                            endAngle: end,
+                            radius: viewModel.comfyTabSize.radius + extraRadius,
+                            thickness: viewModel.comfyTabSize.thickness
+                        )
+                        .fill(Color.white.opacity(0.2))
+                    } else {
+                        VisualEffectView(material: .hudWindow, blendingMode: .behindWindow)
+                            .mask (
+                                CirclePiece(
+                                    startAngle: start,
+                                    endAngle: end,
+                                    radius: viewModel.comfyTabSize.radius + extraRadius,
+                                    thickness: viewModel.comfyTabSize.thickness
+                                )
+                                .fill(Color.white.opacity(0.8))
+                            )
+                        // TODO: Maybe oneday we can add shaders😓 this just doesnt look any different
+//                        LiquidGlassBackground(
+//                            params: parameters
+//                        )
+//                            .mask(
+//                                CirclePiece(
+//                                    startAngle: start,
+//                                    endAngle: end,
+//                                    radius: viewModel.comfyTabSize.radius + extraRadius,
+//                                    thickness: viewModel.comfyTabSize.thickness
+//                                )
+//                                .fill(Color.white.opacity(0.8))
+//                            )
+                    }
                 }
+                .transition(.identity)
+                
+                
+                appView(icon: app.icon, index: index)
+                    .position(labelPosition(
+                        startAngle: start,
+                        endAngle: end,
+                        radius: viewModel.comfyTabSize.radius,
+                        thickness: viewModel.comfyTabSize.thickness,
+                        offset: extraRadius
+                    ))
+                    .transition(.identity)
             }
         }
         .buttonStyle(.plain)
-        .shadow(radius: 4)
-        .contentShape(Circle())
         .onHover { hovering in
             withAnimation(.spring(response: 0.2, dampingFraction: 0.8)) {
                 hoveringIndex = hovering ? index : nil
@@ -97,22 +151,37 @@ struct ComfyTab: View {
         }
     }
     
-    private func positionFor(index: Int, hovered: Bool) -> CGPoint {
-        let count = max(viewModel.runningApps.count, 1)
-        let a = (CGFloat(index) / CGFloat(count)) * 2 * .pi + angleOffset
+    /// Singular App View
+    private func appView(icon: NSImage?, index: Int) -> some View {
+        Group {
+            if let icon = icon {
+                Image(nsImage: icon)
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .clipShape(Circle())
+            } else {
+                Circle().fill(.gray)
+            }
+        }
+        .shadow(radius: 4)
+        .contentShape(Circle())
+    }
+    
+    private func labelPosition(
+        startAngle: Angle,
+        endAngle: Angle,
+        radius: CGFloat,
+        thickness: CGFloat,
+        offset: CGFloat = 0
+    ) -> CGPoint {
+        let midAngle = (startAngle.radians + endAngle.radians) / 2
+        let r = radius - (thickness / 2)
+        let center = radius
         
-        let centerR = viewModel.comfyTabSize.radius
-        let minR = iconSize / 2 + 8
-        
-        // Base distance exactly as set, clamped only to min
-        let baseR = max(distanceFromCenter, minR)
-        
-        // Force outward pop
-        let r = hovered ? baseR + hoverPopOut : baseR
-        
+        // offset pushes the label outward along the slice direction
         return CGPoint(
-            x: centerR + cos(a) * r,
-            y: centerR + sin(a) * r
+            x: center + cos(midAngle) * r + cos(midAngle) * offset,
+            y: center + sin(midAngle) * r + sin(midAngle) * offset
         )
     }
 }
@@ -121,9 +190,15 @@ struct ComfyTab: View {
     
     let overlayViewModel = OverlayViewModel(runningAppManager: RunningAppManager())
     
-    ComfyTab()
-        .environmentObject(overlayViewModel)
-        .task {
-            overlayViewModel.getRunningApps()
-        }
+    ZStack {
+        ComfyTab(
+            parameters: LiquidGlassParameters()
+        )
+            .environmentObject(overlayViewModel)
+            .task {
+                overlayViewModel.isShowing = true
+                overlayViewModel.getRunningApps()
+            }
+    }
+    .frame(width: 300, height: 300)
 }
