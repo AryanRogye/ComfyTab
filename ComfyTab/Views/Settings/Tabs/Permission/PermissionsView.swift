@@ -22,35 +22,40 @@ public struct PermissionsView: View {
     }
     
     private var accessibilityPermissionsView: some View {
-        HStack {
-            Text("Accessibility Permissions")
-            
-            Spacer()
-            
-            Button(action: {
-                permissionManager.requestAcessibilityPermission()
-            }) {
-                Group {
-                    if permissionManager.isAccessibilityEnabled {
-                        Text("Enabled")
-                            .foregroundColor(.green)
-                    } else {
-                        Text("Disabled")
-                            .foregroundColor(.red)
+        VStack(alignment: .leading, spacing: 4) {
+            HStack {
+                Text("Accessibility Permissions")
+                
+                Spacer()
+                
+                Button(action: {
+                    permissionManager.requestAcessibilityPermission()
+                }) {
+                    Group {
+                        if permissionManager.isAccessibilityEnabled {
+                            Text("Enabled")
+                                .foregroundColor(.green)
+                        } else {
+                            Text("Disabled")
+                                .foregroundColor(.red)
+                        }
+                    }
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background {
+                        RoundedRectangle(cornerRadius: 8)
+                            .fill(permissionManager.isAccessibilityEnabled
+                                  ? Color.green.opacity(0.2)
+                                  : Color.red.opacity(0.2)
+                            )
                     }
                 }
-                .padding(.horizontal, 8)
-                .padding(.vertical, 4)
-                .background {
-                    RoundedRectangle(cornerRadius: 8)
-                        .fill(permissionManager.isAccessibilityEnabled
-                              ? Color.green.opacity(0.2)
-                              : Color.red.opacity(0.2)
-                        )
-                }
+                .disabled(permissionManager.isAccessibilityEnabled)
+                .buttonStyle(.plain)
             }
-            .disabled(permissionManager.isAccessibilityEnabled)
-            .buttonStyle(.plain)
+            Text("Required to control app switching")
+                .font(.caption)
+                .foregroundStyle(.secondary)
         }
     }
 }

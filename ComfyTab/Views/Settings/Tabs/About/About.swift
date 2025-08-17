@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct AboutView: View {
-    
     var body: some View {
         SettingsContainerView {
             
@@ -23,6 +22,11 @@ struct AboutView: View {
                 Divider().groupBoxStyle()
                 
                 appBuild
+                    .padding(8)
+                
+                Divider().groupBoxStyle()
+                
+                linkRow
                     .padding(8)
             }
         }
@@ -40,16 +44,13 @@ struct AboutView: View {
                         .font(.title)
                         .fontWeight(.bold)
                         .foregroundColor(.primary)
-                    Button {
-                        if let url = URL(string: "https://github.com/AryanRogye/ComfyTab") {
-                            NSWorkspace.shared.open(url)
-                        }
-                    } label: {
+                    
+                    Link(destination: URL(string: "https://github.com/AryanRogye/ComfyTab")!) {
                         Label("View on GitHub", systemImage: "link")
                     }
-                    .buttonStyle(.link)
                     .font(.system(size: 13, weight: .medium))
-                    .padding(.leading)
+                    .help("Open the ComfyTab repository on GitHub")
+                    .accessibilityLabel("View on GitHub")
                 }
                 
                 Text("The comfiest way to switch apps on your Mac. Lightweight, fluid, and built to make multitasking feel natural instead of stressful.")
@@ -82,13 +83,26 @@ struct AboutView: View {
             .cornerRadius(12)
     }
     
-    // MARK: - Privacy Policy
+    // MARK: - Links Section
+    private var linkRow: some View {
+        HStack(spacing: 12) {
+            Link(destination: URL(string: "https://github.com/AryanRogye/ComfyTab/blob/main/PRIVACY.md")!) {
+                Label("Privacy Policy", systemImage: "lock.shield")
+            }
+            .accessibilityLabel("Privacy Policy")
+            
+            Link(destination: URL(string: "https://github.com/AryanRogye/ComfyTab/issues")!) {
+                Label("Support / Feedback", systemImage: "questionmark.circle")
+            }
+            .accessibilityLabel("Support and Feedback")
+            
+            // Swap this to your future landing page when ready.
+            Link(destination: URL(string: "https://github.com/AryanRogye/ComfyTab")!) {
+                Label("Website", systemImage: "globe")
+            }
+            .accessibilityLabel("Website")
+        }
+        .font(.system(size: 13, weight: .medium))
+        .buttonStyle(.link)
+    }
 }
-
-
-// - [x] App version & build number
-// - [ ] “Check for updates” button
-// - [x] Links:
-// - [ ] Website
-// - [ ] Support / Feedback
-// - [ ] Privacy Policy
