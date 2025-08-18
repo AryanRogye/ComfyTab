@@ -36,7 +36,6 @@ class LocalMonitor {
         
         let target = map(modifierKey)
         activeTarget = target
-        /// Stop Before Starting
         
         isLocallyPressingModifier = isHeldNow()
         
@@ -46,8 +45,9 @@ class LocalMonitor {
             guard let self = self else { return event }
             isLocallyPressingModifier = isHeldNow()
             
+            /// This is when we let go of the modifier key
             if !isLocallyPressingModifier {
-                onEnd()
+                onEnd() /// passed in
                 self.stop()
             }
             

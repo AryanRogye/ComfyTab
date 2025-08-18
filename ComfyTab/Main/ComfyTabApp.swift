@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+#if DEBUG
+let showDebug = false
+#endif
+
 @main
 struct ComfyTabApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate

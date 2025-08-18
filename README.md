@@ -82,7 +82,6 @@ sequenceDiagram
             AC->>HKM:    Initialize HotKeyManager
 
             HKM->>SM:    HotKeyManager Depends on SettingsManager
-            HKM->>PM:    HotKeyManager Depends on PermissionManager
             HKM->>OV:    HotKeyManager Depends on Overlay
             HKM->>OVVM:  HotKeyManager Depends on OverlayViewModel
             HKM->>LM:    HotKeyManager Initializes LocalMonitor

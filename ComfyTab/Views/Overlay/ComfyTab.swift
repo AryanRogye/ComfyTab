@@ -26,6 +26,11 @@ struct ComfyTab: View {
     
     var body: some View {
         ZStack {
+            #if DEBUG
+            if showDebug {
+                Text("Middle")
+            }
+            #endif
             /// If User wants animation on the opening
             if viewModel.settingsManager.isIntroAnimationEnabled {
                 appsViewAnimated

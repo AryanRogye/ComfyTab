@@ -15,7 +15,6 @@ extension KeyboardShortcuts.Name {
 
 public class HotkeyManager {
     
-    private(set) var permissionManager : PermissionManager
     private(set) var overlay           : Overlay
     private(set) var overlayViewModel  : OverlayViewModel
     private(set) var settingsManager   : SettingsManager
@@ -26,13 +25,11 @@ public class HotkeyManager {
     
     init(
         settingsManager     : SettingsManager,
-        permissionManager   : PermissionManager,
         overlay             : Overlay,
         overlayViewModel    : OverlayViewModel,
         toggleTabHotKey     : KeyboardShortcuts.Name = .toggleTab
     ) {
         self.settingsManager   = settingsManager
-        self.permissionManager = permissionManager
         self.overlay           = overlay
         self.overlayViewModel  = overlayViewModel
         self.toggleTabHotKey   = toggleTabHotKey
@@ -98,9 +95,6 @@ public class HotkeyManager {
     }
     
     private func onEnd() {
-        guard self.permissionManager.isAccessibilityEnabled else {
-            return
-        }
         /// If Pinned Dont Hide
         guard !self.overlayViewModel.isPinned else {
             return
