@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		9B217DC32E53133800979E6A /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 9B217DC22E53133800979E6A /* KeyboardShortcuts */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		9BBF0BF02E371FA800F4A825 /* ComfyTab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ComfyTab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -37,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B217DC32E53133800979E6A /* KeyboardShortcuts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +84,7 @@
 			);
 			name = ComfyTab;
 			packageProductDependencies = (
+				9B217DC22E53133800979E6A /* KeyboardShortcuts */,
 			);
 			productName = ComfyTab;
 			productReference = 9BBF0BF02E371FA800F4A825 /* ComfyTab.app */;
@@ -109,6 +115,7 @@
 			mainGroup = 9BBF0BE72E371FA800F4A825;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				9B217DC12E53133800979E6A /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 9BBF0BF12E371FA800F4A825 /* Products */;
@@ -351,6 +358,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9B217DC12E53133800979E6A /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/KeyboardShortcuts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.3.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9B217DC22E53133800979E6A /* KeyboardShortcuts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9B217DC12E53133800979E6A /* XCRemoteSwiftPackageReference "KeyboardShortcuts" */;
+			productName = KeyboardShortcuts;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9BBF0BE82E371FA800F4A825 /* Project object */;
 }

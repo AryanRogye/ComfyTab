@@ -44,24 +44,14 @@ final class AppCoordinator : ObservableObject {
     }
     
     func prepare() {
-        /// Once we detect accessibilty is started/enabled start the app
-        permissionManager.$isAccessibilityEnabled
-            .filter { $0 }
-            .sink { [weak self] granted in
-                guard let self = self else { return }
-                if granted {
-                    self.start()
-                }
-            }
-            .store(in: &cancellables)
+        /// In The Past We Used CGEvent, to listen for events, now we use Carbon so its registed, we dont need
+        /// permissions for the UI to show up
+        hotkeyManager.setupHotkey()
+        start()
     }
     
     func start() {
         guard !didStart else { return }
         didStart = true
-        
-        print("Started App With Correct Permissions")
-        
-        hotkeyManager.setupHotkey()
     }
 }

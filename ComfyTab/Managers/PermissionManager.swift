@@ -11,8 +11,11 @@ import AppKit
 
 /// Manage All Permissions for the App
 class PermissionManager: ObservableObject {
-    @Published var isAccessibilityEnabled: Bool = false
-    @Published var isDoneCheckingPermissionsStart: Bool = false
+    
+    @Published var isAccessibilityEnabled   : Bool = false
+    
+    private var pollTimer: Timer?
+    private var testTap: CFMachPort?
     
     init() {
         checkAccessibilityPermission()
@@ -20,10 +23,9 @@ class PermissionManager: ObservableObject {
         if !isAccessibilityEnabled {
             requestAcessibilityPermission()
         }
-        
-        self.isDoneCheckingPermissionsStart = true
     }
     
+    // MARK: - Accessibility
     /// Check if Accessibility Permission is Granted
     func checkAccessibilityPermission() {
         let isTrusted = AXIsProcessTrusted()
