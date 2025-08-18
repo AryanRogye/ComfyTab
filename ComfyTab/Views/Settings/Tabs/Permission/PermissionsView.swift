@@ -30,6 +30,7 @@ public struct PermissionsView: View {
                 
                 Button(action: {
                     permissionManager.requestAcessibilityPermission()
+                    permissionManager.openPermissionSettings()
                 }) {
                     Group {
                         if permissionManager.isAccessibilityEnabled {
@@ -53,9 +54,17 @@ public struct PermissionsView: View {
                 .disabled(permissionManager.isAccessibilityEnabled)
                 .buttonStyle(.plain)
             }
-            Text("Required to control app switching")
-                .font(.caption)
-                .foregroundStyle(.secondary)
+            
+            HStack {
+                Text("Required to control app switching")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                Button(action: permissionManager.openPermissionSettings) {
+                    Text("Check Anyways?")
+                        .font(.caption)
+                }
+                .buttonStyle(.link)
+            }
         }
     }
 }

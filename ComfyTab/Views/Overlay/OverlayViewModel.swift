@@ -28,7 +28,11 @@ class OverlayViewModel: ObservableObject {
     
     @Published var runningApps: [RunningApp] = []
     
-    init(overlayState: OverlayState = .homeView, runningAppManager: RunningAppManager, settingsManager: SettingsManager) {
+    init(
+        overlayState: OverlayState = .homeView,
+        runningAppManager: RunningAppManager,
+        settingsManager: SettingsManager
+    ) {
         self.overlayState = overlayState
         self.runningAppManager = runningAppManager
         self.settingsManager = settingsManager

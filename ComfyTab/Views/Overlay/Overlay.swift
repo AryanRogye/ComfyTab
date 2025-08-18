@@ -30,7 +30,10 @@ class Overlay: ObservableObject {
     
     init(runningAppManager: RunningAppManager, settingsManager: SettingsManager) {
         self.runningAppManager = runningAppManager
-        self.overlayViewModel = OverlayViewModel(runningAppManager: runningAppManager, settingsManager: settingsManager)
+        self.overlayViewModel = OverlayViewModel(
+            runningAppManager: runningAppManager,
+            settingsManager: settingsManager
+        )
         
         prepareOverlay()
     }
@@ -92,7 +95,7 @@ class Overlay: ObservableObject {
         /// Allow content to draw outside panel bounds
         overlay.setFrame(screen.frame, display: true)
         overlay.contentView?.wantsLayer = true
-        overlay.title = "ComfyNotch"
+        overlay.title = "ComfyTab"
         
         let overlayRaw = CGWindowLevelForKey(.overlayWindow)
         overlay.level = NSWindow.Level(rawValue: Int(overlayRaw))

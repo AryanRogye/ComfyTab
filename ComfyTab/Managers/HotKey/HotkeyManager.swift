@@ -37,17 +37,10 @@ public class HotkeyManager {
         self.overlayViewModel  = overlayViewModel
         self.toggleTabHotKey   = toggleTabHotKey
         
-        /// We Load in what the modifier key is in at the start
-        KeyboardShortcuts.setShortcut(
-            .init(.tab, modifiers: [
-                settingsManager.modifierKey == .control ? .control
-                : settingsManager.modifierKey == .option ? .option
-                : .shift
-            ]),
-            for: .toggleTab
-        )
-        
+        prepareHotKey()
         /// We Bind For The Pinning Logic, Currently Unused
+        
+        /// From Mermaid Diagram This is the setupPinningListener()
         DispatchQueue.main.async {
             overlayViewModel.$isPinned
                 .sink { [weak self] isPinned in
@@ -64,6 +57,7 @@ public class HotkeyManager {
                 .store(in: &self.cancellables)
             
             /// Update Modifier Key with new Values if they change
+            /// From Mermaid Diagram This is the setupHotKeyChangeListener()
             settingsManager.$modifierKey
                 .sink { modifier in
                     /// Only Allowed is control,option and shift, so only those are set
@@ -78,6 +72,18 @@ public class HotkeyManager {
                 }
                 .store(in: &self.cancellables)
         }
+    }
+    
+    private func prepareHotKey() {
+        /// We Load in what the modifier key is in at the start
+        KeyboardShortcuts.setShortcut(
+            .init(.tab, modifiers: [
+                settingsManager.modifierKey == .control ? .control
+                : settingsManager.modifierKey == .option ? .option
+                : .shift
+            ]),
+            for: .toggleTab
+        )
     }
     
     /// This Works Pretty Nicely:

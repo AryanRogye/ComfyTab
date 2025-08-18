@@ -34,6 +34,12 @@ class PermissionManager: ObservableObject {
         }
     }
     
+    func openPermissionSettings() {
+        if let url = URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility") {
+            NSWorkspace.shared.open(url)
+        }
+    }
+    
     /// Request Accessibility Permissions
     func requestAcessibilityPermission() {
         let options: NSDictionary = [kAXTrustedCheckOptionPrompt.takeRetainedValue() as String: true]
