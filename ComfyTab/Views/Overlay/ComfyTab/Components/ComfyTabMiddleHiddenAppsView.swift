@@ -17,8 +17,8 @@ struct ComfyTabMiddleHiddenAppsView: View {
     
     var body: some View {
         ZStack {
-            VisualEffectView()
-            
+            VisualEffectView(material: .hudWindow, blendingMode: .behindWindow)
+
             VStack {
                 topRow
                     .padding(8)

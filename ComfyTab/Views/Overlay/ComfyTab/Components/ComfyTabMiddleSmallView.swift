@@ -16,7 +16,7 @@ struct ComfyTabMiddleSmallView: View {
     
     var body: some View {
         Button(action: onTap) {
-            VisualEffectView()
+            VisualEffectView(material: .hudWindow, blendingMode: .behindWindow)
                 .clipShape (
                     Circle()
                 )
