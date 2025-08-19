@@ -11,6 +11,29 @@ struct OverlayContent: View {
     
     @EnvironmentObject var viewModel : OverlayViewModel
     
+    /// This Represents the Entire Screen
+    /* LOGIC:
+     /// We Push It To The Center Vertically With VStack { Spacer() /**Content */ Spacer() }
+     /// ==================================|
+     /// |                                 |
+     /// |            Spacer()             |
+     /// |_________________________________|
+     /// |_________________________________|
+     /// |                                 |
+     /// |            Spacer()             |
+     /// |                                 |
+     /// ==================================|
+     /// And Same Logic Is Applied to the Center Horizontally HStack { Spacer() /**Content */ Spacer() }
+     /// ==================================|
+     /// |                                 |
+     /// |            Spacer()             |
+     /// |_________________________________|
+     /// |_Spacer()___|content|___Spacer()_|
+     /// |                                 |
+     /// |            Spacer()             |
+     /// |                                 |
+     /// ==================================|
+     */
     var body: some View {
         VStack {
             Spacer()
