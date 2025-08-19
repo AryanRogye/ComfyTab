@@ -92,6 +92,15 @@ public class HotkeyManager {
             self.localMonitor.start(with: self.settingsManager.modifierKey) { self.onEnd() }
             self.overlay.show()
         }
+        KeyboardShortcuts.onKeyUp(for: self.toggleTabHotKey) {
+            /// If The ModifierKey is still held OR the OverlayViewModel is pinned
+            /// just return
+            if self.localMonitor.isHeldNow() || self.overlayViewModel.isPinned {
+                print("Returning Cuz held: \(self.localMonitor.isHeldNow()) isPinned: \(self.overlayViewModel.isPinned)")
+                return
+            }
+            print("Should Hide Now")
+        }
     }
     
     private func onEnd() {

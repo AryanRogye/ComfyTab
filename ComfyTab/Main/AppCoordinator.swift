@@ -21,15 +21,19 @@ final class AppCoordinator : ObservableObject {
     var didStart = false
     
     init() {
+        /// Init Default Managers
         self.settingsManager     = SettingsManager()
         self.runningAppManager   = RunningAppManager()
         self.permissionManager   = PermissionManager()
-        
+        self.installedAppManager = InstalledAppManager(
+            settingsManager: settingsManager
+        )
+
+        /// Init The Overlay
         self.overlay             = Overlay(
             runningAppManager: runningAppManager,
             settingsManager  : settingsManager
         )
-        self.installedAppManager = InstalledAppManager()
         
         /// init HotkeyManager
         self.hotkeyManager     = HotkeyManager(
@@ -39,9 +43,7 @@ final class AppCoordinator : ObservableObject {
         )
     }
     
-    deinit {
-        
-    }
+    deinit {}
     
     func prepare() {
         /// Call Once At The Start to Cache

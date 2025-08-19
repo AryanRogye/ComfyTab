@@ -24,7 +24,6 @@ class OverlayViewModel: ObservableObject {
     @Published var runningApps: [RunningApp] = []
     /// List of All Hidden Apps We Add To
     @Published var hiddenApps: Set<RunningApp> = []
-    
     @Published var closeOnFinderOpen: Bool = false
     
     private var overlay: Overlay
@@ -121,5 +120,9 @@ class OverlayViewModel: ObservableObject {
                 await self.runningAppManager.addToCache(app)
             }
         }
+    }
+    
+    private func loadHiddenItems() {
+        
     }
 }

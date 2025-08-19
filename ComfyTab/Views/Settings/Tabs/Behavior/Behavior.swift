@@ -9,9 +9,19 @@ import SwiftUI
 
 struct BehaviorSettings: View {
     var body: some View {
-        SettingsContainerView {
-            overlayBehavior
-                .padding(.top)
+        NavigationStack {
+            SettingsContainerView {
+                overlayBehavior
+                    .padding(.top)
+                appFiltering
+            }
+        }
+    }
+    
+    private var appFiltering: some View {
+        SettingsSection("App Filtering") {
+            FilterInstalledApps()
+                .padding(8)
         }
     }
     

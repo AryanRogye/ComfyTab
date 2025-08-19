@@ -25,6 +25,7 @@ class SettingsManager : ObservableObject {
         static let isIntroAnimationEnabled  = "isIntroAnimationEnabled"
         static let showAppNameUnderIcon     = "showAppNameUnderIcon"
         static let isHoverEffectEnabled     = "isHoverEffectEnabled"
+        static let directoriesOfApps        = "directoriesOfApps"
     }
     
     /// Defaults
@@ -78,11 +79,16 @@ class SettingsManager : ObservableObject {
         }
     }
     
+    /// Array of Directories that can hold the user Apps
+    @Published var directoriesOfApps: [URL] {
+        didSet {
+            defaults.set(directoriesOfApps.map(\.path), forKey: Keys.directoriesOfApps)
+        }
+    }
     
     @Published var isSettingsWindowOpen: Bool = false
     
     var cancellables: Set<AnyCancellable> = []
-    
     
     /// Load in Defaults
     init(defaults: UserDefaults = .standard) {
@@ -94,9 +100,11 @@ class SettingsManager : ObservableObject {
         self.isIntroAnimationEnabled = true
         self.showAppNameUnderIcon = false
         self.isHoverEffectEnabled = true
+        self.directoriesOfApps = []
         
         loadDefaults()
         
+        // MARK: - Binding Launch At Login
         $launchAtLogin
             .sink { [weak self] launchAtLogin in
                 guard let self = self else { return }
@@ -125,6 +133,7 @@ class SettingsManager : ObservableObject {
             }
             .store(in: &cancellables)
         
+        // MARK: - Bind Show Dock Icon
         /// 1. Settings window open → always show (overrides everything).
         /// 2. User enabled Dock icon → always show (even if settings window is closed).
         /// 3. Neither true → hide (after the delay).
@@ -145,6 +154,7 @@ class SettingsManager : ObservableObject {
             }
             .store(in: &cancellables)
         
+        // MARK: - Bind Settings Window Open
         $isSettingsWindowOpen
             .sink { [weak self] isOpen in
                 guard let self = self else { return }
@@ -159,6 +169,7 @@ class SettingsManager : ObservableObject {
             }
             .store(in: &cancellables)
         
+        // MARK: - Bind Color Scheme
         /// Handling Color Scheme
         $colorScheme
             .sink { colorScheme in
@@ -216,6 +227,7 @@ extension SettingsManager {
         loadIsIntroAnimationEnabled()
         loadShowAppNameUnderIcon()
         loadIsHoverEffectEnabled()
+        loadDirectoryOfApps()
     }
     
     // MARK: - Load Modifier Key
@@ -269,6 +281,22 @@ extension SettingsManager {
             self.isHoverEffectEnabled = isHoverEffectEnabled
         } else {
             self.isHoverEffectEnabled = true
+        }
+    }
+    
+    // MARK: - Load URL's which is what the app's are held in
+    private func loadDirectoryOfApps() {
+        if let paths = defaults.object(forKey: Keys.directoriesOfApps) as? [String] {
+            self.directoriesOfApps = paths.map { URL(fileURLWithPath: $0) }
+        }
+        ensureDefaultDirectoryOfAppsExists()
+    }
+    
+    private func ensureDefaultDirectoryOfAppsExists() {
+        AppDefaultURLS.urls.forEach {
+            if !self.directoriesOfApps.contains($0) {
+                self.directoriesOfApps.append($0)
+            }
         }
     }
 }

@@ -8,7 +8,7 @@
 import Foundation
 import AppKit
 
-class RunningAppFetcher {
+struct RunningAppFetcher {
     
     // MARK: - Public API's
     /// Get all running applications
@@ -82,17 +82,17 @@ class RunningAppFetcher {
         
         
         if result != .success {
-            print("Failed to get windows for app: \(appName) — AXError: \(result.rawValue)")
+//            print("Failed to get windows for app: \(appName) — AXError: \(result.rawValue)")
             
             // Try main window
             result = AXUIElementCopyAttributeValue(axElement, kAXMainWindowAttribute as CFString, &value)
             if result != .success {
-                print("Failed To Get Main Window - AXError: \(result.rawValue)")
+//                print("Failed To Get Main Window - AXError: \(result.rawValue)")
                 
                 // Try focused window
                 result = AXUIElementCopyAttributeValue(axElement, kAXFocusedWindowAttribute as CFString, &value)
                 if result != .success {
-                    print("Failed To Get Focused Window - AXError: \(result.rawValue)")
+//                    print("Failed To Get Focused Window - AXError: \(result.rawValue)")
                     return false // No usable window
                 }
             }

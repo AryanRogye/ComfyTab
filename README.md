@@ -64,7 +64,11 @@ sequenceDiagram
             AC->>SM:     Initialize SettingsManager
             AC->>RAM:    Initialize RunningAppManager
             AC->>PM:     Initialize PermissionManager
+        end
+
+        rect rgb(34,197,94)
             AC->>IAM:    Initialize InstalledAppManager
+            IAM->>SM:   InstalledAppManager Depends on SettingsManager.directoriesOfApps
         end
 
         rect rgb(46,16,101)

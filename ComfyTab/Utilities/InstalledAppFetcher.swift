@@ -5,64 +5,58 @@
 //  Created by Aryan Rogye on 7/28/25.
 //
 
-import Foundation
 import AppKit
+import UniformTypeIdentifiers
 
-struct InstalledApp: Hashable {
-    let url: URL
-    let name: String
-    let image: NSImage?
-}
-
-class InstalledAppFetcher {
-    let appDirs = [
-        "/Applications",
-        "/System/Applications",
-        "\(NSHomeDirectory())/Applications"
-    ]
+final class InstalledAppFetcher {
     
-    func fetchApps() -> [InstalledApp] {
-        var installedApps : [InstalledApp] = []
+    static func fetchApps(
+        from directoryOfApps: [URL],
+        timeout: TimeInterval = 1.5
+    ) -> [InstalledApp] {
         
-        for dir in appDirs {
-            let dirURL = URL(fileURLWithPath: dir)
-            if let urls = try? FileManager.default.contentsOfDirectory(at: dirURL, includingPropertiesForKeys: nil, options: [.skipsHiddenFiles]) {
-                installedApps += urls.compactMap { url in
-                    guard url.pathExtension == "app" else { return nil }
-                    return InstalledApp(
-                        url: url,
-                        name: getAppName(from: url),
-                        image: getAppIcon(from: url))
+        let fm = FileManager.default
+        let keys: Set<URLResourceKey> = [.contentTypeKey, .localizedNameKey]
+        
+        var results : [InstalledApp] = []
+        
+        for root in directoryOfApps where fm.fileExists(atPath: root.path) {
+            guard let e = fm.enumerator(
+                at: root,
+                includingPropertiesForKeys: Array(keys),
+                options: [.skipsHiddenFiles, .skipsPackageDescendants]
+            ) else { continue }
+            
+            for case let url as URL in e {
+                // Only keep .app bundles
+                guard (try? url.resourceValues(forKeys: keys))?
+                    .contentType?
+                    .conforms(to: .applicationBundle) == true
+                else { continue }
+                
+                let bundle = Bundle(url: url)
+                
+                let name = (try? url.resourceValues(forKeys: [.localizedNameKey]))?.localizedName
+                ?? bundle?.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String
+                ?? bundle?.object(forInfoDictionaryKey: "CFBundleName") as? String
+                ?? url.deletingPathExtension().lastPathComponent
+                
+                let bundleID = bundle?.bundleIdentifier
+                let pid = bundleID.flatMap {
+                    NSRunningApplication.runningApplications(withBundleIdentifier: $0).first?.processIdentifier
                 }
+                
+                results.append(InstalledApp(url: url, name: name, bundleID: bundleID))
             }
+            
+            var seen = Set<String>()
+            return results.compactMap { app in
+                let key = app.bundleID ?? app.url.path
+                return seen.insert(key).inserted ? app : nil
+            }
+            .sorted { $0.name.localizedCaseInsensitiveCompare($1.name) == .orderedAscending }
         }
         
-        return installedApps
-    }
-    
-    func getAppName(from url: URL) -> String {
-        let infoPlistURL = url.appendingPathComponent("Contents/Info.plist")
-        
-        if let info = NSDictionary(contentsOf: infoPlistURL),
-           let displayName = info["CFBundleDisplayName"] as? String ?? info["CFBundleName"] as? String {
-            return displayName
-        }
-        
-        return url.deletingPathExtension().lastPathComponent
-    }
-    
-    func getAppIcon(from url: URL) -> NSImage? {
-        let infoPlistURL = url.appendingPathComponent("Contents/Info.plist")
-        var iconFileName = "Icon"
-        if let info = NSDictionary(contentsOf: infoPlistURL),
-           let iconName = info["CFBundleIconFile"] as? String {
-            iconFileName = iconName
-        }
-        // .icns extension may not be included in the plist
-        if !iconFileName.hasSuffix(".icns") {
-            iconFileName += ".icns"
-        }
-        let iconURL = url.appendingPathComponent("Contents/Resources/\(iconFileName)")
-        return NSImage(contentsOfFile: iconURL.path)
+        return []
     }
 }
