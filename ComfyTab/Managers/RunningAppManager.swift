@@ -12,6 +12,18 @@ final actor RunningAppManager {
     private(set) var runningApps: [RunningApp] = []
     private(set) var fetchEpoch = 0   // cancels stale inflight fetches
     
+    public func removeFromCache(_ app: RunningApp) {
+        runningApps.removeAll {
+            $0 == app
+        }
+    }
+    
+    public func addToCache(_ app: RunningApp) {
+        if !runningApps.contains(app) {
+            runningApps.append(app)
+        }
+    }
+    
     /**
      NOTE:
         By adding @MainActor to the completion parameter, i'm telling the compiler that the

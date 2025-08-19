@@ -30,6 +30,9 @@ struct ComfyTab: View {
             if showDebug {
                 Text("Middle")
             }
+            
+            ComfyTabMiddleCircle()
+            
             #endif
             /// If User wants animation on the opening
             if viewModel.settingsManager.isIntroAnimationEnabled {
@@ -190,7 +193,7 @@ struct ComfyTab: View {
         }
         .buttonStyle(.plain)
         .onHover { hovering in
-            withAnimation(.spring(response: 0.2, dampingFraction: 0.8)) {
+            withAnimation(AppAnims.circleAnimation) {
                 hoveringIndex = hovering && viewModel.settingsManager.isHoverEffectEnabled
                 ? index : nil
             }
@@ -240,7 +243,7 @@ struct ComfyTab: View {
         visibleApps = []
         for (i, app) in apps.enumerated() {
             DispatchQueue.main.asyncAfter(deadline: .now() + Double(i) * 0.1) {
-                withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
+                withAnimation(AppAnims.loadingAnimation) {
                     visibleApps.append(app)
                 }
             }

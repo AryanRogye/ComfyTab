@@ -26,7 +26,11 @@ class OverlayViewModel: ObservableObject {
     var runningAppManager: RunningAppManager
     var settingsManager  : SettingsManager
     
+    @Published var allRunningApps: [RunningApp] = []
+    /// Filtered List of Apps
     @Published var runningApps: [RunningApp] = []
+    /// List of All Hidden Apps We Add To
+    @Published var hiddenApps: Set<RunningApp> = []
     
     init(
         overlayState: OverlayState = .homeView,
@@ -69,7 +73,11 @@ class OverlayViewModel: ObservableObject {
         Task { [weak self] in
             guard let self else { return }
             await runningAppManager.getRunningApps { apps in
-                self.runningApps = apps
+                self.allRunningApps = apps  /// we use this to filter
+                var unFilteredApps = apps
+                unFilteredApps.removeAll { self.hiddenApps.contains($0) }
+                
+                self.runningApps = unFilteredApps
                 print("got Running App \(self.runningApps.count)")
             }
         }
@@ -77,5 +85,30 @@ class OverlayViewModel: ObservableObject {
     
     public func focusApp(index: Int)  {
         self.runningAppManager.goToApp(runningApps[index])
+    }
+    
+    // MARK: - Hidden App Stuff
+    public func addHiddenApp(_ isOn: Bool,for app: RunningApp) {
+        if isOn {
+            hiddenApps.insert(app)
+            self.runningApps.removeAll { $0 == app }
+            Task { [weak self] in
+                guard let self else { return }
+                /// we just remove it so the UI updates
+                await self.runningAppManager.removeFromCache(app)
+            }
+        } else {
+            hiddenApps.remove(app)
+            if allRunningApps.contains(app) {
+                self.runningApps.append(app)
+            }
+            Task { [weak self] in
+                guard let self else { return }
+                
+                /// if All The Running Apps has the app we want, just add it in
+                
+                await self.runningAppManager.addToCache(app)
+            }
+        }
     }
 }
