@@ -14,8 +14,9 @@
 - Clone and open `ComfyTab.xcodeproj`
 - Run the `ComfyTab` target
 
+## For Developers
 
-## Initialization Flow
+### Initialization Flow
 
 ```mermaid
 %%{init: {

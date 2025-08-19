@@ -6,23 +6,14 @@
 //
 
 import SwiftUI
+import Combine
 import CoreGraphics
 
 /// Donut Shaped
 struct ComfyTab: View {
     
     @EnvironmentObject var viewModel: OverlayViewModel
-    
-    /// What index we're hovering on
-    @State private var hoveringIndex: Int? = nil
-    
-    private let iconSize: CGFloat           = 48
-    private let distanceFromCenter: CGFloat = 130
-    private let hoverPopOut: CGFloat        = 12
-    private let angleOffset: CGFloat        = -.pi/2
-    
-    @State private var visibleApps: [RunningApp] = []
-    var parameters = LiquidGlassParameters()
+    @StateObject private var internalViewModel = ViewModel()
     
     var body: some View {
         ZStack {
@@ -32,6 +23,7 @@ struct ComfyTab: View {
             }
             
             ComfyTabMiddleCircle()
+                .animation(.spring, value: viewModel.isShowing)
             
             #endif
             /// If User wants animation on the opening
@@ -45,14 +37,14 @@ struct ComfyTab: View {
             if value {
                 viewModel.getRunningApps()
             } else {
-                visibleApps = []
+                internalViewModel.visibleApps = []
             }
         }
         .onChange(of: viewModel.runningApps) { _, apps in
             guard viewModel.isShowing else { return }
             /// Only add Apps One By One if the into is enabled
             if viewModel.settingsManager.isIntroAnimationEnabled {
-                addAppsOneByOne(apps: apps)
+                internalViewModel.addAppsOneByOne(apps: apps)
             }
         }
     }
@@ -89,8 +81,8 @@ struct ComfyTab: View {
     // MARK: - App View Animated
     private var appsViewAnimated: some View {
         ZStack {
-            ForEach(Array(visibleApps.enumerated()), id: \.offset) { index, app in
-                let count = visibleApps.count
+            ForEach(Array(internalViewModel.visibleApps.enumerated()), id: \.offset) { index, app in
+                let count = internalViewModel.visibleApps.count
                 let start = Angle(degrees: Double(index) * 360.0 / Double(count))
                 let end   = Angle(degrees: Double(index+1) * 360.0 / Double(count))
                 
@@ -108,7 +100,7 @@ struct ComfyTab: View {
                         thickness: viewModel.comfyTabSize.thickness
                     )
                 )
-                .animation(.spring(response: 0.4, dampingFraction: 0.8), value: visibleApps)
+                .animation(.spring(response: 0.4, dampingFraction: 0.8), value: internalViewModel.visibleApps)
             }
         }
         .frame(width: viewModel.comfyTabSize.radius * 2,
@@ -118,6 +110,7 @@ struct ComfyTab: View {
     
     
     // MARK: - Circle Piece
+    /// circle piece allows us to get the hover on each one we set it for
     private func circlePiece(
         index: Int,
         count: Int,
@@ -129,7 +122,7 @@ struct ComfyTab: View {
             viewModel.focusApp(index: index)
         }) {
             ZStack {
-                let isHovered = hoveringIndex == index
+                let isHovered = internalViewModel.hoveringIndex == index
                 let extraRadius: CGFloat = isHovered ? 12 : 0
                 
                 ZStack {
@@ -181,7 +174,7 @@ struct ComfyTab: View {
                             ))
                     }
                 }
-                .position(labelPosition(
+                .position(internalViewModel.labelPosition(
                     startAngle: start,
                     endAngle: end,
                     radius: viewModel.comfyTabSize.radius,
@@ -194,7 +187,7 @@ struct ComfyTab: View {
         .buttonStyle(.plain)
         .onHover { hovering in
             withAnimation(AppAnims.circleAnimation) {
-                hoveringIndex = hovering && viewModel.settingsManager.isHoverEffectEnabled
+                internalViewModel.hoveringIndex = hovering && viewModel.settingsManager.isHoverEffectEnabled
                 ? index : nil
             }
         }
@@ -216,35 +209,46 @@ struct ComfyTab: View {
         .shadow(radius: 4)
         .contentShape(Circle())
     }
+}
+
+
+extension ComfyTab {
     
-    // MARK: - Helpers
-    
-    /// Used for positioning of the lables
-    private func labelPosition(
-        startAngle: Angle,
-        endAngle: Angle,
-        radius: CGFloat,
-        thickness: CGFloat,
-        offset: CGFloat = 0
-    ) -> CGPoint {
-        let midAngle = (startAngle.radians + endAngle.radians) / 2
-        let r = radius - (thickness / 2)
-        let center = radius
+    @MainActor
+    class ViewModel: ObservableObject {
         
-        // offset pushes the label outward along the slice direction
-        return CGPoint(
-            x: center + cos(midAngle) * r + cos(midAngle) * offset,
-            y: center + sin(midAngle) * r + sin(midAngle) * offset
-        )
-    }
-    
-    /// Function will add apps into the array, one by one, this simulates a nice animation
-    private func addAppsOneByOne(apps: [RunningApp]) {
-        visibleApps = []
-        for (i, app) in apps.enumerated() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + Double(i) * 0.1) {
-                withAnimation(AppAnims.loadingAnimation) {
-                    visibleApps.append(app)
+        /// What index we're hovering on
+        @Published public var hoveringIndex: Int? = nil
+        /// Used when animating the intro
+        @Published public var visibleApps: [RunningApp] = []
+        
+        /// Used for positioning of the lables
+        public func labelPosition(
+            startAngle: Angle,
+            endAngle: Angle,
+            radius: CGFloat,
+            thickness: CGFloat,
+            offset: CGFloat = 0
+        ) -> CGPoint {
+            let midAngle = (startAngle.radians + endAngle.radians) / 2
+            let r = radius - (thickness / 2)
+            let center = radius
+            
+            // offset pushes the label outward along the slice direction
+            return CGPoint(
+                x: center + cos(midAngle) * r + cos(midAngle) * offset,
+                y: center + sin(midAngle) * r + sin(midAngle) * offset
+            )
+        }
+        
+        /// Function will add apps into the array, one by one, this simulates a nice animation
+        public func addAppsOneByOne(apps: [RunningApp]) {
+            visibleApps = []
+            for (i, app) in apps.enumerated() {
+                DispatchQueue.main.asyncAfter(deadline: .now() + Double(i) * 0.1) {
+                    withAnimation(AppAnims.loadingAnimation) {
+                        self.visibleApps.append(app)
+                    }
                 }
             }
         }
@@ -257,7 +261,7 @@ struct ComfyTab: View {
     
     ZStack {
         ComfyTab(
-            parameters: LiquidGlassParameters()
+//            parameters: LiquidGlassParameters()
         )
         .environmentObject(overlayViewModel)
         .task {
@@ -267,3 +271,4 @@ struct ComfyTab: View {
     }
     .frame(width: 300, height: 300)
 }
+

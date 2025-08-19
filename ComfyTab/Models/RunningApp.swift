@@ -6,6 +6,9 @@
 //
 
 import SwiftUI
+import Cocoa
+import AppKit
+import Darwin
 
 struct RunningApp: Identifiable, Equatable, Hashable {
     var name    : String
@@ -66,5 +69,21 @@ struct RunningApp: Identifiable, Equatable, Hashable {
                 print("✅ Launched \(bundleID)")
             }
         }
+    }
+    
+    func revealInFinder() {
+        if let ra = NSRunningApplication(processIdentifier: pid), let bundleURL = ra.bundleURL {
+            NSWorkspace.shared.activateFileViewerSelecting([bundleURL])
+            return
+        }
+        
+        if let bid = bundleID,
+           let appURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: bid) {
+            NSWorkspace.shared.activateFileViewerSelecting([appURL])
+            return
+        }
+        
+        // 4) Nothing to reveal
+        NSSound.beep()
     }
 }

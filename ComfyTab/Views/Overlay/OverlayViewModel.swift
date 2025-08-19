@@ -8,17 +8,9 @@
 import SwiftUI
 import Combine
 
-enum OverlayState {
-    case homeView
-    case configureVibe
-    case goWithFlow
-}
-
 class OverlayViewModel: ObservableObject {
     @Published var isPinned: Bool = false
     
-    var lastState: OverlayState? = nil
-    @Published var overlayState : OverlayState = .homeView
     @Published var isShowing: Bool = false
     
     @Published var comfyTabSize: (radius: CGFloat, thickness: CGFloat) = (130, 80)
@@ -26,45 +18,42 @@ class OverlayViewModel: ObservableObject {
     var runningAppManager: RunningAppManager
     var settingsManager  : SettingsManager
     
+    /// All Running Apps, this is nice when we wanna display the currently running apps
     @Published var allRunningApps: [RunningApp] = []
     /// Filtered List of Apps
     @Published var runningApps: [RunningApp] = []
     /// List of All Hidden Apps We Add To
     @Published var hiddenApps: Set<RunningApp> = []
     
+    @Published var closeOnFinderOpen: Bool = false
+
     init(
-        overlayState: OverlayState = .homeView,
         runningAppManager: RunningAppManager,
         settingsManager: SettingsManager
     ) {
-        self.overlayState = overlayState
         self.runningAppManager = runningAppManager
         self.settingsManager = settingsManager
     }
     
-    // MARK: - Pin Toggle
+    // MARK: - Public Utilities
+    /// toggles the state of the pin, Hotkey Listens for this value
     public func togglePinned() {
         isPinned.toggle()
     }
-    
-    // MARK: - State Functions
-    public func switchOverlayState(to state: OverlayState) {
-        self.lastState = self.overlayState
-        self.overlayState = state
-        
-        if overlayState == .homeView {
-            self.lastState = nil
-        }
+    /// Forces if Pinned, to close, this is nice, when finder is opened to close it
+    public func onFinderOpen(_ app: RunningApp) {
+        app.revealInFinder()
     }
-    
-    public func goBack() {
-        guard let lastState = lastState else { return }
-        self.overlayState = lastState
-        self.lastState = nil
+    /// Nice Utility Function to Focus the App, Called when we click from the Dial
+    public func focusApp(index: Int)  {
+        self.runningAppManager.goToApp(runningApps[index])
     }
-    
+
+    // MARK: - Running Apps
+    /// Function Gets the Running Apps For The User
     public func getRunningApps() {
         
+        /// if Intro is Enabled we clear to show a nice animation of filling
         if settingsManager.isIntroAnimationEnabled {
             // Clear first to ensure animation triggers
             self.runningApps = []
@@ -73,19 +62,34 @@ class OverlayViewModel: ObservableObject {
         Task { [weak self] in
             guard let self else { return }
             await runningAppManager.getRunningApps { apps in
-                self.allRunningApps = apps  /// we use this to filter
-                var unFilteredApps = apps
-                unFilteredApps.removeAll { self.hiddenApps.contains($0) }
+                // 1) Build a fast lookup for hidden apps (by pid OR bundleID)
+                let hiddenPIDs: Set<pid_t> = Set(self.hiddenApps.map { $0.pid })
+                let hiddenBundleIDs: Set<String> = Set(self.hiddenApps.compactMap { $0.bundleID })
                 
-                self.runningApps = unFilteredApps
-                print("got Running App \(self.runningApps.count)")
+                // 2) Filter out hidden apps using stable identity
+                let filtered = apps.filter { app in
+                    if hiddenPIDs.contains(app.pid) { return false }
+                    if let bid = app.bundleID, hiddenBundleIDs.contains(bid) { return false }
+                    return true
+                }
+                
+                // 3) De-dupe by pid (keeps first occurrence, preserves order)
+                var seen = Set<pid_t>(minimumCapacity: filtered.count)
+                var result: [RunningApp] = []
+                result.reserveCapacity(filtered.count)
+                
+                for app in filtered {
+                    if seen.insert(app.pid).inserted {
+                        result.append(app)
+                    }
+                }
+                
+                self.allRunningApps = result  /// we use this to filter
+                self.runningApps = result
             }
         }
     }
     
-    public func focusApp(index: Int)  {
-        self.runningAppManager.goToApp(runningApps[index])
-    }
     
     // MARK: - Hidden App Stuff
     public func addHiddenApp(_ isOn: Bool,for app: RunningApp) {

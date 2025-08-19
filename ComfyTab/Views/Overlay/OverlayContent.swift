@@ -41,56 +41,6 @@ struct OverlayContent: View {
     }
     
     private var overlay: some View {
-                
-//                topRow
-//                    .padding([.horizontal, .top], 8)
-//                    .frame(alignment: .top)
-//                
-//                
-//                switch viewModel.overlayState {
-//                case .homeView: OverlayHome()
-//                case .configureVibe: OverlayConfigureVibe()
-//                case .goWithFlow: OverlayGoWithFlow()
-//                }
-                
         ComfyTab()
-    }
-    
-    // MARK: - Top Row
-    private var topRow: some View {
-        HStack(alignment: .top) {
-            if viewModel.lastState != nil {
-                backButton
-            }
-            Spacer()
-            pinButton
-        }
-    }
-    
-    // MARK: - Back Button
-    private var backButton: some View {
-        Button(action: viewModel.goBack) {
-            Image(systemName: "arrowshape.backward")
-                .resizable()
-                .foregroundColor(.secondary)
-                .frame(width: 14, height: 14)
-        }
-        .buttonStyle(.plain)
-    }
-    
-    // MARK: - Pin Button
-    private var pinButton: some View {
-        Button(action : {
-            viewModel.togglePinned()
-        }) {
-            Image(systemName: viewModel.isPinned
-                  ? "pin.fill"
-                  : "pin"
-            )
-            .resizable()
-            .foregroundColor(.secondary)
-            .frame(width: 14, height: 17)
-        }
-        .buttonStyle(.plain)
     }
 }

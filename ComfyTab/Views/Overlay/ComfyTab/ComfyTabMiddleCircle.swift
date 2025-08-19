@@ -12,6 +12,7 @@ struct ComfyTabMiddleCircle: View {
     enum Size {
         case small
         case large
+        case hiddenApps
     }
     
     @EnvironmentObject var viewModel: OverlayViewModel
@@ -36,6 +37,23 @@ struct ComfyTabMiddleCircle: View {
                         centerPosition()
                         size = .small
                     }
+                } onEye: {
+                    withAnimation(AppAnims.circleAnimation) {
+                        animateLeft()
+                        size = .hiddenApps
+                    }
+                }
+            case .hiddenApps:
+                ComfyTabMiddleHiddenAppsView(ns: ns) {
+                    withAnimation(AppAnims.circleAnimation) {
+                        centerPosition()
+                        size = .small
+                    }
+                } onBack: {
+                    withAnimation(AppAnims.circleAnimation) {
+                        animateRight()
+                        size = .large
+                    }
                 }
             }
         }
@@ -48,6 +66,11 @@ struct ComfyTabMiddleCircle: View {
             size = .small
             centerPosition()
         }
+        .onChange(of: size) { _, value in
+            if value == .small {
+                viewModel.isPinned = false
+            }
+        }
     }
     
     private func centerPosition()  {
@@ -55,7 +78,16 @@ struct ComfyTabMiddleCircle: View {
                 y: viewModel.comfyTabSize.radius)
     }
     
+    private func animateLeft() {
+        centerPosition()
+        position = CGPoint(
+            x: position.x - (viewModel.comfyTabSize.radius * 2) - 10,
+            y: position.y
+        )
+    }
+    
     private func animateRight() {
+        centerPosition()
         position = CGPoint(
             x: position.x + (viewModel.comfyTabSize.radius * 2) + 10,
             y: position.y
@@ -64,43 +96,11 @@ struct ComfyTabMiddleCircle: View {
 }
 
 #Preview {
-    @Previewable @Namespace var ns
     let overlayViewModel = OverlayViewModel(runningAppManager: RunningAppManager(), settingsManager: SettingsManager())
-
+    
     
     ZStack {
-        ComfyTabMiddleSmallView(
-            ns: ns
-        ) {
-            
-        }
-    }
-    .environmentObject(overlayViewModel)
-    .task {
-        overlayViewModel.isShowing = true
-        overlayViewModel.getRunningApps()
-    }
-    .frame(width: 300, height: 100)
-
-    
-    ZStack {
-        ComfyTabMiddleLargeView(
-            ns: ns
-        ) {
-            
-        }
-    }
-    .environmentObject(overlayViewModel)
-    .task {
-        overlayViewModel.isShowing = true
-        overlayViewModel.getRunningApps()
-    }
-    .frame(width: 300, height: 300)
-    
-    ZStack {
-        ComfyTab(
-            parameters: LiquidGlassParameters()
-        )
+        ComfyTab()
         .environmentObject(overlayViewModel)
         .task {
             overlayViewModel.isShowing = true
@@ -108,5 +108,6 @@ struct ComfyTabMiddleCircle: View {
         }
     }
     .frame(width: 780, height: 300)
+    .scaleEffect(0.8)
 
 }
