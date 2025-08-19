@@ -21,11 +21,11 @@ struct ComfyTab: View {
             if showDebug {
                 Text("Middle")
             }
-            
+            #endif
+
             ComfyTabMiddleCircle()
                 .animation(.spring, value: viewModel.isShowing)
             
-            #endif
             /// If User wants animation on the opening
             if viewModel.settingsManager.isIntroAnimationEnabled {
                 appsViewAnimated
@@ -257,12 +257,16 @@ extension ComfyTab {
 
 #Preview {
     
-    let overlayViewModel = OverlayViewModel(runningAppManager: RunningAppManager(), settingsManager: SettingsManager())
+    var settingsManager = SettingsManager()
+    var runningAppManager = RunningAppManager()
     
+    var overlay = Overlay(
+        runningAppManager: runningAppManager, settingsManager: settingsManager
+    )
+    let overlayViewModel = OverlayViewModel(runningAppManager: runningAppManager, settingsManager: settingsManager, overlay: overlay)
+
     ZStack {
-        ComfyTab(
-//            parameters: LiquidGlassParameters()
-        )
+        ComfyTab()
         .environmentObject(overlayViewModel)
         .task {
             overlayViewModel.isShowing = true

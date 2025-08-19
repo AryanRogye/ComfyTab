@@ -26,13 +26,17 @@ class OverlayViewModel: ObservableObject {
     @Published var hiddenApps: Set<RunningApp> = []
     
     @Published var closeOnFinderOpen: Bool = false
+    
+    private var overlay: Overlay
 
     init(
         runningAppManager: RunningAppManager,
-        settingsManager: SettingsManager
+        settingsManager: SettingsManager,
+        overlay: Overlay
     ) {
         self.runningAppManager = runningAppManager
         self.settingsManager = settingsManager
+        self.overlay = overlay
     }
     
     // MARK: - Public Utilities
@@ -43,10 +47,12 @@ class OverlayViewModel: ObservableObject {
     /// Forces if Pinned, to close, this is nice, when finder is opened to close it
     public func onFinderOpen(_ app: RunningApp) {
         app.revealInFinder()
+        overlay.hide()
     }
     /// Nice Utility Function to Focus the App, Called when we click from the Dial
     public func focusApp(index: Int)  {
         self.runningAppManager.goToApp(runningApps[index])
+        overlay.hide()
     }
 
     // MARK: - Running Apps
@@ -62,6 +68,8 @@ class OverlayViewModel: ObservableObject {
         Task { [weak self] in
             guard let self else { return }
             await runningAppManager.getRunningApps { apps in
+                self.allRunningApps = apps // this cant be filtered
+                
                 // 1) Build a fast lookup for hidden apps (by pid OR bundleID)
                 let hiddenPIDs: Set<pid_t> = Set(self.hiddenApps.map { $0.pid })
                 let hiddenBundleIDs: Set<String> = Set(self.hiddenApps.compactMap { $0.bundleID })
@@ -84,7 +92,6 @@ class OverlayViewModel: ObservableObject {
                     }
                 }
                 
-                self.allRunningApps = result  /// we use this to filter
                 self.runningApps = result
             }
         }

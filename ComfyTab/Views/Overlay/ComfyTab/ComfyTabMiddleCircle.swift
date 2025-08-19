@@ -96,7 +96,13 @@ struct ComfyTabMiddleCircle: View {
 }
 
 #Preview {
-    let overlayViewModel = OverlayViewModel(runningAppManager: RunningAppManager(), settingsManager: SettingsManager())
+    var settingsManager = SettingsManager()
+    var runningAppManager = RunningAppManager()
+    
+    var overlay = Overlay(
+        runningAppManager: runningAppManager, settingsManager: settingsManager
+    )
+    let overlayViewModel = OverlayViewModel(runningAppManager: runningAppManager, settingsManager: settingsManager, overlay: overlay)
     
     
     ZStack {

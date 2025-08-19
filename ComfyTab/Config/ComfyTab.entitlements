@@ -6,9 +6,6 @@
         <key>com.apple.security.app-sandbox</key>
         <true/>
         
-        <key>com.apple.security.accessibility</key>
-        <true/>
-        
         <key>com.apple.security.automation.apple-events</key>
         <true/>
         

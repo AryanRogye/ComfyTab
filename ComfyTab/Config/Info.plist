@@ -3,9 +3,19 @@
 <plist version="1.0">
     <dict>
         
+        <!-- Background App -->
         <key>LSUIElement</key>
         <true/>
         
+        <!-- Utility App -->
+        <key>LSApplicationCategoryType</key>
+        <string>public.app-category.utilities</string>
+        
+        <!-- Turns Off Encryption Annoying Question -->
+        <key>ITSAppUsesNonExemptEncryption</key>
+        <false/>
+        
+        <!-- Acessibility Usage -->
         <key>NSAccessibilityUsageDescription</key>
         <string>This app needs Accessibility permission to detect your keyboard shortcut and retrieve information about open applications for the app switcher overlay.</string>
         

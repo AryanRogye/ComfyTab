@@ -25,14 +25,15 @@ class Overlay: ObservableObject {
     let overlayHeight    : CGFloat = 400
     
     var runningAppManager: RunningAppManager
-    var overlayViewModel: OverlayViewModel
+    var overlayViewModel: OverlayViewModel!
     private weak var previousFocousedWindow: NSRunningApplication?
     
     init(runningAppManager: RunningAppManager, settingsManager: SettingsManager) {
         self.runningAppManager = runningAppManager
         self.overlayViewModel = OverlayViewModel(
             runningAppManager: runningAppManager,
-            settingsManager: settingsManager
+            settingsManager: settingsManager,
+            overlay: self
         )
         
         prepareOverlay()
