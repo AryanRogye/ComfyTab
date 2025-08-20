@@ -48,9 +48,7 @@ final class AppCoordinator : ObservableObject {
     
     func prepare() {
         /// Call Once At The Start to Cache
-        if permissionManager.isAccessibilityEnabled {
-            overlay.overlayViewModel.getRunningApps()
-        }
+        overlay.overlayViewModel.getRunningApps()
         /// In The Past We Used CGEvent, to listen for events, now we use Carbon so its registed, we dont need
         /// permissions for the UI to show up
         hotkeyManager.setupHotkey()

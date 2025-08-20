@@ -18,16 +18,17 @@ class OverlayViewModel: ObservableObject {
     var runningAppManager: RunningAppManager
     var settingsManager  : SettingsManager
     
-    /// All Running Apps, this is nice when we wanna display the currently running apps
-    @Published var allRunningApps: [RunningApp] = []
     /// Filtered List of Apps
     @Published var runningApps: [RunningApp] = []
+    
+    /// All Running Apps, this is nice when we wanna display the currently running apps
+    @Published var allRunningApps: [RunningApp] = []
     /// List of All Hidden Apps We Add To
     @Published var hiddenApps: Set<RunningApp> = []
     @Published var closeOnFinderOpen: Bool = false
-   
+    
     private let overlay: Overlay
-
+    
     init(
         runningAppManager: RunningAppManager,
         settingsManager: SettingsManager,
@@ -56,12 +57,10 @@ class OverlayViewModel: ObservableObject {
     
     @MainActor
     public func getAppIcon(for app: RunningApp) -> NSImage {
-        return AppIconManager.loadAppIcon(
-            for: app.url,
-            bundleID: app.bundleID ?? ""
-        )
+        let image : NSImage? = AppIconManager.appIcons[app.bundleID ?? ""]
+        return image ?? AppIconManager.fallbackAppIcon()
     }
-
+    
     // MARK: - Running Apps
     /// Function Gets the Running Apps For The User
     public func getRunningApps() {
@@ -100,6 +99,7 @@ class OverlayViewModel: ObservableObject {
                 }
                 
                 self.runningApps = result
+                self.updateRunningAppIcons()
             }
         }
     }
@@ -132,5 +132,19 @@ class OverlayViewModel: ObservableObject {
     
     private func loadHiddenItems() {
         
+    }
+    
+    // MARK: - Private API's
+    
+    /// Update Running App Icons Internally, this can be nicely for `getAppIcon()`
+    @MainActor
+    private func updateRunningAppIcons() {
+        runningApps.forEach { app in
+            let url = app.url
+            let bundle = app.bundleID ?? ""
+            AppIconManager.loadAppIcon(for: url,bundleID: bundle) { _ in
+                self.objectWillChange.send()
+            }
+        }
     }
 }

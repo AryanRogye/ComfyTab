@@ -23,8 +23,6 @@ struct RunningAppFetcher {
             
             guard app.activationPolicy == .regular else { continue }
             
-            /// Create a Acessibilitty Element
-            let axElement = AXUIElementCreateApplication(app.processIdentifier)
             let name = app.localizedName ?? ""
             let hidden = app.isHidden
             let isTerminated = app.isTerminated
