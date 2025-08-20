@@ -8,6 +8,7 @@
 import Combine
 import AppKit
 import SwiftUI
+import os
 
 class FocusablePanel: NSPanel {
     override var canBecomeKey: Bool {
@@ -41,38 +42,32 @@ class Overlay: ObservableObject {
     
     // MARK: - Show Hide Overlay
     public func show() {
-        guard let overlay = overlay else {
-            prepareOverlay()
-            return
+        guard let overlay = overlay, !overlay.isVisible else { return }
+        
+        previousFocousedWindow = NSWorkspace.shared.frontmostApplication
+        calculateNewScreenPosition()
+        
+        overlay.alphaValue = 0
+        overlay.orderFrontRegardless()
+        NSAnimationContext.runAnimationGroup { _ in
+            overlay.animator().alphaValue = 1
+            NSApp.activate(ignoringOtherApps: true)
         }
         
-        if !overlay.isVisible {
-            previousFocousedWindow = NSWorkspace.shared.frontmostApplication
-            calculateNewScreenPosition()
-            NSApp.activate(ignoringOtherApps: true)
-//            OverlayHelper.centerMouse()
-            DispatchQueue.main.async {
-                self.overlayViewModel.isShowing = true
-            }
-            overlay.makeKeyAndOrderFront(nil)
-        }
+        overlayViewModel.isShowing = true
     }
     
     public func hide() {
-        guard let overlay = overlay else { return }
+        guard let overlay = overlay, overlay.isVisible else { return }
         
-        if overlay.isVisible {
-            DispatchQueue.main.async {
-                self.overlayViewModel.isShowing = false
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
-                    guard let self = self else { return }
-                    self.overlay.orderOut(nil)
-                    self.previousFocousedWindow?.activate(options: [.activateAllWindows])
-                    self.previousFocousedWindow = nil
-                }
-            }
-        }
+        NSAnimationContext.runAnimationGroup({ _ in
+            overlay.animator().alphaValue = 0
+        }, completionHandler: {
+            overlay.orderOut(nil)
+            self.previousFocousedWindow?.activate(options: [.activateAllWindows])
+            self.previousFocousedWindow = nil
+            self.overlayViewModel.isShowing = false
+        })
     }
     
     // MARK: - Calculate New Show
@@ -106,6 +101,7 @@ class Overlay: ObservableObject {
         overlay.backgroundColor = .clear
         overlay.isOpaque = false
         overlay.hasShadow = false
+        
         overlay.ignoresMouseEvents = false
         overlay.acceptsMouseMovedEvents = true
         
