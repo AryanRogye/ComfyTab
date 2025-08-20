@@ -9,6 +9,7 @@ import Combine
 
 /// we make it observable so we can pass it around as a enviorment object
 final class AppCoordinator : ObservableObject {
+    
     var settingsManager     : SettingsManager
     let permissionManager   : PermissionManager
     let hotkeyManager       : HotkeyManager

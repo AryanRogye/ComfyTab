@@ -12,11 +12,11 @@ import Darwin
 
 struct RunningApp: Identifiable, Equatable, Hashable {
     var name    : String
-    var icon    : NSImage?
     var hidden  : Bool
     var isTerminated: Bool
     var bundleID: String?
     var pid     : pid_t
+    var url     : URL?
     
     /// stable ID for SwiftUI diffing
     var id: String {
@@ -31,16 +31,16 @@ struct RunningApp: Identifiable, Equatable, Hashable {
         name: String,
         hidden: Bool,
         isTerminated: Bool,
-        icon: NSImage? = nil,
         bundleID: String?,
-        pid: pid_t
+        pid: pid_t,
+        url: URL?
     ) {
         self.name = name
         self.hidden = hidden
         self.isTerminated = isTerminated
-        self.icon = icon
         self.bundleID = bundleID
         self.pid = pid
+        self.url = url
     }
     
     public func focusApp() {

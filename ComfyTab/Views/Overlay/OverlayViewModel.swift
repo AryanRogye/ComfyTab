@@ -25,8 +25,8 @@ class OverlayViewModel: ObservableObject {
     /// List of All Hidden Apps We Add To
     @Published var hiddenApps: Set<RunningApp> = []
     @Published var closeOnFinderOpen: Bool = false
-    
-    private var overlay: Overlay
+   
+    private let overlay: Overlay
 
     init(
         runningAppManager: RunningAppManager,
@@ -52,6 +52,14 @@ class OverlayViewModel: ObservableObject {
     public func focusApp(index: Int)  {
         self.runningAppManager.goToApp(runningApps[index])
         overlay.hide()
+    }
+    
+    @MainActor
+    public func getAppIcon(for app: RunningApp) -> NSImage {
+        return AppIconManager.loadAppIcon(
+            for: app.url,
+            bundleID: app.bundleID ?? ""
+        )
     }
 
     // MARK: - Running Apps

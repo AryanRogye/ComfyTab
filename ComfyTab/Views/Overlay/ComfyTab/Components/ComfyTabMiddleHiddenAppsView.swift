@@ -70,11 +70,9 @@ struct ComfyTabMiddleHiddenAppsView: View {
     private var hiddenAppToggle: some View {
         ForEach(viewModel.allRunningApps) { app in
             HStack(alignment: .center) {
-                if let icon = app.icon {
-                    Image(nsImage: icon)
-                        .resizable()
-                        .frame(width: 16, height: 16)
-                }
+                Image(nsImage: viewModel.getAppIcon(for: app))
+                    .resizable()
+                    .frame(width: 16, height: 16)
                 Text(app.name)
                 
                 Spacer()

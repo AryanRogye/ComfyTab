@@ -68,14 +68,9 @@ struct ComfyTabMiddleLargeView: View {
                         Button(action: {
                             viewModel.onFinderOpen(app)
                         }) {
-                            if let icon = app.icon {
-                                Image(nsImage: icon)
-                                    .resizable()
-                                    .frame(width: 22, height: 22)
-                            } else {
-                                RoundedRectangle(cornerRadius: 6)
-                                    .frame(width: 22, height: 22)
-                            }
+                            Image(nsImage: viewModel.getAppIcon(for: app))
+                                .resizable()
+                                .frame(width: 22, height: 22)
                         }
                         .buttonStyle(.plain)
                     }

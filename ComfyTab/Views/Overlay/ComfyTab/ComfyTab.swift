@@ -121,7 +121,7 @@ struct ComfyTab: View {
                 .transition(.identity)
                 
                 VStack {
-                    icon(for: app.icon, index: index)
+                    icon(for: app, index: index)
                     /// Swtich for the app icon names
                     if viewModel.settingsManager.showAppNameUnderIcon {
                         Text(app.name)
@@ -153,16 +153,12 @@ struct ComfyTab: View {
     
     // MARK: - App Icon
     /// Singular App View
-    private func icon(for icon: NSImage?, index: Int) -> some View {
+    private func icon(for app: RunningApp, index: Int) -> some View {
         Group {
-            if let icon = icon {
-                Image(nsImage: icon)
-                    .resizable()
-                    .frame(width: 30, height: 30)
-                    .clipShape(Circle())
-            } else {
-                Circle().fill(.gray)
-            }
+            Image(nsImage: viewModel.getAppIcon(for: app))
+                .resizable()
+                .frame(width: 30, height: 30)
+                .clipShape(Circle())
         }
         /// Lil Performance
         .shadow(radius:
