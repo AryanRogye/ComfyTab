@@ -20,7 +20,7 @@ public class HotkeyManager {
     private(set) var settingsManager   : SettingsManager
     private(set) var localMonitor      = LocalMonitor()
     private(set) var toggleTabHotKey   : KeyboardShortcuts.Name
-    
+
     var cancellables = Set<AnyCancellable>()
     
     init(
@@ -61,20 +61,11 @@ public class HotkeyManager {
                     KeyboardShortcuts.setShortcut(
                         .init(.tab, modifiers: [
                             modifier == .control ? .control
-                            : modifier == .option ? .option
-                            : .shift
+                                : modifier == .option ? .option
+                                    : .shift
                         ]),
                         for: .toggleTab
                     )
-                }
-                .store(in: &self.cancellables)
-            
-            overlayViewModel.$isShowing
-                .removeDuplicates()
-                .debounce(for: .milliseconds(120), scheduler: RunLoop.main)
-                .filter { !$0 }
-                .sink { [weak self] _ in
-                    self?.localMonitor.stop()
                 }
                 .store(in: &self.cancellables)
         }
@@ -105,9 +96,10 @@ public class HotkeyManager {
             /// If The ModifierKey is still held OR the OverlayViewModel is pinned
             /// just return
             if self.localMonitor.isHeldNow() || self.overlayViewModel.isPinned {
+                print("Returning Cuz held: \(self.localMonitor.isHeldNow()) isPinned: \(self.overlayViewModel.isPinned)")
                 return
             }
-            self.overlay.hide()
+            print("Should Hide Now")
         }
     }
     
