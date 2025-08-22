@@ -9,15 +9,15 @@ import SwiftUI
 
 struct HoverEffect: View {
     
-    @EnvironmentObject private var settingsManager : SettingsManager
-    
+    @EnvironmentObject var viewModel: BehaviorViewModel
+
     var body: some View {
         HStack {
             Text("Hover Effect")
             
             Spacer()
             
-            Toggle("Hover Effect", isOn: $settingsManager.isHoverEffectEnabled)
+            Toggle("Hover Effect", isOn: viewModel.isHoverEffectEnabled)
                 .toggleStyle(.switch)
                 .labelsHidden()
         }

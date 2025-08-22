@@ -15,13 +15,25 @@ enum SettingTab: String, CaseIterable, Hashable {
     
     var color: Color {
         switch self {
-        case .general, .behavior, .permissions, .about:
+        case .general:
+            return Color.primary.opacity(0.15) // neutral backdrop
+        case .behavior:
+            return Color.primary.opacity(0.15) // neutral backdrop
+        case .permissions:
+            return Color.primary.opacity(0.15) // neutral backdrop
+        case .about:
             return Color.primary.opacity(0.15) // neutral backdrop
         }
     }
     var titleColor: Color {
         switch self {
-        case .general, .behavior, .permissions, .about:
+        case .general:
+            return Color.primary.opacity(0.75) // neutral backdrop
+        case .behavior:
+            return Color.primary.opacity(0.75) // neutral backdrop
+        case .permissions:
+            return Color.primary.opacity(0.75) // neutral backdrop
+        case .about:
             return Color.primary.opacity(0.75) // neutral backdrop
         }
     }

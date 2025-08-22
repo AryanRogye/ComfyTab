@@ -8,32 +8,159 @@
 
 /* Begin PBXBuildFile section */
 		9B217DC32E53133800979E6A /* KeyboardShortcuts in Frameworks */ = {isa = PBXBuildFile; productRef = 9B217DC22E53133800979E6A /* KeyboardShortcuts */; };
+		9B2E01182E569CF50087A5CB /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00BF2E569CF50087A5CB /* AppCoordinator.swift */; };
+		9B2E01192E569CF50087A5CB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00C02E569CF50087A5CB /* AppDelegate.swift */; };
+		9B2E011A2E569CF50087A5CB /* ComfyTabApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00C12E569CF50087A5CB /* ComfyTabApp.swift */; };
+		9B2E011B2E569CF50087A5CB /* constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00C42E569CF50087A5CB /* constants.swift */; };
+		9B2E011C2E569CF50087A5CB /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00C82E569CF50087A5CB /* Bundle.swift */; };
+		9B2E011D2E569CF50087A5CB /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00C92E569CF50087A5CB /* Color.swift */; };
+		9B2E011E2E569CF50087A5CB /* Divider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00CA2E569CF50087A5CB /* Divider.swift */; };
+		9B2E011F2E569CF50087A5CB /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00CB2E569CF50087A5CB /* Image.swift */; };
+		9B2E01202E569CF50087A5CB /* ComfyTabMenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00CD2E569CF50087A5CB /* ComfyTabMenuBar.swift */; };
+		9B2E01212E569CF50087A5CB /* SettingsWindowScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00CE2E569CF50087A5CB /* SettingsWindowScene.swift */; };
+		9B2E01222E569CF50087A5CB /* HotkeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00D12E569CF50087A5CB /* HotkeyManager.swift */; };
+		9B2E01232E569CF50087A5CB /* LocalMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00D22E569CF50087A5CB /* LocalMonitor.swift */; };
+		9B2E01242E569CF50087A5CB /* AppIconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00D42E569CF50087A5CB /* AppIconManager.swift */; };
+		9B2E01252E569CF50087A5CB /* InstalledAppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00D52E569CF50087A5CB /* InstalledAppManager.swift */; };
+		9B2E01262E569CF50087A5CB /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00D62E569CF50087A5CB /* PermissionManager.swift */; };
+		9B2E01272E569CF50087A5CB /* RunningAppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00D72E569CF50087A5CB /* RunningAppManager.swift */; };
+		9B2E01282E569CF50087A5CB /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00D82E569CF50087A5CB /* SettingsManager.swift */; };
+		9B2E01292E569CF50087A5CB /* ColorSchemeSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00DA2E569CF50087A5CB /* ColorSchemeSetting.swift */; };
+		9B2E012A2E569CF50087A5CB /* InstalledApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00DB2E569CF50087A5CB /* InstalledApp.swift */; };
+		9B2E012B2E569CF50087A5CB /* ModifierKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00DC2E569CF50087A5CB /* ModifierKey.swift */; };
+		9B2E012C2E569CF50087A5CB /* RunningApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00DD2E569CF50087A5CB /* RunningApp.swift */; };
+		9B2E012D2E569CF50087A5CB /* SettingsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00DE2E569CF50087A5CB /* SettingsTab.swift */; };
+		9B2E012E2E569CF50087A5CB /* CirclePiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00E02E569CF50087A5CB /* CirclePiece.swift */; };
+		9B2E012F2E569CF50087A5CB /* Ring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00E12E569CF50087A5CB /* Ring.swift */; };
+		9B2E01302E569CF50087A5CB /* InstalledAppFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00E32E569CF50087A5CB /* InstalledAppFetcher.swift */; };
+		9B2E01322E569CF50087A5CB /* liquidGlass.metal in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00E62E569CF50087A5CB /* liquidGlass.metal */; };
+		9B2E01332E569CF50087A5CB /* LiquidGlassBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00E72E569CF50087A5CB /* LiquidGlassBackground.swift */; };
+		9B2E01342E569CF50087A5CB /* LiquidGlassParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00E82E569CF50087A5CB /* LiquidGlassParameters.swift */; };
+		9B2E01352E569CF50087A5CB /* ComfyTabMiddleCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00EA2E569CF50087A5CB /* ComfyTabMiddleCircle.swift */; };
+		9B2E01362E569CF50087A5CB /* ComfyTabMiddleHiddenAppsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00EB2E569CF50087A5CB /* ComfyTabMiddleHiddenAppsView.swift */; };
+		9B2E01372E569CF50087A5CB /* ComfyTabMiddleLargeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00EC2E569CF50087A5CB /* ComfyTabMiddleLargeView.swift */; };
+		9B2E01382E569CF50087A5CB /* ComfyTabMiddleSmallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00ED2E569CF50087A5CB /* ComfyTabMiddleSmallView.swift */; };
+		9B2E01392E569CF50087A5CB /* ComfyTabLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00EF2E569CF50087A5CB /* ComfyTabLayout.swift */; };
+		9B2E013A2E569CF50087A5CB /* ComfyTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00F12E569CF50087A5CB /* ComfyTab.swift */; };
+		9B2E013B2E569CF50087A5CB /* ComfyTabViewModel.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00F22E569CF50087A5CB /* ComfyTabViewModel.swift.swift */; };
+		9B2E013C2E569CF50087A5CB /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00F42E569CF50087A5CB /* VisualEffectView.swift */; };
+		9B2E013E2E569CF50087A5CB /* OverlayContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00F72E569CF50087A5CB /* OverlayContent.swift */; };
+		9B2E013F2E569CF50087A5CB /* OverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00F82E569CF50087A5CB /* OverlayViewModel.swift */; };
+		9B2E01402E569CF50087A5CB /* SettingsContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00FA2E569CF50087A5CB /* SettingsContainerView.swift */; };
+		9B2E01412E569CF50087A5CB /* SettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00FB2E569CF50087A5CB /* SettingsSection.swift */; };
+		9B2E01422E569CF50087A5CB /* About.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00FD2E569CF50087A5CB /* About.swift */; };
+		9B2E01432E569CF50087A5CB /* AppConfigurationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00FF2E569CF50087A5CB /* AppConfigurationSettings.swift */; };
+		9B2E01442E569CF50087A5CB /* FilterInstalledApps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E01002E569CF50087A5CB /* FilterInstalledApps.swift */; };
+		9B2E01452E569CF50087A5CB /* InstalledAppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E01012E569CF50087A5CB /* InstalledAppConfiguration.swift */; };
+		9B2E01462E569CF50087A5CB /* HoverEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E01032E569CF50087A5CB /* HoverEffect.swift */; };
+		9B2E01472E569CF50087A5CB /* IntroAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E01042E569CF50087A5CB /* IntroAnimation.swift */; };
+		9B2E01482E569CF50087A5CB /* ShowAppNameUnderIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E01052E569CF50087A5CB /* ShowAppNameUnderIcon.swift */; };
+		9B2E01492E569CF50087A5CB /* TriggerSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E01062E569CF50087A5CB /* TriggerSettings.swift */; };
+		9B2E014A2E569CF50087A5CB /* Behavior.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E01082E569CF50087A5CB /* Behavior.swift */; };
+		9B2E014B2E569CF50087A5CB /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E010A2E569CF50087A5CB /* Appearance.swift */; };
+		9B2E014C2E569CF50087A5CB /* General.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E010B2E569CF50087A5CB /* General.swift */; };
+		9B2E014D2E569CF50087A5CB /* LaunchAtLogin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E010C2E569CF50087A5CB /* LaunchAtLogin.swift */; };
+		9B2E014E2E569CF50087A5CB /* ShowDockIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E010D2E569CF50087A5CB /* ShowDockIcon.swift */; };
+		9B2E014F2E569CF50087A5CB /* PermissionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E010F2E569CF50087A5CB /* PermissionsView.swift */; };
+		9B2E01502E569CF50087A5CB /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E01122E569CF50087A5CB /* SettingsView.swift */; };
+		9B2E01512E569CF50087A5CB /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E01132E569CF50087A5CB /* SettingsViewModel.swift */; };
+		9B2E01532E569CF50087A5CB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9B2E01162E569CF50087A5CB /* Assets.xcassets */; };
+		9B2E01562E569DC40087A5CB /* RunningAppService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E01552E569DC00087A5CB /* RunningAppService.swift */; };
+		9B2E02A62E56AE710087A5CB /* OverlayCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E02A52E56AE6E0087A5CB /* OverlayCoordinator.swift */; };
+		9B2E02AA2E5705E00087A5CB /* SettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E02A92E5705DC0087A5CB /* SettingsService.swift */; };
+		9B2E02AC2E57E4360087A5CB /* InstalledAppService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E02AB2E57E4330087A5CB /* InstalledAppService.swift */; };
+		9B2E02AE2E57E8960087A5CB /* WindowCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E02AD2E57E8930087A5CB /* WindowCoordinator.swift */; };
+		9B2E02B02E57E93A0087A5CB /* SettingsCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E02AF2E57E9310087A5CB /* SettingsCoordinator.swift */; };
+		9B2E02B22E57ED4A0087A5CB /* OverlayDeps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E02B12E57ED460087A5CB /* OverlayDeps.swift */; };
+		9B2E02B42E57EDDE0087A5CB /* NSPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E02B32E57EDDD0087A5CB /* NSPanel.swift */; };
+		9B2E02B82E57F32A0087A5CB /* BehaviorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E02B72E57F3270087A5CB /* BehaviorViewModel.swift */; };
+		9B2E02BA2E57F3A60087A5CB /* BehaviorDeps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E02B92E57F3A40087A5CB /* BehaviorDeps.swift */; };
+		9B2E02BC2E57F8E50087A5CB /* SettingsDeps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E02BB2E57F8E20087A5CB /* SettingsDeps.swift */; };
+		9B2E02BE2E57FCD70087A5CB /* GeneralViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E02BD2E57FCD10087A5CB /* GeneralViewModel.swift */; };
+		9B2E02C02E57FD000087A5CB /* GeneralDeps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E02BF2E57FCFD0087A5CB /* GeneralDeps.swift */; };
+		9B2E02C32E5805130087A5CB /* PermissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E02C22E58050C0087A5CB /* PermissionService.swift */; };
+		9B2E02C52E5806840087A5CB /* PermissionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E02C42E58067E0087A5CB /* PermissionViewModel.swift */; };
+		9B2E02C72E58069A0087A5CB /* PermissionDeps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E02C62E5806930087A5CB /* PermissionDeps.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		9B2E00BF2E569CF50087A5CB /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		9B2E00C02E569CF50087A5CB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		9B2E00C12E569CF50087A5CB /* ComfyTabApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComfyTabApp.swift; sourceTree = "<group>"; };
+		9B2E00C32E569CF50087A5CB /* ComfyTab.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ComfyTab.entitlements; sourceTree = "<group>"; };
+		9B2E00C42E569CF50087A5CB /* constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = constants.swift; sourceTree = "<group>"; };
+		9B2E00C52E569CF50087A5CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9B2E00C82E569CF50087A5CB /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
+		9B2E00C92E569CF50087A5CB /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		9B2E00CA2E569CF50087A5CB /* Divider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Divider.swift; sourceTree = "<group>"; };
+		9B2E00CB2E569CF50087A5CB /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
+		9B2E00CD2E569CF50087A5CB /* ComfyTabMenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComfyTabMenuBar.swift; sourceTree = "<group>"; };
+		9B2E00CE2E569CF50087A5CB /* SettingsWindowScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowScene.swift; sourceTree = "<group>"; };
+		9B2E00D12E569CF50087A5CB /* HotkeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyManager.swift; sourceTree = "<group>"; };
+		9B2E00D22E569CF50087A5CB /* LocalMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalMonitor.swift; sourceTree = "<group>"; };
+		9B2E00D42E569CF50087A5CB /* AppIconManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconManager.swift; sourceTree = "<group>"; };
+		9B2E00D52E569CF50087A5CB /* InstalledAppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstalledAppManager.swift; sourceTree = "<group>"; };
+		9B2E00D62E569CF50087A5CB /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
+		9B2E00D72E569CF50087A5CB /* RunningAppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningAppManager.swift; sourceTree = "<group>"; };
+		9B2E00D82E569CF50087A5CB /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
+		9B2E00DA2E569CF50087A5CB /* ColorSchemeSetting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorSchemeSetting.swift; sourceTree = "<group>"; };
+		9B2E00DB2E569CF50087A5CB /* InstalledApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstalledApp.swift; sourceTree = "<group>"; };
+		9B2E00DC2E569CF50087A5CB /* ModifierKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModifierKey.swift; sourceTree = "<group>"; };
+		9B2E00DD2E569CF50087A5CB /* RunningApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningApp.swift; sourceTree = "<group>"; };
+		9B2E00DE2E569CF50087A5CB /* SettingsTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTab.swift; sourceTree = "<group>"; };
+		9B2E00E02E569CF50087A5CB /* CirclePiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CirclePiece.swift; sourceTree = "<group>"; };
+		9B2E00E12E569CF50087A5CB /* Ring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ring.swift; sourceTree = "<group>"; };
+		9B2E00E32E569CF50087A5CB /* InstalledAppFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstalledAppFetcher.swift; sourceTree = "<group>"; };
+		9B2E00E62E569CF50087A5CB /* liquidGlass.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = liquidGlass.metal; sourceTree = "<group>"; };
+		9B2E00E72E569CF50087A5CB /* LiquidGlassBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiquidGlassBackground.swift; sourceTree = "<group>"; };
+		9B2E00E82E569CF50087A5CB /* LiquidGlassParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiquidGlassParameters.swift; sourceTree = "<group>"; };
+		9B2E00EA2E569CF50087A5CB /* ComfyTabMiddleCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComfyTabMiddleCircle.swift; sourceTree = "<group>"; };
+		9B2E00EB2E569CF50087A5CB /* ComfyTabMiddleHiddenAppsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComfyTabMiddleHiddenAppsView.swift; sourceTree = "<group>"; };
+		9B2E00EC2E569CF50087A5CB /* ComfyTabMiddleLargeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComfyTabMiddleLargeView.swift; sourceTree = "<group>"; };
+		9B2E00ED2E569CF50087A5CB /* ComfyTabMiddleSmallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComfyTabMiddleSmallView.swift; sourceTree = "<group>"; };
+		9B2E00EF2E569CF50087A5CB /* ComfyTabLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComfyTabLayout.swift; sourceTree = "<group>"; };
+		9B2E00F12E569CF50087A5CB /* ComfyTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComfyTab.swift; sourceTree = "<group>"; };
+		9B2E00F22E569CF50087A5CB /* ComfyTabViewModel.swift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComfyTabViewModel.swift.swift; sourceTree = "<group>"; };
+		9B2E00F42E569CF50087A5CB /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
+		9B2E00F72E569CF50087A5CB /* OverlayContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayContent.swift; sourceTree = "<group>"; };
+		9B2E00F82E569CF50087A5CB /* OverlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayViewModel.swift; sourceTree = "<group>"; };
+		9B2E00FA2E569CF50087A5CB /* SettingsContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsContainerView.swift; sourceTree = "<group>"; };
+		9B2E00FB2E569CF50087A5CB /* SettingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSection.swift; sourceTree = "<group>"; };
+		9B2E00FD2E569CF50087A5CB /* About.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = About.swift; sourceTree = "<group>"; };
+		9B2E00FF2E569CF50087A5CB /* AppConfigurationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfigurationSettings.swift; sourceTree = "<group>"; };
+		9B2E01002E569CF50087A5CB /* FilterInstalledApps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterInstalledApps.swift; sourceTree = "<group>"; };
+		9B2E01012E569CF50087A5CB /* InstalledAppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstalledAppConfiguration.swift; sourceTree = "<group>"; };
+		9B2E01032E569CF50087A5CB /* HoverEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverEffect.swift; sourceTree = "<group>"; };
+		9B2E01042E569CF50087A5CB /* IntroAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroAnimation.swift; sourceTree = "<group>"; };
+		9B2E01052E569CF50087A5CB /* ShowAppNameUnderIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowAppNameUnderIcon.swift; sourceTree = "<group>"; };
+		9B2E01062E569CF50087A5CB /* TriggerSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriggerSettings.swift; sourceTree = "<group>"; };
+		9B2E01082E569CF50087A5CB /* Behavior.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Behavior.swift; sourceTree = "<group>"; };
+		9B2E010A2E569CF50087A5CB /* Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
+		9B2E010B2E569CF50087A5CB /* General.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = General.swift; sourceTree = "<group>"; };
+		9B2E010C2E569CF50087A5CB /* LaunchAtLogin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchAtLogin.swift; sourceTree = "<group>"; };
+		9B2E010D2E569CF50087A5CB /* ShowDockIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShowDockIcon.swift; sourceTree = "<group>"; };
+		9B2E010F2E569CF50087A5CB /* PermissionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionsView.swift; sourceTree = "<group>"; };
+		9B2E01122E569CF50087A5CB /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		9B2E01132E569CF50087A5CB /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		9B2E01162E569CF50087A5CB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9B2E01552E569DC00087A5CB /* RunningAppService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningAppService.swift; sourceTree = "<group>"; };
+		9B2E02A52E56AE6E0087A5CB /* OverlayCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayCoordinator.swift; sourceTree = "<group>"; };
+		9B2E02A92E5705DC0087A5CB /* SettingsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsService.swift; sourceTree = "<group>"; };
+		9B2E02AB2E57E4330087A5CB /* InstalledAppService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstalledAppService.swift; sourceTree = "<group>"; };
+		9B2E02AD2E57E8930087A5CB /* WindowCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowCoordinator.swift; sourceTree = "<group>"; };
+		9B2E02AF2E57E9310087A5CB /* SettingsCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCoordinator.swift; sourceTree = "<group>"; };
+		9B2E02B12E57ED460087A5CB /* OverlayDeps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayDeps.swift; sourceTree = "<group>"; };
+		9B2E02B32E57EDDD0087A5CB /* NSPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSPanel.swift; sourceTree = "<group>"; };
+		9B2E02B72E57F3270087A5CB /* BehaviorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BehaviorViewModel.swift; sourceTree = "<group>"; };
+		9B2E02B92E57F3A40087A5CB /* BehaviorDeps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BehaviorDeps.swift; sourceTree = "<group>"; };
+		9B2E02BB2E57F8E20087A5CB /* SettingsDeps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsDeps.swift; sourceTree = "<group>"; };
+		9B2E02BD2E57FCD10087A5CB /* GeneralViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralViewModel.swift; sourceTree = "<group>"; };
+		9B2E02BF2E57FCFD0087A5CB /* GeneralDeps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralDeps.swift; sourceTree = "<group>"; };
+		9B2E02C22E58050C0087A5CB /* PermissionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionService.swift; sourceTree = "<group>"; };
+		9B2E02C42E58067E0087A5CB /* PermissionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionViewModel.swift; sourceTree = "<group>"; };
+		9B2E02C62E5806930087A5CB /* PermissionDeps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionDeps.swift; sourceTree = "<group>"; };
 		9BBF0BF02E371FA800F4A825 /* ComfyTab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ComfyTab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
-
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		9BBF0D672E3733AA00F4A825 /* Exceptions for "ComfyTab" folder in "ComfyTab" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Config/Info.plist,
-			);
-			target = 9BBF0BEF2E371FA800F4A825 /* ComfyTab */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
-/* Begin PBXFileSystemSynchronizedRootGroup section */
-		9BBF0BF22E371FA800F4A825 /* ComfyTab */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				9BBF0D672E3733AA00F4A825 /* Exceptions for "ComfyTab" folder in "ComfyTab" target */,
-			);
-			path = ComfyTab;
-			sourceTree = "<group>";
-		};
-/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		9BBF0BED2E371FA800F4A825 /* Frameworks */ = {
@@ -47,11 +174,309 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9B2E00C22E569CF50087A5CB /* App */ = {
+			isa = PBXGroup;
+			children = (
+				9B2E00C02E569CF50087A5CB /* AppDelegate.swift */,
+				9B2E00C12E569CF50087A5CB /* ComfyTabApp.swift */,
+				9B2E00BF2E569CF50087A5CB /* AppCoordinator.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		9B2E00C62E569CF50087A5CB /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				9B2E00C32E569CF50087A5CB /* ComfyTab.entitlements */,
+				9B2E00C42E569CF50087A5CB /* constants.swift */,
+				9B2E00C52E569CF50087A5CB /* Info.plist */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		9B2E00C72E569CF50087A5CB /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				9B2E02AF2E57E9310087A5CB /* SettingsCoordinator.swift */,
+				9B2E02AD2E57E8930087A5CB /* WindowCoordinator.swift */,
+				9B2E02A52E56AE6E0087A5CB /* OverlayCoordinator.swift */,
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		9B2E00CC2E569CF50087A5CB /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				9B2E02B32E57EDDD0087A5CB /* NSPanel.swift */,
+				9B2E00C82E569CF50087A5CB /* Bundle.swift */,
+				9B2E00C92E569CF50087A5CB /* Color.swift */,
+				9B2E00CA2E569CF50087A5CB /* Divider.swift */,
+				9B2E00CB2E569CF50087A5CB /* Image.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		9B2E00CF2E569CF50087A5CB /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				9B2E00CD2E569CF50087A5CB /* ComfyTabMenuBar.swift */,
+				9B2E00CE2E569CF50087A5CB /* SettingsWindowScene.swift */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		9B2E00D32E569CF50087A5CB /* HotKey */ = {
+			isa = PBXGroup;
+			children = (
+				9B2E00D12E569CF50087A5CB /* HotkeyManager.swift */,
+				9B2E00D22E569CF50087A5CB /* LocalMonitor.swift */,
+			);
+			path = HotKey;
+			sourceTree = "<group>";
+		};
+		9B2E00D92E569CF50087A5CB /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				9B2E00D32E569CF50087A5CB /* HotKey */,
+				9B2E00D42E569CF50087A5CB /* AppIconManager.swift */,
+				9B2E00D52E569CF50087A5CB /* InstalledAppManager.swift */,
+				9B2E00D62E569CF50087A5CB /* PermissionManager.swift */,
+				9B2E00D72E569CF50087A5CB /* RunningAppManager.swift */,
+				9B2E00D82E569CF50087A5CB /* SettingsManager.swift */,
+			);
+			path = Managers;
+			sourceTree = "<group>";
+		};
+		9B2E00DF2E569CF50087A5CB /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9B2E00DA2E569CF50087A5CB /* ColorSchemeSetting.swift */,
+				9B2E00DB2E569CF50087A5CB /* InstalledApp.swift */,
+				9B2E00DC2E569CF50087A5CB /* ModifierKey.swift */,
+				9B2E00DD2E569CF50087A5CB /* RunningApp.swift */,
+				9B2E00DE2E569CF50087A5CB /* SettingsTab.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		9B2E00E22E569CF50087A5CB /* Shapes */ = {
+			isa = PBXGroup;
+			children = (
+				9B2E00E02E569CF50087A5CB /* CirclePiece.swift */,
+				9B2E00E12E569CF50087A5CB /* Ring.swift */,
+			);
+			path = Shapes;
+			sourceTree = "<group>";
+		};
+		9B2E00E52E569CF50087A5CB /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				9B2E00E32E569CF50087A5CB /* InstalledAppFetcher.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		9B2E00E92E569CF50087A5CB /* Metal */ = {
+			isa = PBXGroup;
+			children = (
+				9B2E00E62E569CF50087A5CB /* liquidGlass.metal */,
+				9B2E00E72E569CF50087A5CB /* LiquidGlassBackground.swift */,
+				9B2E00E82E569CF50087A5CB /* LiquidGlassParameters.swift */,
+			);
+			path = Metal;
+			sourceTree = "<group>";
+		};
+		9B2E00EE2E569CF50087A5CB /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				9B2E00EA2E569CF50087A5CB /* ComfyTabMiddleCircle.swift */,
+				9B2E00EB2E569CF50087A5CB /* ComfyTabMiddleHiddenAppsView.swift */,
+				9B2E00EC2E569CF50087A5CB /* ComfyTabMiddleLargeView.swift */,
+				9B2E00ED2E569CF50087A5CB /* ComfyTabMiddleSmallView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		9B2E00F02E569CF50087A5CB /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				9B2E00EF2E569CF50087A5CB /* ComfyTabLayout.swift */,
+			);
+			path = Layout;
+			sourceTree = "<group>";
+		};
+		9B2E00F32E569CF50087A5CB /* ComfyTab */ = {
+			isa = PBXGroup;
+			children = (
+				9B2E00EE2E569CF50087A5CB /* Components */,
+				9B2E00F02E569CF50087A5CB /* Layout */,
+				9B2E00F12E569CF50087A5CB /* ComfyTab.swift */,
+				9B2E00F22E569CF50087A5CB /* ComfyTabViewModel.swift.swift */,
+			);
+			path = ComfyTab;
+			sourceTree = "<group>";
+		};
+		9B2E00F52E569CF50087A5CB /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				9B2E00F42E569CF50087A5CB /* VisualEffectView.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		9B2E00F92E569CF50087A5CB /* Overlay */ = {
+			isa = PBXGroup;
+			children = (
+				9B2E00F32E569CF50087A5CB /* ComfyTab */,
+				9B2E00F52E569CF50087A5CB /* Components */,
+				9B2E00F72E569CF50087A5CB /* OverlayContent.swift */,
+				9B2E00F82E569CF50087A5CB /* OverlayViewModel.swift */,
+				9B2E02B12E57ED460087A5CB /* OverlayDeps.swift */,
+			);
+			path = Overlay;
+			sourceTree = "<group>";
+		};
+		9B2E00FC2E569CF50087A5CB /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				9B2E00FA2E569CF50087A5CB /* SettingsContainerView.swift */,
+				9B2E00FB2E569CF50087A5CB /* SettingsSection.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
+		9B2E00FE2E569CF50087A5CB /* About */ = {
+			isa = PBXGroup;
+			children = (
+				9B2E00FD2E569CF50087A5CB /* About.swift */,
+			);
+			path = About;
+			sourceTree = "<group>";
+		};
+		9B2E01022E569CF50087A5CB /* AppFiltering */ = {
+			isa = PBXGroup;
+			children = (
+				9B2E00FF2E569CF50087A5CB /* AppConfigurationSettings.swift */,
+				9B2E01002E569CF50087A5CB /* FilterInstalledApps.swift */,
+				9B2E01012E569CF50087A5CB /* InstalledAppConfiguration.swift */,
+			);
+			path = AppFiltering;
+			sourceTree = "<group>";
+		};
+		9B2E01072E569CF50087A5CB /* OverlayBehavior */ = {
+			isa = PBXGroup;
+			children = (
+				9B2E01032E569CF50087A5CB /* HoverEffect.swift */,
+				9B2E01042E569CF50087A5CB /* IntroAnimation.swift */,
+				9B2E01052E569CF50087A5CB /* ShowAppNameUnderIcon.swift */,
+				9B2E01062E569CF50087A5CB /* TriggerSettings.swift */,
+			);
+			path = OverlayBehavior;
+			sourceTree = "<group>";
+		};
+		9B2E01092E569CF50087A5CB /* Behavior */ = {
+			isa = PBXGroup;
+			children = (
+				9B2E01022E569CF50087A5CB /* AppFiltering */,
+				9B2E01072E569CF50087A5CB /* OverlayBehavior */,
+				9B2E01082E569CF50087A5CB /* Behavior.swift */,
+				9B2E02B72E57F3270087A5CB /* BehaviorViewModel.swift */,
+				9B2E02B92E57F3A40087A5CB /* BehaviorDeps.swift */,
+			);
+			path = Behavior;
+			sourceTree = "<group>";
+		};
+		9B2E010E2E569CF50087A5CB /* General */ = {
+			isa = PBXGroup;
+			children = (
+				9B2E02BF2E57FCFD0087A5CB /* GeneralDeps.swift */,
+				9B2E02BD2E57FCD10087A5CB /* GeneralViewModel.swift */,
+				9B2E010A2E569CF50087A5CB /* Appearance.swift */,
+				9B2E010B2E569CF50087A5CB /* General.swift */,
+				9B2E010C2E569CF50087A5CB /* LaunchAtLogin.swift */,
+				9B2E010D2E569CF50087A5CB /* ShowDockIcon.swift */,
+			);
+			path = General;
+			sourceTree = "<group>";
+		};
+		9B2E01102E569CF50087A5CB /* Permission */ = {
+			isa = PBXGroup;
+			children = (
+				9B2E02C62E5806930087A5CB /* PermissionDeps.swift */,
+				9B2E02C42E58067E0087A5CB /* PermissionViewModel.swift */,
+				9B2E010F2E569CF50087A5CB /* PermissionsView.swift */,
+			);
+			path = Permission;
+			sourceTree = "<group>";
+		};
+		9B2E01112E569CF50087A5CB /* Tabs */ = {
+			isa = PBXGroup;
+			children = (
+				9B2E00FE2E569CF50087A5CB /* About */,
+				9B2E01092E569CF50087A5CB /* Behavior */,
+				9B2E010E2E569CF50087A5CB /* General */,
+				9B2E01102E569CF50087A5CB /* Permission */,
+			);
+			path = Tabs;
+			sourceTree = "<group>";
+		};
+		9B2E01142E569CF50087A5CB /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				9B2E00FC2E569CF50087A5CB /* Components */,
+				9B2E01112E569CF50087A5CB /* Tabs */,
+				9B2E01122E569CF50087A5CB /* SettingsView.swift */,
+				9B2E01132E569CF50087A5CB /* SettingsViewModel.swift */,
+				9B2E02BB2E57F8E20087A5CB /* SettingsDeps.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		9B2E01152E569CF50087A5CB /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9B2E00E92E569CF50087A5CB /* Metal */,
+				9B2E00F92E569CF50087A5CB /* Overlay */,
+				9B2E01142E569CF50087A5CB /* Settings */,
+				9B2E00CF2E569CF50087A5CB /* Scenes */,
+				9B2E00E22E569CF50087A5CB /* Shapes */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		9B2E01172E569CF50087A5CB /* ComfyTab */ = {
+			isa = PBXGroup;
+			children = (
+				9B2E00C62E569CF50087A5CB /* Config */,
+				9B2E00C22E569CF50087A5CB /* App */,
+				9B2E00C72E569CF50087A5CB /* Coordinators */,
+				9B2E00D92E569CF50087A5CB /* Managers */,
+				9B2E01542E569D370087A5CB /* Services */,
+				9B2E01152E569CF50087A5CB /* Views */,
+				9B2E00CC2E569CF50087A5CB /* Extensions */,
+				9B2E00DF2E569CF50087A5CB /* Models */,
+				9B2E00E52E569CF50087A5CB /* Utilities */,
+				9B2E01162E569CF50087A5CB /* Assets.xcassets */,
+			);
+			path = ComfyTab;
+			sourceTree = "<group>";
+		};
+		9B2E01542E569D370087A5CB /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				9B2E02C22E58050C0087A5CB /* PermissionService.swift */,
+				9B2E02AB2E57E4330087A5CB /* InstalledAppService.swift */,
+				9B2E02A92E5705DC0087A5CB /* SettingsService.swift */,
+				9B2E01552E569DC00087A5CB /* RunningAppService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		9BBF0BE72E371FA800F4A825 = {
 			isa = PBXGroup;
 			children = (
-				9BBF0BF22E371FA800F4A825 /* ComfyTab */,
 				9BBF0BF12E371FA800F4A825 /* Products */,
+				9B2E01172E569CF50087A5CB /* ComfyTab */,
 			);
 			sourceTree = "<group>";
 		};
@@ -77,9 +502,6 @@
 			buildRules = (
 			);
 			dependencies = (
-			);
-			fileSystemSynchronizedGroups = (
-				9BBF0BF22E371FA800F4A825 /* ComfyTab */,
 			);
 			name = ComfyTab;
 			packageProductDependencies = (
@@ -131,6 +553,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B2E01532E569CF50087A5CB /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -141,6 +564,78 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B2E01182E569CF50087A5CB /* AppCoordinator.swift in Sources */,
+				9B2E01192E569CF50087A5CB /* AppDelegate.swift in Sources */,
+				9B2E02B22E57ED4A0087A5CB /* OverlayDeps.swift in Sources */,
+				9B2E011A2E569CF50087A5CB /* ComfyTabApp.swift in Sources */,
+				9B2E011B2E569CF50087A5CB /* constants.swift in Sources */,
+				9B2E02B02E57E93A0087A5CB /* SettingsCoordinator.swift in Sources */,
+				9B2E011C2E569CF50087A5CB /* Bundle.swift in Sources */,
+				9B2E011D2E569CF50087A5CB /* Color.swift in Sources */,
+				9B2E011E2E569CF50087A5CB /* Divider.swift in Sources */,
+				9B2E011F2E569CF50087A5CB /* Image.swift in Sources */,
+				9B2E01202E569CF50087A5CB /* ComfyTabMenuBar.swift in Sources */,
+				9B2E01212E569CF50087A5CB /* SettingsWindowScene.swift in Sources */,
+				9B2E01222E569CF50087A5CB /* HotkeyManager.swift in Sources */,
+				9B2E02AC2E57E4360087A5CB /* InstalledAppService.swift in Sources */,
+				9B2E01232E569CF50087A5CB /* LocalMonitor.swift in Sources */,
+				9B2E01242E569CF50087A5CB /* AppIconManager.swift in Sources */,
+				9B2E01252E569CF50087A5CB /* InstalledAppManager.swift in Sources */,
+				9B2E01262E569CF50087A5CB /* PermissionManager.swift in Sources */,
+				9B2E01272E569CF50087A5CB /* RunningAppManager.swift in Sources */,
+				9B2E01282E569CF50087A5CB /* SettingsManager.swift in Sources */,
+				9B2E02C72E58069A0087A5CB /* PermissionDeps.swift in Sources */,
+				9B2E02A62E56AE710087A5CB /* OverlayCoordinator.swift in Sources */,
+				9B2E01292E569CF50087A5CB /* ColorSchemeSetting.swift in Sources */,
+				9B2E012A2E569CF50087A5CB /* InstalledApp.swift in Sources */,
+				9B2E012B2E569CF50087A5CB /* ModifierKey.swift in Sources */,
+				9B2E012C2E569CF50087A5CB /* RunningApp.swift in Sources */,
+				9B2E012D2E569CF50087A5CB /* SettingsTab.swift in Sources */,
+				9B2E012E2E569CF50087A5CB /* CirclePiece.swift in Sources */,
+				9B2E02BE2E57FCD70087A5CB /* GeneralViewModel.swift in Sources */,
+				9B2E012F2E569CF50087A5CB /* Ring.swift in Sources */,
+				9B2E01302E569CF50087A5CB /* InstalledAppFetcher.swift in Sources */,
+				9B2E01322E569CF50087A5CB /* liquidGlass.metal in Sources */,
+				9B2E01332E569CF50087A5CB /* LiquidGlassBackground.swift in Sources */,
+				9B2E01342E569CF50087A5CB /* LiquidGlassParameters.swift in Sources */,
+				9B2E02BC2E57F8E50087A5CB /* SettingsDeps.swift in Sources */,
+				9B2E01352E569CF50087A5CB /* ComfyTabMiddleCircle.swift in Sources */,
+				9B2E02AA2E5705E00087A5CB /* SettingsService.swift in Sources */,
+				9B2E02B82E57F32A0087A5CB /* BehaviorViewModel.swift in Sources */,
+				9B2E01362E569CF50087A5CB /* ComfyTabMiddleHiddenAppsView.swift in Sources */,
+				9B2E02C32E5805130087A5CB /* PermissionService.swift in Sources */,
+				9B2E01372E569CF50087A5CB /* ComfyTabMiddleLargeView.swift in Sources */,
+				9B2E01382E569CF50087A5CB /* ComfyTabMiddleSmallView.swift in Sources */,
+				9B2E01392E569CF50087A5CB /* ComfyTabLayout.swift in Sources */,
+				9B2E013A2E569CF50087A5CB /* ComfyTab.swift in Sources */,
+				9B2E013B2E569CF50087A5CB /* ComfyTabViewModel.swift.swift in Sources */,
+				9B2E013C2E569CF50087A5CB /* VisualEffectView.swift in Sources */,
+				9B2E01562E569DC40087A5CB /* RunningAppService.swift in Sources */,
+				9B2E02AE2E57E8960087A5CB /* WindowCoordinator.swift in Sources */,
+				9B2E013E2E569CF50087A5CB /* OverlayContent.swift in Sources */,
+				9B2E013F2E569CF50087A5CB /* OverlayViewModel.swift in Sources */,
+				9B2E01402E569CF50087A5CB /* SettingsContainerView.swift in Sources */,
+				9B2E01412E569CF50087A5CB /* SettingsSection.swift in Sources */,
+				9B2E02C52E5806840087A5CB /* PermissionViewModel.swift in Sources */,
+				9B2E01422E569CF50087A5CB /* About.swift in Sources */,
+				9B2E01432E569CF50087A5CB /* AppConfigurationSettings.swift in Sources */,
+				9B2E01442E569CF50087A5CB /* FilterInstalledApps.swift in Sources */,
+				9B2E01452E569CF50087A5CB /* InstalledAppConfiguration.swift in Sources */,
+				9B2E01462E569CF50087A5CB /* HoverEffect.swift in Sources */,
+				9B2E01472E569CF50087A5CB /* IntroAnimation.swift in Sources */,
+				9B2E01482E569CF50087A5CB /* ShowAppNameUnderIcon.swift in Sources */,
+				9B2E01492E569CF50087A5CB /* TriggerSettings.swift in Sources */,
+				9B2E014A2E569CF50087A5CB /* Behavior.swift in Sources */,
+				9B2E014B2E569CF50087A5CB /* Appearance.swift in Sources */,
+				9B2E02B42E57EDDE0087A5CB /* NSPanel.swift in Sources */,
+				9B2E02BA2E57F3A60087A5CB /* BehaviorDeps.swift in Sources */,
+				9B2E014C2E569CF50087A5CB /* General.swift in Sources */,
+				9B2E014D2E569CF50087A5CB /* LaunchAtLogin.swift in Sources */,
+				9B2E014E2E569CF50087A5CB /* ShowDockIcon.swift in Sources */,
+				9B2E014F2E569CF50087A5CB /* PermissionsView.swift in Sources */,
+				9B2E02C02E57FD000087A5CB /* GeneralDeps.swift in Sources */,
+				9B2E01502E569CF50087A5CB /* SettingsView.swift in Sources */,
+				9B2E01512E569CF50087A5CB /* SettingsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

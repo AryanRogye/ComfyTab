@@ -12,4 +12,9 @@ class SettingsViewModel: ObservableObject {
     
     @Published var selectedTab: SettingTab = .general
     
+    var settingsService : any SettingsService
+    
+    init(deps: SettingsDeps) {
+        settingsService = deps.settingsService
+    }
 }

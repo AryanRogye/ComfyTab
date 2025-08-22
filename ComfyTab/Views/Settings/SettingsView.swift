@@ -9,11 +9,7 @@ import SwiftUI
 
 struct SettingsView: View {
     
-    @EnvironmentObject var installedAppManager: InstalledAppManager
-    @EnvironmentObject var permissionManager: PermissionManager
-    @EnvironmentObject var settingsManager: SettingsManager
-    
-    @StateObject var viewModel = SettingsViewModel()
+    @EnvironmentObject var viewModel : SettingsViewModel
 
     var body: some View {
         NavigationSplitView {
@@ -32,12 +28,12 @@ struct SettingsView: View {
     }
     
     private func onClose() {
-        settingsManager.isSettingsWindowOpen = false
+        viewModel.settingsService.isSettingsWindowOpen = false
         NSApp.activate(ignoringOtherApps: false)
     }
     private func onAppear() {
         /// Mark as True
-        settingsManager.isSettingsWindowOpen = true
+        viewModel.settingsService.isSettingsWindowOpen = true
         
         /// Make Sure That the Window is Above runs after 0.2 seconds
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {

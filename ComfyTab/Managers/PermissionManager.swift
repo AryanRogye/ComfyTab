@@ -10,7 +10,7 @@ import ApplicationServices
 import AppKit
 
 /// Manage All Permissions for the App
-class PermissionManager: ObservableObject {
+class PermissionManager: PermissionService, ObservableObject {
     
     @Published var isAccessibilityEnabled   : Bool = false
     

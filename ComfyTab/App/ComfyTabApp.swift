@@ -15,9 +15,10 @@ struct ComfyTabApp: App {
     }
     
     var body: some Scene {
-        SettingsWindowScene(appDelegate: appDelegate)
-        ComfyTabMenuBar()
-            .environmentObject(appDelegate.appCoordinator.settingsManager)
+        ComfyTabMenuBar(
+            appEnv: appDelegate.appEnv,
+            settingsCoordinator: appDelegate.appCoordinator.settings
+        )
     }
 }
 

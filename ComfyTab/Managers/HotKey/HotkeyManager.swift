@@ -13,25 +13,24 @@ extension KeyboardShortcuts.Name {
     static let toggleTab = Self("ComfyTabToggleTab")
 }
 
+@MainActor
 public class HotkeyManager {
     
-    private(set) var overlay           : Overlay
-    private(set) var overlayViewModel  : OverlayViewModel
-    private(set) var settingsManager   : SettingsManager
+    private(set) var settingsService   : SettingsService
     private(set) var localMonitor      = LocalMonitor()
     private(set) var toggleTabHotKey   : KeyboardShortcuts.Name
 
     var cancellables = Set<AnyCancellable>()
     
+    private var overlay: OverlayCoordinator
+    
     init(
-        settingsManager     : SettingsManager,
-        overlay             : Overlay,
-        overlayViewModel    : OverlayViewModel,
+        deps: OverlayDeps,
+        instance : OverlayCoordinator,
         toggleTabHotKey     : KeyboardShortcuts.Name = .toggleTab
     ) {
-        self.settingsManager   = settingsManager
-        self.overlay           = overlay
-        self.overlayViewModel  = overlayViewModel
+        self.overlay = instance
+        self.settingsService   = deps.settingsService
         self.toggleTabHotKey   = toggleTabHotKey
         
         prepareHotKey()
@@ -39,7 +38,7 @@ public class HotkeyManager {
         
         /// From Mermaid Diagram This is the setupPinningListener()
         DispatchQueue.main.async {
-            overlayViewModel.$isPinned
+            self.overlay.overlayViewModel?.$isPinned
                 .sink { [weak self] isPinned in
                     guard let self = self else { return }
                     if !isPinned {
@@ -55,7 +54,7 @@ public class HotkeyManager {
             
             /// Update Modifier Key with new Values if they change
             /// From Mermaid Diagram This is the setupHotKeyChangeListener()
-            settingsManager.$modifierKey
+            self.settingsService.modifierKeyPublisher
                 .sink { modifier in
                     /// Only Allowed is control,option and shift, so only those are set
                     KeyboardShortcuts.setShortcut(
@@ -75,8 +74,8 @@ public class HotkeyManager {
         /// We Load in what the modifier key is in at the start
         KeyboardShortcuts.setShortcut(
             .init(.tab, modifiers: [
-                settingsManager.modifierKey == .control ? .control
-                : settingsManager.modifierKey == .option ? .option
+                settingsService.modifierKey == .control ? .control
+                : settingsService.modifierKey == .option ? .option
                 : .shift
             ]),
             for: .toggleTab
@@ -89,23 +88,27 @@ public class HotkeyManager {
     /// and so now, we can let the modifier be the "keyBind" that the on release will stop it
     func setupHotkey() {
         KeyboardShortcuts.onKeyDown(for: self.toggleTabHotKey) {
-            self.localMonitor.start(with: self.settingsManager.modifierKey) { self.onEnd() }
+            self.localMonitor.start(
+                with: self.settingsService.modifierKey
+            ) {
+                self.onEnd()
+            }
             self.overlay.show()
         }
         KeyboardShortcuts.onKeyUp(for: self.toggleTabHotKey) {
             /// If The ModifierKey is still held OR the OverlayViewModel is pinned
             /// just return
-            if self.localMonitor.isHeldNow() || self.overlayViewModel.isPinned {
-                print("Returning Cuz held: \(self.localMonitor.isHeldNow()) isPinned: \(self.overlayViewModel.isPinned)")
+            if self.localMonitor.isHeldNow() || (self.overlay.overlayViewModel?.isPinned ?? false)
+            {
                 return
             }
-            print("Should Hide Now")
         }
     }
     
     private func onEnd() {
         /// If Pinned Dont Hide
-        guard !self.overlayViewModel.isPinned else {
+        guard let overlayViewModel = overlay.overlayViewModel else { return }
+        guard !overlayViewModel.isPinned else {
             return
         }
         /// Hide Overlay

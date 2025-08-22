@@ -14,7 +14,7 @@ import ServiceManagement
 /// All Managers will retreive data through this object,
 /// This Object is responsible for saving/persisting data,
 /// And Setting Default Values for things
-class SettingsManager : ObservableObject {
+class SettingsManager : ObservableObject, SettingsService {
     
     /// Keys
     private enum Keys {
@@ -38,6 +38,10 @@ class SettingsManager : ObservableObject {
         didSet {
             defaults.set(modifierKey.rawValue, forKey: Keys.modifierKey)
         }
+    }
+    var modifierKeyPublisher: AnyPublisher<ModifierKey, Never> {
+        $modifierKey
+            .eraseToAnyPublisher()
     }
     
     /// Colorscheme of the App, System by default
@@ -64,12 +68,20 @@ class SettingsManager : ObservableObject {
             defaults.set(isIntroAnimationEnabled, forKey: Keys.isIntroAnimationEnabled)
         }
     }
+    var isIntroAnimationEnabledPublisher: AnyPublisher<Bool, Never> {
+        $isIntroAnimationEnabled
+            .eraseToAnyPublisher()
+    }
     
     /// Switch to show app name under the icon in the donut
     @Published var showAppNameUnderIcon: Bool {
         didSet {
             defaults.set(showAppNameUnderIcon, forKey: Keys.showAppNameUnderIcon)
         }
+    }
+    var showAppNameUnderIconPublisher: AnyPublisher<Bool, Never> {
+        $showAppNameUnderIcon
+            .eraseToAnyPublisher()
     }
     
     /// Switch to turn hover off and on, on the donut
@@ -78,12 +90,20 @@ class SettingsManager : ObservableObject {
             defaults.set(isHoverEffectEnabled, forKey: Keys.isHoverEffectEnabled)
         }
     }
+    var isHoverEffectEnabledPublisher: AnyPublisher<Bool, Never> {
+        $isHoverEffectEnabled
+            .eraseToAnyPublisher()
+    }
     
     /// Array of Directories that can hold the user Apps
     @Published var directoriesOfApps: [URL] {
         didSet {
             defaults.set(directoriesOfApps.map(\.path), forKey: Keys.directoriesOfApps)
         }
+    }
+    var directoriesOfAppsPublisher: AnyPublisher<[URL], Never> {
+        $directoriesOfApps
+            .eraseToAnyPublisher()
     }
     
     @Published var isSettingsWindowOpen: Bool = false

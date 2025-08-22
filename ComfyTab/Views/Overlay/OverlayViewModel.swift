@@ -8,35 +8,90 @@
 import SwiftUI
 import Combine
 
+extension OverlayViewModel {
+
+    @MainActor
+    func resetVisibleApps() {
+        visibleApps = []
+    }
+    
+    @MainActor
+    func setVisibleAppsInstant(_ apps: [RunningApp]) {
+        resetVisibleApps()
+        self.visibleApps = apps
+    }
+    
+    @MainActor
+    public func addAppsOneByOne(
+        apps: [RunningApp],
+        perItemDelay: Duration = .milliseconds(100)
+    ) {
+        resetVisibleApps()
+        revealTask = Task { [weak self] in
+            guard let self else { return }
+            for app in apps {
+                try? await Task.sleep(for: perItemDelay)
+                if Task.isCancelled || !isShowing { return }
+                withAnimation(AppAnims.loadingAnimation) {
+                    self.visibleApps.append(app)
+                }
+            }
+        }
+    }
+    
+}
+
 class OverlayViewModel: ObservableObject {
+    private var revealTask: Task<Void, Never>?
+
+    private let runningAppsService  : RunningAppService
+    private var settingsService     : any SettingsService
+    
+    /// Pinned State
     @Published var isPinned: Bool = false
-    
+    /// If Shown or Not
     @Published var isShowing: Bool = false
-    
+    /// Size of The Overlay
     @Published var comfyTabSize: (radius: CGFloat, thickness: CGFloat) = (130, 80)
     
-    var runningAppManager: RunningAppManager
-    var settingsManager  : SettingsManager
     
     /// Filtered List of Apps
     @Published var runningApps: [RunningApp] = []
-    
     /// All Running Apps, this is nice when we wanna display the currently running apps
     @Published var allRunningApps: [RunningApp] = []
+    @Published var visibleApps: [RunningApp] = []
+    
     /// List of All Hidden Apps We Add To
     @Published var hiddenApps: Set<RunningApp> = []
     @Published var closeOnFinderOpen: Bool = false
     
-    private let overlay: Overlay
+    @Published var isIntroAnimationEnabled: Bool = false
+    @Published var showAppNameUnderIcon: Bool = false
+    @Published var isHoverEffectEnabled: Bool = false
     
-    init(
-        runningAppManager: RunningAppManager,
-        settingsManager: SettingsManager,
-        overlay: Overlay
-    ) {
-        self.runningAppManager = runningAppManager
-        self.settingsManager = settingsManager
-        self.overlay = overlay
+    private var cancellables = Set<AnyCancellable>()
+    
+    init(deps: OverlayDeps) {
+        self.runningAppsService = deps.runningAppService
+        self.settingsService = deps.settingsService
+        
+        settingsService.isIntroAnimationEnabledPublisher
+            .sink { enabled in
+                self.isIntroAnimationEnabled = enabled
+            }
+            .store(in: &cancellables)
+        
+        settingsService.showAppNameUnderIconPublisher
+            .sink { show in
+                self.showAppNameUnderIcon = show
+            }
+            .store(in: &cancellables)
+        
+        settingsService.isHoverEffectEnabledPublisher
+            .sink { enabled in
+                self.isHoverEffectEnabled = enabled
+            }
+            .store(in: &cancellables)
     }
     
     // MARK: - Public Utilities
@@ -47,12 +102,12 @@ class OverlayViewModel: ObservableObject {
     /// Forces if Pinned, to close, this is nice, when finder is opened to close it
     public func onFinderOpen(_ app: RunningApp) {
         app.revealInFinder()
-        overlay.hide()
+        //        overlay.hide()
     }
     /// Nice Utility Function to Focus the App, Called when we click from the Dial
     public func focusApp(index: Int)  {
-        self.runningAppManager.goToApp(runningApps[index])
-        overlay.hide()
+        self.runningAppsService.goToApp(runningApps[index])
+        //        overlay.hide()
     }
     
     @MainActor
@@ -66,40 +121,42 @@ class OverlayViewModel: ObservableObject {
     public func getRunningApps() {
         
         /// if Intro is Enabled we clear to show a nice animation of filling
-        if settingsManager.isIntroAnimationEnabled {
+        if settingsService.isIntroAnimationEnabled {
             // Clear first to ensure animation triggers
             self.runningApps = []
         }
         
-        Task { [weak self] in
-            guard let self else { return }
-            await runningAppManager.getRunningApps { apps in
-                self.allRunningApps = apps // this cant be filtered
-                
-                // 1) Build a fast lookup for hidden apps (by pid OR bundleID)
-                let hiddenPIDs: Set<pid_t> = Set(self.hiddenApps.map { $0.pid })
-                let hiddenBundleIDs: Set<String> = Set(self.hiddenApps.compactMap { $0.bundleID })
-                
-                // 2) Filter out hidden apps using stable identity
-                let filtered = apps.filter { app in
-                    if hiddenPIDs.contains(app.pid) { return false }
-                    if let bid = app.bundleID, hiddenBundleIDs.contains(bid) { return false }
-                    return true
-                }
-                
-                // 3) De-dupe by pid (keeps first occurrence, preserves order)
-                var seen = Set<pid_t>(minimumCapacity: filtered.count)
-                var result: [RunningApp] = []
-                result.reserveCapacity(filtered.count)
-                
-                for app in filtered {
-                    if seen.insert(app.pid).inserted {
-                        result.append(app)
+        // 1) Build a fast lookup for hidden apps (by pid OR bundleID)
+        let hiddenPIDs: Set<pid_t> = Set(self.hiddenApps.map { $0.pid })
+        let hiddenBundleIDs: Set<String> = Set(self.hiddenApps.compactMap { $0.bundleID })
+        
+        Task {
+            for await app in await runningAppsService.observe() {
+                await MainActor.run {
+                    
+                    self.allRunningApps = app // this cant be filtered
+                    
+                    let filtered = app.filter { a in
+                        if hiddenPIDs.contains(a.pid) { return false }
+                        if let bid = a.bundleID, hiddenBundleIDs.contains(bid) { return false }
+                        return true
                     }
+                    
+                    // 3) De-dupe by pid (keeps first occurrence, preserves order)
+                    var seen = Set<pid_t>(minimumCapacity: filtered.count)
+                    var result: [RunningApp] = []
+                    result.reserveCapacity(filtered.count)
+                    
+                    for a in filtered {
+                        if seen.insert(a.pid).inserted {
+                            result.append(a)
+                        }
+                    }
+                    
+                    self.runningApps = result
+                    self.updateRunningAppIcons()
+                    self.objectWillChange.send()
                 }
-                
-                self.runningApps = result
-                self.updateRunningAppIcons()
             }
         }
     }
@@ -113,20 +170,16 @@ class OverlayViewModel: ObservableObject {
             Task { [weak self] in
                 guard let self else { return }
                 /// we just remove it so the UI updates
-                await self.runningAppManager.removeFromCache(app)
+                await self.runningAppsService.removeFromCache(app)
             }
         } else {
             hiddenApps.remove(app)
             if allRunningApps.contains(app) {
                 self.runningApps.append(app)
             }
-            Task { [weak self] in
-                guard let self else { return }
-                
-                /// if All The Running Apps has the app we want, just add it in
-                
-                await self.runningAppManager.addToCache(app)
-            }
+            //            Task { [weak self] in
+            //                guard let self else { return }
+            //            }
         }
     }
     

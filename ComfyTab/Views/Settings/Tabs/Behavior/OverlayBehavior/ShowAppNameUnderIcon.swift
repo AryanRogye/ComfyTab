@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ShowAppNameUnderIcon: View {
     
-    @EnvironmentObject private var settingsManager: SettingsManager
+    @EnvironmentObject var viewModel: BehaviorViewModel
 
     var body: some View {
         HStack {
@@ -17,7 +17,7 @@ struct ShowAppNameUnderIcon: View {
             
             Spacer()
             
-            Toggle("Show App Name Under Icon", isOn: $settingsManager.showAppNameUnderIcon)
+            Toggle("Show App Name Under Icon", isOn: viewModel.showAppNameUnderIcon)
                 .toggleStyle(.switch)
                 .labelsHidden()
         }

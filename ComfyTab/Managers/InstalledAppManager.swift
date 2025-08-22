@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 /// Service so we can retrive the installed Apps in a background Service
-final actor InstalledAppsService {
+final actor InstalledAppFetcherService {
     private var currentTask : Task<[InstalledApp], Never>?
     
     deinit {
@@ -32,21 +32,28 @@ final actor InstalledAppsService {
     }
 }
 
-final class InstalledAppManager : ObservableObject {
+final class InstalledAppManager : InstalledAppService, ObservableObject {
     
-    @Published private(set) var installedApps: [InstalledApp] = []
+    @Published var installedApps: [InstalledApp] = []
+    
+    var installedAppsPublisher: AnyPublisher<[InstalledApp], Never> {
+        $installedApps
+            .eraseToAnyPublisher()
+    }
+    
+    
     private(set) var directoryOfApps: [URL] = []
     
     private var cancellables: Set<AnyCancellable> = []
-    private let installedAppService = InstalledAppsService()
+    private let installedAppFetcherService = InstalledAppFetcherService()
     
-    init(settingsManager: SettingsManager) {
+    init(settingsService: SettingsService) {
         
-        self.directoryOfApps = settingsManager.directoriesOfApps
+        self.directoryOfApps = settingsService.directoriesOfApps
         fetchApps()
         
         /// Bind For Any Changes
-        settingsManager.$directoriesOfApps
+        settingsService.directoriesOfAppsPublisher
             .removeDuplicates()
             .debounce(for: .milliseconds(150), scheduler: DispatchQueue.main)
             .sink { [weak self] directoryOfApps in
@@ -63,7 +70,7 @@ final class InstalledAppManager : ObservableObject {
     
     public func fetchApps() {
         Task { @MainActor in
-            let apps = await installedAppService.fetchApps(from: directoryOfApps)
+            let apps = await installedAppFetcherService.fetchApps(from: directoryOfApps)
             self.installedApps = apps
         }
     }
