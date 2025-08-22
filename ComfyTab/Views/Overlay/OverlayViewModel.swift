@@ -155,7 +155,6 @@ class OverlayViewModel: ObservableObject {
                     
                     self.runningApps = result
                     self.updateRunningAppIcons()
-                    self.objectWillChange.send()
                 }
             }
         }

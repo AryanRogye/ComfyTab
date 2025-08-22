@@ -8,11 +8,9 @@
 import AppKit
 import Combine
 
-struct AppEnv : OverlayDeps, SettingsDeps, BehaviorDeps, GeneralDeps, PermissionDeps {
+final class AppEnv : OverlayDeps, SettingsDeps, BehaviorDeps, GeneralDeps, PermissionDeps {
     var settingsManager = SettingsManager()
-    var installedAppManager : InstalledAppManager {
-        InstalledAppManager(settingsService: settingsService)
-    }
+    lazy var installedAppManager : InstalledAppManager = InstalledAppManager(settingsService: settingsService)
     
     var runningAppService: any RunningAppService = RunningAppManager()
     var settingsService : any SettingsService { settingsManager }
