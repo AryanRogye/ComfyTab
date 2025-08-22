@@ -25,7 +25,7 @@ final actor InstalledAppFetcherService {
         /// Start A Background Task That return [InstalledApp
         let task = Task<[InstalledApp], Never> {
             if Task.isCancelled { return [] }
-            return await self.fetchApps(from: from)
+            return self.fetchInstalledApps(from: from)
         }
         
         currentTask = task
