@@ -13,6 +13,7 @@ struct ComfyTabMenuBar: Scene {
     var settingsCoordinator: SettingsCoordinator
     
     var body: some Scene {
+        // TODO: Design Logo
         MenuBarExtra("MyApp", systemImage: "star") {
             VStack {
                 Button("Open Settings") {

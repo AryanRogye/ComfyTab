@@ -17,7 +17,6 @@
 		9B2E011E2E569CF50087A5CB /* Divider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00CA2E569CF50087A5CB /* Divider.swift */; };
 		9B2E011F2E569CF50087A5CB /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00CB2E569CF50087A5CB /* Image.swift */; };
 		9B2E01202E569CF50087A5CB /* ComfyTabMenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00CD2E569CF50087A5CB /* ComfyTabMenuBar.swift */; };
-		9B2E01212E569CF50087A5CB /* SettingsWindowScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00CE2E569CF50087A5CB /* SettingsWindowScene.swift */; };
 		9B2E01222E569CF50087A5CB /* HotkeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00D12E569CF50087A5CB /* HotkeyManager.swift */; };
 		9B2E01232E569CF50087A5CB /* LocalMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00D22E569CF50087A5CB /* LocalMonitor.swift */; };
 		9B2E01242E569CF50087A5CB /* AppIconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00D42E569CF50087A5CB /* AppIconManager.swift */; };
@@ -32,7 +31,6 @@
 		9B2E012D2E569CF50087A5CB /* SettingsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00DE2E569CF50087A5CB /* SettingsTab.swift */; };
 		9B2E012E2E569CF50087A5CB /* CirclePiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00E02E569CF50087A5CB /* CirclePiece.swift */; };
 		9B2E012F2E569CF50087A5CB /* Ring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00E12E569CF50087A5CB /* Ring.swift */; };
-		9B2E01302E569CF50087A5CB /* InstalledAppFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00E32E569CF50087A5CB /* InstalledAppFetcher.swift */; };
 		9B2E01322E569CF50087A5CB /* liquidGlass.metal in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00E62E569CF50087A5CB /* liquidGlass.metal */; };
 		9B2E01332E569CF50087A5CB /* LiquidGlassBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00E72E569CF50087A5CB /* LiquidGlassBackground.swift */; };
 		9B2E01342E569CF50087A5CB /* LiquidGlassParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00E82E569CF50087A5CB /* LiquidGlassParameters.swift */; };
@@ -95,7 +93,6 @@
 		9B2E00CA2E569CF50087A5CB /* Divider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Divider.swift; sourceTree = "<group>"; };
 		9B2E00CB2E569CF50087A5CB /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		9B2E00CD2E569CF50087A5CB /* ComfyTabMenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComfyTabMenuBar.swift; sourceTree = "<group>"; };
-		9B2E00CE2E569CF50087A5CB /* SettingsWindowScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsWindowScene.swift; sourceTree = "<group>"; };
 		9B2E00D12E569CF50087A5CB /* HotkeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyManager.swift; sourceTree = "<group>"; };
 		9B2E00D22E569CF50087A5CB /* LocalMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalMonitor.swift; sourceTree = "<group>"; };
 		9B2E00D42E569CF50087A5CB /* AppIconManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconManager.swift; sourceTree = "<group>"; };
@@ -110,7 +107,6 @@
 		9B2E00DE2E569CF50087A5CB /* SettingsTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTab.swift; sourceTree = "<group>"; };
 		9B2E00E02E569CF50087A5CB /* CirclePiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CirclePiece.swift; sourceTree = "<group>"; };
 		9B2E00E12E569CF50087A5CB /* Ring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ring.swift; sourceTree = "<group>"; };
-		9B2E00E32E569CF50087A5CB /* InstalledAppFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstalledAppFetcher.swift; sourceTree = "<group>"; };
 		9B2E00E62E569CF50087A5CB /* liquidGlass.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = liquidGlass.metal; sourceTree = "<group>"; };
 		9B2E00E72E569CF50087A5CB /* LiquidGlassBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiquidGlassBackground.swift; sourceTree = "<group>"; };
 		9B2E00E82E569CF50087A5CB /* LiquidGlassParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiquidGlassParameters.swift; sourceTree = "<group>"; };
@@ -220,7 +216,6 @@
 			isa = PBXGroup;
 			children = (
 				9B2E00CD2E569CF50087A5CB /* ComfyTabMenuBar.swift */,
-				9B2E00CE2E569CF50087A5CB /* SettingsWindowScene.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -266,14 +261,6 @@
 				9B2E00E12E569CF50087A5CB /* Ring.swift */,
 			);
 			path = Shapes;
-			sourceTree = "<group>";
-		};
-		9B2E00E52E569CF50087A5CB /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				9B2E00E32E569CF50087A5CB /* InstalledAppFetcher.swift */,
-			);
-			path = Utilities;
 			sourceTree = "<group>";
 		};
 		9B2E00E92E569CF50087A5CB /* Metal */ = {
@@ -455,7 +442,6 @@
 				9B2E01152E569CF50087A5CB /* Views */,
 				9B2E00CC2E569CF50087A5CB /* Extensions */,
 				9B2E00DF2E569CF50087A5CB /* Models */,
-				9B2E00E52E569CF50087A5CB /* Utilities */,
 				9B2E01162E569CF50087A5CB /* Assets.xcassets */,
 			);
 			path = ComfyTab;
@@ -575,7 +561,6 @@
 				9B2E011E2E569CF50087A5CB /* Divider.swift in Sources */,
 				9B2E011F2E569CF50087A5CB /* Image.swift in Sources */,
 				9B2E01202E569CF50087A5CB /* ComfyTabMenuBar.swift in Sources */,
-				9B2E01212E569CF50087A5CB /* SettingsWindowScene.swift in Sources */,
 				9B2E01222E569CF50087A5CB /* HotkeyManager.swift in Sources */,
 				9B2E02AC2E57E4360087A5CB /* InstalledAppService.swift in Sources */,
 				9B2E01232E569CF50087A5CB /* LocalMonitor.swift in Sources */,
@@ -594,7 +579,6 @@
 				9B2E012E2E569CF50087A5CB /* CirclePiece.swift in Sources */,
 				9B2E02BE2E57FCD70087A5CB /* GeneralViewModel.swift in Sources */,
 				9B2E012F2E569CF50087A5CB /* Ring.swift in Sources */,
-				9B2E01302E569CF50087A5CB /* InstalledAppFetcher.swift in Sources */,
 				9B2E01322E569CF50087A5CB /* liquidGlass.metal in Sources */,
 				9B2E01332E569CF50087A5CB /* LiquidGlassBackground.swift in Sources */,
 				9B2E01342E569CF50087A5CB /* LiquidGlassParameters.swift in Sources */,
