@@ -8,5 +8,5 @@
 protocol PermissionService {
     var isAccessibilityEnabled : Bool { get set }
     func openPermissionSettings()
-    func requestAcessibilityPermission()
+    func requestAccessibilityPermission()
 }

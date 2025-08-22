@@ -29,7 +29,7 @@ public struct PermissionsView: View {
                 Spacer()
                 
                 Button(action: {
-                    viewModel.permissionService.requestAcessibilityPermission()
+                    viewModel.permissionService.requestAccessibilityPermission()
                     viewModel.permissionService.openPermissionSettings()
                 }) {
                     Group {

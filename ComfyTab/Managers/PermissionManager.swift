@@ -21,7 +21,7 @@ class PermissionManager: PermissionService, ObservableObject {
         checkAccessibilityPermission()
         
         if !isAccessibilityEnabled {
-            requestAcessibilityPermission()
+            requestAccessibilityPermission()
         }
     }
     
@@ -41,7 +41,7 @@ class PermissionManager: PermissionService, ObservableObject {
     }
     
     /// Request Accessibility Permissions
-    func requestAcessibilityPermission() {
+    func requestAccessibilityPermission() {
         let options: NSDictionary = [kAXTrustedCheckOptionPrompt.takeRetainedValue() as String: true]
         let status = AXIsProcessTrustedWithOptions(options)
         
