@@ -11,14 +11,8 @@ import SwiftUI
 struct ComfyTabApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
-    init() {
-    }
-    
     var body: some Scene {
-        ComfyTabMenuBar(
-            appEnv: appDelegate.appEnv,
-            settingsCoordinator: appDelegate.appCoordinator.settings
-        )
+        ComfyTabMenuBar(settingsCoordinator: appDelegate.appCoordinator.settingsCoordinator)
     }
 }
 

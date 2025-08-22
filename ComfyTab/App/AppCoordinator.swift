@@ -11,7 +11,7 @@ import Combine
 final class AppCoordinator : ObservableObject {
     
     var overlay     : OverlayCoordinator
-    var settings    : SettingsCoordinator
+    var settingsCoordinator    : SettingsCoordinator
     var windows     : WindowCoordinator
     
     let env : AppEnv
@@ -22,11 +22,9 @@ final class AppCoordinator : ObservableObject {
         
         /// Create Window Coordinator
         self.windows = WindowCoordinator()
-        
-        
         self.overlay = OverlayCoordinator(d: self.env)
         
-        self.settings = SettingsCoordinator(
+        self.settingsCoordinator = SettingsCoordinator(
             windows: windows,
             deps: self.env
         )

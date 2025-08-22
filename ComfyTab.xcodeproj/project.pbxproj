@@ -17,8 +17,7 @@
 		9B2E011E2E569CF50087A5CB /* Divider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00CA2E569CF50087A5CB /* Divider.swift */; };
 		9B2E011F2E569CF50087A5CB /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00CB2E569CF50087A5CB /* Image.swift */; };
 		9B2E01202E569CF50087A5CB /* ComfyTabMenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00CD2E569CF50087A5CB /* ComfyTabMenuBar.swift */; };
-		9B2E01222E569CF50087A5CB /* HotkeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00D12E569CF50087A5CB /* HotkeyManager.swift */; };
-		9B2E01232E569CF50087A5CB /* LocalMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00D22E569CF50087A5CB /* LocalMonitor.swift */; };
+		9B2E01222E569CF50087A5CB /* HotkeyCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00D12E569CF50087A5CB /* HotkeyCoordinator.swift */; };
 		9B2E01242E569CF50087A5CB /* AppIconManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00D42E569CF50087A5CB /* AppIconManager.swift */; };
 		9B2E01252E569CF50087A5CB /* InstalledAppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00D52E569CF50087A5CB /* InstalledAppManager.swift */; };
 		9B2E01262E569CF50087A5CB /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00D62E569CF50087A5CB /* PermissionManager.swift */; };
@@ -30,7 +29,6 @@
 		9B2E012C2E569CF50087A5CB /* RunningApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00DD2E569CF50087A5CB /* RunningApp.swift */; };
 		9B2E012D2E569CF50087A5CB /* SettingsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00DE2E569CF50087A5CB /* SettingsTab.swift */; };
 		9B2E012E2E569CF50087A5CB /* CirclePiece.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00E02E569CF50087A5CB /* CirclePiece.swift */; };
-		9B2E012F2E569CF50087A5CB /* Ring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00E12E569CF50087A5CB /* Ring.swift */; };
 		9B2E01322E569CF50087A5CB /* liquidGlass.metal in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00E62E569CF50087A5CB /* liquidGlass.metal */; };
 		9B2E01332E569CF50087A5CB /* LiquidGlassBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00E72E569CF50087A5CB /* LiquidGlassBackground.swift */; };
 		9B2E01342E569CF50087A5CB /* LiquidGlassParameters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E00E82E569CF50087A5CB /* LiquidGlassParameters.swift */; };
@@ -79,6 +77,7 @@
 		9B2E02C32E5805130087A5CB /* PermissionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E02C22E58050C0087A5CB /* PermissionService.swift */; };
 		9B2E02C52E5806840087A5CB /* PermissionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E02C42E58067E0087A5CB /* PermissionViewModel.swift */; };
 		9B2E02C72E58069A0087A5CB /* PermissionDeps.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E02C62E5806930087A5CB /* PermissionDeps.swift */; };
+		9B2E02CB2E584AC00087A5CB /* AppEnv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B2E02CA2E584ABE0087A5CB /* AppEnv.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -93,8 +92,7 @@
 		9B2E00CA2E569CF50087A5CB /* Divider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Divider.swift; sourceTree = "<group>"; };
 		9B2E00CB2E569CF50087A5CB /* Image.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		9B2E00CD2E569CF50087A5CB /* ComfyTabMenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComfyTabMenuBar.swift; sourceTree = "<group>"; };
-		9B2E00D12E569CF50087A5CB /* HotkeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyManager.swift; sourceTree = "<group>"; };
-		9B2E00D22E569CF50087A5CB /* LocalMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalMonitor.swift; sourceTree = "<group>"; };
+		9B2E00D12E569CF50087A5CB /* HotkeyCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotkeyCoordinator.swift; sourceTree = "<group>"; };
 		9B2E00D42E569CF50087A5CB /* AppIconManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconManager.swift; sourceTree = "<group>"; };
 		9B2E00D52E569CF50087A5CB /* InstalledAppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstalledAppManager.swift; sourceTree = "<group>"; };
 		9B2E00D62E569CF50087A5CB /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
@@ -106,7 +104,6 @@
 		9B2E00DD2E569CF50087A5CB /* RunningApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RunningApp.swift; sourceTree = "<group>"; };
 		9B2E00DE2E569CF50087A5CB /* SettingsTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTab.swift; sourceTree = "<group>"; };
 		9B2E00E02E569CF50087A5CB /* CirclePiece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CirclePiece.swift; sourceTree = "<group>"; };
-		9B2E00E12E569CF50087A5CB /* Ring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ring.swift; sourceTree = "<group>"; };
 		9B2E00E62E569CF50087A5CB /* liquidGlass.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = liquidGlass.metal; sourceTree = "<group>"; };
 		9B2E00E72E569CF50087A5CB /* LiquidGlassBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiquidGlassBackground.swift; sourceTree = "<group>"; };
 		9B2E00E82E569CF50087A5CB /* LiquidGlassParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiquidGlassParameters.swift; sourceTree = "<group>"; };
@@ -155,6 +152,7 @@
 		9B2E02C22E58050C0087A5CB /* PermissionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionService.swift; sourceTree = "<group>"; };
 		9B2E02C42E58067E0087A5CB /* PermissionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionViewModel.swift; sourceTree = "<group>"; };
 		9B2E02C62E5806930087A5CB /* PermissionDeps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionDeps.swift; sourceTree = "<group>"; };
+		9B2E02CA2E584ABE0087A5CB /* AppEnv.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnv.swift; sourceTree = "<group>"; };
 		9BBF0BF02E371FA800F4A825 /* ComfyTab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ComfyTab.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -173,6 +171,7 @@
 		9B2E00C22E569CF50087A5CB /* App */ = {
 			isa = PBXGroup;
 			children = (
+				9B2E02CA2E584ABE0087A5CB /* AppEnv.swift */,
 				9B2E00C02E569CF50087A5CB /* AppDelegate.swift */,
 				9B2E00C12E569CF50087A5CB /* ComfyTabApp.swift */,
 				9B2E00BF2E569CF50087A5CB /* AppCoordinator.swift */,
@@ -196,6 +195,7 @@
 				9B2E02AF2E57E9310087A5CB /* SettingsCoordinator.swift */,
 				9B2E02AD2E57E8930087A5CB /* WindowCoordinator.swift */,
 				9B2E02A52E56AE6E0087A5CB /* OverlayCoordinator.swift */,
+				9B2E00D12E569CF50087A5CB /* HotkeyCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -220,19 +220,9 @@
 			path = Scenes;
 			sourceTree = "<group>";
 		};
-		9B2E00D32E569CF50087A5CB /* HotKey */ = {
-			isa = PBXGroup;
-			children = (
-				9B2E00D12E569CF50087A5CB /* HotkeyManager.swift */,
-				9B2E00D22E569CF50087A5CB /* LocalMonitor.swift */,
-			);
-			path = HotKey;
-			sourceTree = "<group>";
-		};
 		9B2E00D92E569CF50087A5CB /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				9B2E00D32E569CF50087A5CB /* HotKey */,
 				9B2E00D42E569CF50087A5CB /* AppIconManager.swift */,
 				9B2E00D52E569CF50087A5CB /* InstalledAppManager.swift */,
 				9B2E00D62E569CF50087A5CB /* PermissionManager.swift */,
@@ -258,7 +248,6 @@
 			isa = PBXGroup;
 			children = (
 				9B2E00E02E569CF50087A5CB /* CirclePiece.swift */,
-				9B2E00E12E569CF50087A5CB /* Ring.swift */,
 			);
 			path = Shapes;
 			sourceTree = "<group>";
@@ -306,6 +295,7 @@
 		9B2E00F52E569CF50087A5CB /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				9B2E00E22E569CF50087A5CB /* Shapes */,
 				9B2E00F42E569CF50087A5CB /* VisualEffectView.swift */,
 			);
 			path = Components;
@@ -315,7 +305,6 @@
 			isa = PBXGroup;
 			children = (
 				9B2E00F32E569CF50087A5CB /* ComfyTab */,
-				9B2E00F52E569CF50087A5CB /* Components */,
 				9B2E00F72E569CF50087A5CB /* OverlayContent.swift */,
 				9B2E00F82E569CF50087A5CB /* OverlayViewModel.swift */,
 				9B2E02B12E57ED460087A5CB /* OverlayDeps.swift */,
@@ -426,7 +415,7 @@
 				9B2E00F92E569CF50087A5CB /* Overlay */,
 				9B2E01142E569CF50087A5CB /* Settings */,
 				9B2E00CF2E569CF50087A5CB /* Scenes */,
-				9B2E00E22E569CF50087A5CB /* Shapes */,
+				9B2E00F52E569CF50087A5CB /* Components */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -561,9 +550,9 @@
 				9B2E011E2E569CF50087A5CB /* Divider.swift in Sources */,
 				9B2E011F2E569CF50087A5CB /* Image.swift in Sources */,
 				9B2E01202E569CF50087A5CB /* ComfyTabMenuBar.swift in Sources */,
-				9B2E01222E569CF50087A5CB /* HotkeyManager.swift in Sources */,
+				9B2E02CB2E584AC00087A5CB /* AppEnv.swift in Sources */,
+				9B2E01222E569CF50087A5CB /* HotkeyCoordinator.swift in Sources */,
 				9B2E02AC2E57E4360087A5CB /* InstalledAppService.swift in Sources */,
-				9B2E01232E569CF50087A5CB /* LocalMonitor.swift in Sources */,
 				9B2E01242E569CF50087A5CB /* AppIconManager.swift in Sources */,
 				9B2E01252E569CF50087A5CB /* InstalledAppManager.swift in Sources */,
 				9B2E01262E569CF50087A5CB /* PermissionManager.swift in Sources */,
@@ -578,7 +567,6 @@
 				9B2E012D2E569CF50087A5CB /* SettingsTab.swift in Sources */,
 				9B2E012E2E569CF50087A5CB /* CirclePiece.swift in Sources */,
 				9B2E02BE2E57FCD70087A5CB /* GeneralViewModel.swift in Sources */,
-				9B2E012F2E569CF50087A5CB /* Ring.swift in Sources */,
 				9B2E01322E569CF50087A5CB /* liquidGlass.metal in Sources */,
 				9B2E01332E569CF50087A5CB /* LiquidGlassBackground.swift in Sources */,
 				9B2E01342E569CF50087A5CB /* LiquidGlassParameters.swift in Sources */,

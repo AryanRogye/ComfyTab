@@ -8,16 +8,6 @@
 import AppKit
 import Combine
 
-final class AppEnv : OverlayDeps, SettingsDeps, BehaviorDeps, GeneralDeps, PermissionDeps {
-    var settingsManager = SettingsManager()
-    lazy var installedAppManager : InstalledAppManager = InstalledAppManager(settingsService: settingsService)
-    
-    var runningAppService: any RunningAppService = RunningAppManager()
-    var settingsService : any SettingsService { settingsManager }
-    var installedAppService: any InstalledAppService { installedAppManager }
-    var permissionService : any PermissionService { PermissionManager() }
-}
-
 class AppDelegate: NSObject, NSApplicationDelegate {
     
     var appCoordinator : AppCoordinator

@@ -9,24 +9,27 @@ import SwiftUI
 import Combine
 
 extension OverlayViewModel {
-
+    
     @MainActor
     func resetVisibleApps() {
+        print("resetting visible apps")
         visibleApps = []
     }
     
     @MainActor
-    func setVisibleAppsInstant(_ apps: [RunningApp]) {
+    private func setVisibleAppsInstant(_ apps: [RunningApp]) {
+        revealTask?.cancel()
         resetVisibleApps()
         self.visibleApps = apps
     }
     
     @MainActor
-    public func addAppsOneByOne(
+    private func addAppsOneByOne(
         apps: [RunningApp],
         perItemDelay: Duration = .milliseconds(100)
     ) {
         resetVisibleApps()
+        revealTask?.cancel()
         revealTask = Task { [weak self] in
             guard let self else { return }
             for app in apps {
@@ -38,12 +41,11 @@ extension OverlayViewModel {
             }
         }
     }
-    
 }
 
 class OverlayViewModel: ObservableObject {
     private var revealTask: Task<Void, Never>?
-
+    
     private let runningAppsService  : RunningAppService
     private var settingsService     : any SettingsService
     
@@ -75,6 +77,40 @@ class OverlayViewModel: ObservableObject {
         self.runningAppsService = deps.runningAppService
         self.settingsService = deps.settingsService
         
+        /// When Showing/Hiding we want to get the running apps
+        $isShowing
+            .debounce(for: .milliseconds(100), scheduler: RunLoop.main)
+            .sink { isShowing in
+                if isShowing {
+                    self.getRunningApps()
+                } else {
+                    Task { @MainActor in
+                        self.resetVisibleApps()
+                    }
+                }
+            }
+            .store(in: &cancellables)
+        
+        /// If Running Apps Change we wanna update the visible apps with a nice animation
+        /// but only if the user wants it
+        $runningApps
+            .debounce(for: .milliseconds(100), scheduler: RunLoop.main)
+            .sink { apps in
+                if self.isShowing && apps.count > 0 {
+                    if self.isIntroAnimationEnabled {
+                        Task { @MainActor in
+                            self.addAppsOneByOne(apps: apps)
+                        }
+                    } else {
+                        Task { @MainActor in
+                            self.setVisibleAppsInstant(apps)
+                        }
+                    }
+                }
+            }
+            .store(in: &cancellables)
+        
+        /// Load Changes From Settings
         settingsService.isIntroAnimationEnabledPublisher
             .sink { enabled in
                 self.isIntroAnimationEnabled = enabled

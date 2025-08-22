@@ -19,7 +19,7 @@ class OverlayCoordinator {
     /// Overlay ViewModel
     var overlayViewModel: OverlayViewModel? = nil
     /// HotKeyManager
-    var hotkeyManager: HotkeyManager? = nil
+    var hotkeyManager: HotkeyCoordinator? = nil
     
     /// Previous focused window before the overlay was shown
     private weak var previousFocousedWindow: NSRunningApplication?
@@ -34,12 +34,14 @@ class OverlayCoordinator {
     
     private func prepare() {
         
-        self.hotkeyManager = HotkeyManager(
-            deps: dependencies,
-            instance: self
-        )
         self.overlayViewModel = OverlayViewModel(
             deps: dependencies
+        )
+        self.hotkeyManager = HotkeyCoordinator(
+            deps: dependencies,
+            overlayViewModel: overlayViewModel!,
+            onShow: self.show,
+            onHide: self.hide
         )
     }
 }

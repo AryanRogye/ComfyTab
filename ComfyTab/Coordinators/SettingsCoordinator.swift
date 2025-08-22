@@ -17,7 +17,7 @@ class SettingsCoordinator {
     let generalViewModel  : GeneralViewModel
     let permissionViewModel : PermissionViewModel
     
-    let deps: AppEnv
+    var deps: AppEnv
     
     init(windows: WindowCoordinator, deps: AppEnv) {
         self.windowCoordinator = windows
@@ -40,7 +40,17 @@ class SettingsCoordinator {
             id: "settings",
             title: "Settings",
             content: view,
-            size: NSSize(width: 800, height: 500)
-        )
+            size: NSSize(width: 800, height: 500),
+            onOpen: {
+                NSApp.activate(ignoringOtherApps: true)
+                self.settingsViewModel.settingsService.isSettingsWindowOpen = true
+                print("Settings Window Opened")
+            },
+            onClose: {
+                self.settingsViewModel.settingsService.isSettingsWindowOpen = false
+                NSApp.activate(ignoringOtherApps: false)
+                print("Settings Window Closed")
+            })
+        
     }
 }

@@ -30,23 +30,6 @@ struct ComfyTab: View {
                 appsView
             }
         }
-        .onChange(of: viewModel.isShowing) { _, isShowing in
-            if isShowing {
-                viewModel.getRunningApps()
-            } else {
-                viewModel.resetVisibleApps()
-            }
-        }
-        .onChange(of: viewModel.runningApps) { _, apps in
-            guard viewModel.isShowing else { return }
-            
-            /// Only add Apps One By One if the into is enabled
-            if viewModel.isIntroAnimationEnabled {
-                viewModel.addAppsOneByOne(apps: viewModel.runningApps)
-            } else {
-                viewModel.setVisibleAppsInstant(viewModel.runningApps)
-            }
-        }
     }
     
     // MARK: - App View

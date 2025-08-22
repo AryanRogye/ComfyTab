@@ -9,9 +9,33 @@ import Foundation
 import AppKit
 import SwiftUI
 
+private class WindowDelegate: NSObject, NSWindowDelegate {
+    let id: String
+    weak var coordinator: WindowCoordinator?
+    
+    init(id: String, coordinator: WindowCoordinator) {
+        self.id = id
+        self.coordinator = coordinator
+    }
+    
+    func windowDidBecomeKey(_ notification: Notification) {
+        coordinator?.handleWindowOpen(id: id)
+    }
+    
+    func windowWillClose(_ notification: Notification) {
+        coordinator?.handleWindowClose(id: id)
+    }
+}
+
 /// Window Coordinator manages the lifecycle of multiple windows in the application.
 class WindowCoordinator {
+    
     private var windows : [String: NSWindow] = [:]
+    
+    private var onOpenAction : [String: (() -> Void)] = [:]
+    private var onCloseAction : [String: (() -> Void)] = [:]
+    
+    private var delegates: [String: WindowDelegate] = [:]
     
     deinit {
         // Clean up all windows when the coordinator is deinitialized
@@ -25,7 +49,9 @@ class WindowCoordinator {
         id: String,
         title: String,
         content: some View,
-        size: NSSize = .init(width: 600, height: 400)
+        size: NSSize = .init(width: 600, height: 400),
+        onOpen: (() -> Void)? = nil,
+        onClose: (() -> Void)? = nil
     ) {
         if let window = windows[id] {
             window.makeKeyAndOrderFront(nil)
@@ -51,14 +77,42 @@ class WindowCoordinator {
         hostingView.layer?.backgroundColor = NSColor.windowBackgroundColor.cgColor
         window.contentView = hostingView
         
+        /// Assign A Window Delegate
+        let delegate = WindowDelegate(id: id, coordinator: self)
+        window.delegate = delegate
+        delegates[id] = delegate
+        
         window.center()
         window.makeKeyAndOrderFront(nil)
         
         windows[id] = window
+        if let action = onClose {
+            onCloseAction[id] = action
+        }
+        if let action = onOpen {
+            onOpenAction[id] = action
+            /// Init of Delegate will call this
+        }
     }
     
     func closeWindow(id: String) {
         windows[id]?.close()
+        /// windowWillClose will be called automatically
+    }
+    
+    fileprivate func handleWindowOpen(id: String) {
+        if let action = onOpenAction[id] {
+            action()
+            onOpenAction[id] = nil
+        }
+    }
+    
+    fileprivate func handleWindowClose(id: String) {
         windows[id] = nil
+        delegates[id] = nil
+        if let action = onCloseAction[id] {
+            action()
+            onCloseAction[id] = nil
+        }
     }
 }

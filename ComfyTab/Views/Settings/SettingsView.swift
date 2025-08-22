@@ -10,7 +10,7 @@ import SwiftUI
 struct SettingsView: View {
     
     @EnvironmentObject var viewModel : SettingsViewModel
-
+    
     var body: some View {
         NavigationSplitView {
             Sidebar()
@@ -22,15 +22,8 @@ struct SettingsView: View {
         .onAppear {
             onAppear()
         }
-        .onDisappear {
-            onClose()
-        }
     }
     
-    private func onClose() {
-        viewModel.settingsService.isSettingsWindowOpen = false
-        NSApp.activate(ignoringOtherApps: false)
-    }
     private func onAppear() {
         /// Mark as True
         viewModel.settingsService.isSettingsWindowOpen = true

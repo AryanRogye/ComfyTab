@@ -9,7 +9,6 @@ import SwiftUI
 
 struct ComfyTabMenuBar: Scene {
     
-    var appEnv: AppEnv
     var settingsCoordinator: SettingsCoordinator
     
     var body: some Scene {
@@ -17,9 +16,7 @@ struct ComfyTabMenuBar: Scene {
         MenuBarExtra("MyApp", systemImage: "star") {
             VStack {
                 Button("Open Settings") {
-                    NSApp.activate(ignoringOtherApps: true)
                     settingsCoordinator.showSettings()
-                    appEnv.settingsManager.isSettingsWindowOpen = true
                 }
                 Divider()
                 Button("Quit") {
