@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ShowDockIcon: View {
     
-    @EnvironmentObject private var settingsManager: SettingsManager
+    @EnvironmentObject private var viewModel: GeneralViewModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
@@ -18,7 +18,7 @@ struct ShowDockIcon: View {
                 
                 Spacer()
                 
-                Toggle("Show Dock Icon", isOn: $settingsManager.showDockIcon)
+                Toggle("Show Dock Icon", isOn: viewModel.showDockIcon)
                     .toggleStyle(.switch)
                     .labelsHidden()
             }

@@ -9,14 +9,14 @@ import SwiftUI
 
 struct IntroAnimation: View {
     
-    @EnvironmentObject private var settingsManager: SettingsManager
-    
+    @EnvironmentObject var viewModel: BehaviorViewModel
+
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             HStack {
                 Text("Intro Animation")
                 Spacer()
-                Toggle("Intro Animation", isOn: $settingsManager.isIntroAnimationEnabled)
+                Toggle("Intro Animation", isOn: viewModel.isIntroAnimationEnabled)
                     .toggleStyle(.switch)
                     .labelsHidden()
             }

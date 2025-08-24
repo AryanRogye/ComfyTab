@@ -8,45 +8,15 @@
 import SwiftUI
 import UniformTypeIdentifiers
 
-extension InstalledAppConfiguration {
-    @Observable @MainActor
-    class ViewModel {
-        
-        var doneLoading = false
-        
-        public func getIcon(for app: InstalledApp) -> NSImage {
-            let image : NSImage? = AppIconManager.appIcons[app.bundleID ?? ""]
-            return image ?? AppIconManager.fallbackAppIcon()
-        }
-        
-        public func updateIcons(_ apps: [InstalledApp]) {
-            apps.forEach { app in
-                    
-                let url = app.url
-                let bundle = app.bundleID ?? ""
-                
-                AppIconManager.loadAppIcon(for: url,bundleID: bundle) { _ in }
-            }
-            doneLoading = true
-        }
-        
-        public func removeIconsFromCache(_ apps: [InstalledApp]) {
-            apps.forEach {
-                AppIconManager.removeAppIcon(for: $0.bundleID ?? "")
-            }
-        }
-    }
-}
 struct InstalledAppConfiguration: View {
     
-    @EnvironmentObject var installedAppManager: InstalledAppManager
-    @State var viewModel = ViewModel()
+    @EnvironmentObject var viewModel: BehaviorViewModel
     
     var body: some View {
         SettingsContainerView {
             SettingsSection {
                 if viewModel.doneLoading {
-                    ForEach(installedAppManager.installedApps, id: \.self) { app in
+                    ForEach(viewModel.installedAppService.installedApps, id: \.self) { app in
                         showAppDetails(app)
                     }
                 } else {
@@ -58,11 +28,13 @@ struct InstalledAppConfiguration: View {
             .padding(.top, 8)
         }
         .onAppear {
-            installedAppManager.fetchApps()
-            viewModel.updateIcons(installedAppManager.installedApps)
+            viewModel.installedAppService.fetchApps()
+            viewModel.updateIcons(viewModel.installedAppService.installedApps)
         }
         .onDisappear {
-            viewModel.removeIconsFromCache(installedAppManager.installedApps)
+            viewModel.removeIconsFromCache(
+                viewModel.installedAppService.installedApps
+            )
         }
     }
     

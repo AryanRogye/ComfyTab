@@ -10,7 +10,7 @@ import ApplicationServices
 import AppKit
 
 /// Manage All Permissions for the App
-class PermissionManager: ObservableObject {
+class PermissionManager: PermissionService, ObservableObject {
     
     @Published var isAccessibilityEnabled   : Bool = false
     
@@ -21,7 +21,7 @@ class PermissionManager: ObservableObject {
         checkAccessibilityPermission()
         
         if !isAccessibilityEnabled {
-            requestAcessibilityPermission()
+            requestAccessibilityPermission()
         }
     }
     
@@ -41,7 +41,7 @@ class PermissionManager: ObservableObject {
     }
     
     /// Request Accessibility Permissions
-    func requestAcessibilityPermission() {
+    func requestAccessibilityPermission() {
         let options: NSDictionary = [kAXTrustedCheckOptionPrompt.takeRetainedValue() as String: true]
         let status = AXIsProcessTrustedWithOptions(options)
         

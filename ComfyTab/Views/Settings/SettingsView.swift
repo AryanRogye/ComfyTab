@@ -9,12 +9,8 @@ import SwiftUI
 
 struct SettingsView: View {
     
-    @EnvironmentObject var installedAppManager: InstalledAppManager
-    @EnvironmentObject var permissionManager: PermissionManager
-    @EnvironmentObject var settingsManager: SettingsManager
+    @EnvironmentObject var viewModel : SettingsViewModel
     
-    @StateObject var viewModel = SettingsViewModel()
-
     var body: some View {
         NavigationSplitView {
             Sidebar()
@@ -26,18 +22,11 @@ struct SettingsView: View {
         .onAppear {
             onAppear()
         }
-        .onDisappear {
-            onClose()
-        }
     }
     
-    private func onClose() {
-        settingsManager.isSettingsWindowOpen = false
-        NSApp.activate(ignoringOtherApps: false)
-    }
     private func onAppear() {
         /// Mark as True
-        settingsManager.isSettingsWindowOpen = true
+        viewModel.settingsService.isSettingsWindowOpen = true
         
         /// Make Sure That the Window is Above runs after 0.2 seconds
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {

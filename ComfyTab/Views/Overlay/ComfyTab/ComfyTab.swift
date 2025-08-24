@@ -17,45 +17,24 @@ struct ComfyTab: View {
     
     var body: some View {
         ZStack {
-            #if DEBUG
+#if DEBUG
             if showDebug {
                 Text("Middle")
             }
-            #endif
-
+#endif
+            
             ComfyTabMiddleCircle()
             
             /// If Not Empty
-            if !internalViewModel.visibleApps.isEmpty {
+            if !viewModel.visibleApps.isEmpty {
                 appsView
-            }
-        }
-        .onChange(of: viewModel.isShowing) { _, isShowing in
-            if isShowing {
-                viewModel.getRunningApps()
-            } else {
-                internalViewModel.reset()
-            }
-        }
-        .onChange(of: viewModel.runningApps) { _, apps in
-            guard viewModel.isShowing else { return }
-            /// Only add Apps One By One if the into is enabled
-            if viewModel.settingsManager.isIntroAnimationEnabled {
-                internalViewModel.addAppsOneByOne(apps: apps)
-            } else {
-                internalViewModel.setVisibleAppsInstant(apps)
-            }
-        }
-        .onAppear {
-            internalViewModel.configure {
-                viewModel.isShowing
             }
         }
     }
     
     // MARK: - App View
     private var appsView: some View {
-        let s = ComfyTabLayout.makeSlices(internalViewModel.visibleApps)
+        let s = ComfyTabLayout.makeSlices(viewModel.visibleApps)
         return ZStack {
             ForEach(s, id: \.app.bundleID) { s in
                 
@@ -123,7 +102,7 @@ struct ComfyTab: View {
                 VStack {
                     icon(for: app, index: index)
                     /// Swtich for the app icon names
-                    if viewModel.settingsManager.showAppNameUnderIcon {
+                    if viewModel.showAppNameUnderIcon {
                         Text(app.name)
                             .font(.system(
                                 size: 8,
@@ -145,7 +124,7 @@ struct ComfyTab: View {
         .buttonStyle(.plain)
         .onHover { hovering in
             withAnimation(AppAnims.circleAnimation) {
-                internalViewModel.hoveringIndex = hovering && viewModel.settingsManager.isHoverEffectEnabled
+                internalViewModel.hoveringIndex = hovering && viewModel.isHoverEffectEnabled
                 ? index : nil
             }
         }
@@ -162,31 +141,9 @@ struct ComfyTab: View {
         }
         /// Lil Performance
         .shadow(radius:
-            internalViewModel.visibleApps.count < 10
-            ? 4 : 0
+                    viewModel.visibleApps.count < 10
+                ? 4 : 0
         )
         .contentShape(Circle())
     }
 }
-
-#Preview {
-    
-    var settingsManager = SettingsManager()
-    var runningAppManager = RunningAppManager()
-    
-    var overlay = Overlay(
-        runningAppManager: runningAppManager, settingsManager: settingsManager
-    )
-    let overlayViewModel = OverlayViewModel(runningAppManager: runningAppManager, settingsManager: settingsManager, overlay: overlay)
-
-    ZStack {
-        ComfyTab()
-        .environmentObject(overlayViewModel)
-        .task {
-            overlayViewModel.isShowing = true
-            overlayViewModel.getRunningApps()
-        }
-    }
-    .frame(width: 300, height: 300)
-}
-

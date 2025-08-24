@@ -9,13 +9,13 @@ import SwiftUI
 
 struct LaunchAtLogin: View {
     
-    @EnvironmentObject private var settingsManager : SettingsManager
+    @EnvironmentObject private var viewModel : GeneralViewModel
     
     var body: some View {
         HStack {
             Text("Launch At Login")
             Spacer()
-            Toggle("Launch At Login", isOn: $settingsManager.launchAtLogin)
+            Toggle("Launch At Login", isOn: viewModel.launchAtLogin)
                 .toggleStyle(.switch)
                 .labelsHidden()
         }

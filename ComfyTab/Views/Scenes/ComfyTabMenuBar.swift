@@ -9,16 +9,14 @@ import SwiftUI
 
 struct ComfyTabMenuBar: Scene {
     
-    @EnvironmentObject private var settingsManager: SettingsManager
-    @Environment(\.openWindow) private var openWindow
+    var settingsCoordinator: SettingsCoordinator
     
     var body: some Scene {
+        // TODO: Design Logo
         MenuBarExtra("MyApp", systemImage: "star") {
             VStack {
                 Button("Open Settings") {
-                    openWindow(id: "SettingsView")
-                    NSApp.activate(ignoringOtherApps: true)
-                    settingsManager.isSettingsWindowOpen = true
+                    settingsCoordinator.showSettings()
                 }
                 Divider()
                 Button("Quit") {

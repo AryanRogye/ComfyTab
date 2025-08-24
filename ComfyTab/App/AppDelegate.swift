@@ -10,10 +10,15 @@ import Combine
 
 class AppDelegate: NSObject, NSApplicationDelegate {
     
-    let appCoordinator = AppCoordinator()
+    var appCoordinator : AppCoordinator
+    var appEnv = AppEnv()
+    
+    @MainActor
+    override init() {
+        appCoordinator = AppCoordinator(env: appEnv)
+    }
     
     public func applicationDidFinishLaunching(_ notification: Notification) {
-        appCoordinator.prepare()
     }
     
     public func applicationWillTerminate(_ notification: Notification) {

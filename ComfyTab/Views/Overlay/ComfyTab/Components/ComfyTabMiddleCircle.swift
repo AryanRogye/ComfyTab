@@ -94,26 +94,3 @@ struct ComfyTabMiddleCircle: View {
         )
     }
 }
-
-#Preview {
-    var settingsManager = SettingsManager()
-    var runningAppManager = RunningAppManager()
-    
-    var overlay = Overlay(
-        runningAppManager: runningAppManager, settingsManager: settingsManager
-    )
-    let overlayViewModel = OverlayViewModel(runningAppManager: runningAppManager, settingsManager: settingsManager, overlay: overlay)
-    
-    
-    ZStack {
-        ComfyTab()
-        .environmentObject(overlayViewModel)
-        .task {
-            overlayViewModel.isShowing = true
-            overlayViewModel.getRunningApps()
-        }
-    }
-    .frame(width: 780, height: 300)
-    .scaleEffect(0.8)
-
-}

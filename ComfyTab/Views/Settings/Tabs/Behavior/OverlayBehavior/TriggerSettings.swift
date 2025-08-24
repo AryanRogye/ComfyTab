@@ -9,11 +9,11 @@ import SwiftUI
 
 struct ModifierKeyPicker: View {
     
-    @EnvironmentObject var settingsManager: SettingsManager
+    @EnvironmentObject var viewModel: BehaviorViewModel
     
     var body: some View {
         VStack {
-            Picker("Pick a Modifier Key", selection: $settingsManager.modifierKey) {
+            Picker("Pick a Modifier Key", selection: viewModel.modifierKey) {
                 ForEach(ModifierKey.allCases) { key in
                     Text(key.label)
                         .tag(key)

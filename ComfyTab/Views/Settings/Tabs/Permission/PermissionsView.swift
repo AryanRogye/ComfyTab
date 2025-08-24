@@ -10,7 +10,7 @@ import SwiftUI
 // TODO: Move to a view model
 public struct PermissionsView: View {
     
-    @EnvironmentObject var permissionManager: PermissionManager
+    @EnvironmentObject var viewModel: PermissionViewModel
     
     public var body: some View {
         SettingsContainerView {
@@ -29,11 +29,11 @@ public struct PermissionsView: View {
                 Spacer()
                 
                 Button(action: {
-                    permissionManager.requestAcessibilityPermission()
-                    permissionManager.openPermissionSettings()
+                    viewModel.permissionService.requestAccessibilityPermission()
+                    viewModel.permissionService.openPermissionSettings()
                 }) {
                     Group {
-                        if permissionManager.isAccessibilityEnabled {
+                        if viewModel.permissionService.isAccessibilityEnabled {
                             Text("Enabled")
                                 .foregroundColor(.green)
                         } else {
@@ -45,13 +45,13 @@ public struct PermissionsView: View {
                     .padding(.vertical, 4)
                     .background {
                         RoundedRectangle(cornerRadius: 8)
-                            .fill(permissionManager.isAccessibilityEnabled
+                            .fill(viewModel.permissionService.isAccessibilityEnabled
                                   ? Color.green.opacity(0.2)
                                   : Color.red.opacity(0.2)
                             )
                     }
                 }
-                .disabled(permissionManager.isAccessibilityEnabled)
+                .disabled(viewModel.permissionService.isAccessibilityEnabled)
                 .buttonStyle(.plain)
             }
             
@@ -59,7 +59,7 @@ public struct PermissionsView: View {
                 Text("Required to control app switching")
                     .font(.caption)
                     .foregroundStyle(.secondary)
-                Button(action: permissionManager.openPermissionSettings) {
+                Button(action: viewModel.permissionService.openPermissionSettings) {
                     Text("Check Anyways?")
                         .font(.caption)
                 }
