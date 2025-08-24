@@ -12,7 +12,6 @@ extension OverlayViewModel {
     
     @MainActor
     func resetVisibleApps() {
-        print("resetting visible apps")
         visibleApps = []
     }
     

@@ -43,12 +43,12 @@ struct OverlayContent: View {
                     /// Mix of Scale and offset gives it that nice come up feeling
                     .scaleEffect(viewModel.isShowing ? 1.0 : 0.95)
                     /// Gives Appearence of coming from the bottom
-                    .offset(y: viewModel.isShowing ? 0 : 10)
+                    .offset(y: viewModel.isShowing ? 0 : 15)
                     /// hide to unhide
                     .opacity(viewModel.isShowing ? 1.0 : 0.0)
                     /// transition to a nonblur when showing
                     .blur(radius: viewModel.isShowing ? 0 : 1.5)
-                    .shadow(radius: viewModel.isShowing ? 2 : 1)
+                    .shadow(radius: viewModel.isShowing ? 4 : 1)
                     /// Animation Logic
                     .animation(
                         .interpolatingSpring(

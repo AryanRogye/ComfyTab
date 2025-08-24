@@ -171,10 +171,10 @@
 		9B2E00C22E569CF50087A5CB /* App */ = {
 			isa = PBXGroup;
 			children = (
-				9B2E02CA2E584ABE0087A5CB /* AppEnv.swift */,
-				9B2E00C02E569CF50087A5CB /* AppDelegate.swift */,
 				9B2E00C12E569CF50087A5CB /* ComfyTabApp.swift */,
+				9B2E00C02E569CF50087A5CB /* AppDelegate.swift */,
 				9B2E00BF2E569CF50087A5CB /* AppCoordinator.swift */,
+				9B2E02CA2E584ABE0087A5CB /* AppEnv.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -182,8 +182,8 @@
 		9B2E00C62E569CF50087A5CB /* Config */ = {
 			isa = PBXGroup;
 			children = (
-				9B2E00C32E569CF50087A5CB /* ComfyTab.entitlements */,
 				9B2E00C42E569CF50087A5CB /* constants.swift */,
+				9B2E00C32E569CF50087A5CB /* ComfyTab.entitlements */,
 				9B2E00C52E569CF50087A5CB /* Info.plist */,
 			);
 			path = Config;
@@ -192,10 +192,10 @@
 		9B2E00C72E569CF50087A5CB /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
-				9B2E02AF2E57E9310087A5CB /* SettingsCoordinator.swift */,
-				9B2E02AD2E57E8930087A5CB /* WindowCoordinator.swift */,
 				9B2E02A52E56AE6E0087A5CB /* OverlayCoordinator.swift */,
 				9B2E00D12E569CF50087A5CB /* HotkeyCoordinator.swift */,
+				9B2E02AD2E57E8930087A5CB /* WindowCoordinator.swift */,
+				9B2E02AF2E57E9310087A5CB /* SettingsCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -223,11 +223,11 @@
 		9B2E00D92E569CF50087A5CB /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				9B2E00D42E569CF50087A5CB /* AppIconManager.swift */,
-				9B2E00D52E569CF50087A5CB /* InstalledAppManager.swift */,
+				9B2E00D82E569CF50087A5CB /* SettingsManager.swift */,
 				9B2E00D62E569CF50087A5CB /* PermissionManager.swift */,
 				9B2E00D72E569CF50087A5CB /* RunningAppManager.swift */,
-				9B2E00D82E569CF50087A5CB /* SettingsManager.swift */,
+				9B2E00D52E569CF50087A5CB /* InstalledAppManager.swift */,
+				9B2E00D42E569CF50087A5CB /* AppIconManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
